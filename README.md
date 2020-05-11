@@ -85,7 +85,7 @@ while
 ** int - 4 bytes (32 bits, de –2.147.483.648 a 2.147.483.647);
 ** long - 8 bytes (64 bits, de –9.223.372.036.854.775.808 a 9.223.372.036.854.775.807).
 * boolean em Java só pode ser false ou true. Não existe 0 para false ou 1 para true
-
+* tipos primitivos: atribuição é por cópia do valor
 
 
 

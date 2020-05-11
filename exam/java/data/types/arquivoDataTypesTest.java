@@ -98,7 +98,7 @@ class DataTypesTest{
 
 		if(d=='A') System.out.println("65==A");
 
-		System.out.println('\u0042'); //unicode
+		System.out.println('\u0042'); //unicode B
 		
 
 		
