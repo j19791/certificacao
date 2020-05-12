@@ -8,6 +8,7 @@ class CalculadoraTest{
 		System.out.println(c.soma(1,2,3,5,9,10));
 		System.out.println(c.soma("Jefferson",1,2,3,5,9,10));	
 		int[] parcelas = {1,2,3,5,9,10}	;
+		//new int[]{23789,673482};
 		System.out.println(c.somaArray(parcelas));	//array na´é vargs mas vargs é array	
 		System.out.println(c.soma(parcelas));
 		System.out.println(c.soma());//devido à regra de sempre invocar o mais específico, ele sempre invoca o método sem argumentos. Se não tivesse esse método, o retorno seria 0

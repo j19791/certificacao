@@ -23,4 +23,8 @@ class Pessoa{
 	void setNome(String nome){
 		this.nome = nome;
 	}
+
+	public String toString(){
+		return nome;
+	}
 }
