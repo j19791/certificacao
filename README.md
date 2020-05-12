@@ -1,6 +1,7 @@
 # Repositório de todo material utilizado para certificação OCA Programmer
 
 ## dicas
+* contagem de posição sempre começa do 0
 * fortemente tipado
 * atentar as pequenas regras necessárias para que o código compile
 * verifique cada ponto-e-vírgula, visibilidade, escopo de variáveis, nomes e parâmetros de métodos
