@@ -79,7 +79,10 @@ class StringTeste{
 		
 		//substring - pegadinha: não é subString
 		System.out.println(str8.substring(0));//a partir da posição 0, inclusive, retorna o resto da string. Nesse caso aqui, vai retornar toda a string
-		System.out.println(str8.substring(0,4));//a partir da posição 0, inclusive, retorna o resto da string até a posição 4, não incluindo a posição 4	
+		System.out.println(str8.substring(0,4));//a partir da posição 0, inclusive, retorna o resto da string até a posição 4, não incluindo a posição 4
+		System.out.println(str8.substring(18,18));//a partir do último r, sem pegar o r. Ou seja, retorna nada
+		String str9 = "s1"	;
+		System.out.println(str9.substring(0,2));//apesar de nao ter posicao 2, o substring vai pegar da posicao 0 (inclusive) até a posicção 2-1
 		
 		//equals
 		System.out.println(new String("Java").equals(new String("Java")));//true
