@@ -45,7 +45,7 @@ class ArrayListTest{
 		lista2.add(0,"elemento 0"); //o add do arraylist sempre adiciona no final. especificando a posição no inicio
 		
 		System.out.println("tamanho da lista 2: " + lista2.size()); //tamanho 6
-		//lista2.add(7,"elemento 999");nao funciona
+		//lista2.add(7,"elemento 999");Index out of bounds
 		lista2.add(6,"elemento 999");//adicionando no final (array de tmamanho 6) . funciona
 
 

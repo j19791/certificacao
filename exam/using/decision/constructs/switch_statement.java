@@ -40,7 +40,7 @@ argumentos){
 		case "e": //obrigatório utilização dos 2 pontos
 		//não é obrigatório o caso possuir instruções, pode ser vazio
 
-		case caso: //nao pode ser variavel mas pode ser final
+		case caso: //pegadinha da prova: nao pode ser variavel mas pode ser final ou constante
 
 		//case null: nao pode null
 
