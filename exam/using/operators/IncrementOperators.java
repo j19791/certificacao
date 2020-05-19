@@ -2,6 +2,7 @@ package exam.using.operators;
 
 class IncrementOperatorsTest{
 
+	//atenção: incremento só pode ser usado em variaveis. Não pode ser usado em chamadas de meetodos, mesmo q eles retornem tipos numéricos
 	public static void main(String[] args){
 		int i = 1;
 		//pós-incremento
