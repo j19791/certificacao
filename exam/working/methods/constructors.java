@@ -45,6 +45,17 @@ class ConstructorsTest{
 		Pessoa p = new Pessoa("certificação");
 		System.out.println(p.n);
 
+		Pessoa p2 = new Pessoa("joao", "pedro");//chama o construtor com varargs
+
+		Pessoa p3 = new Pessoa("joao");//chama o construtor com apenas 1 argumento
+
+		Pessoa p4 = new Pessoa();//chama o varargs
+
+		Pessoa p5 = new Pessoa(1);
+
+		 new C(new B(new A()));
+
+
 	}
 	
 	//compila e roda
@@ -61,7 +72,8 @@ class ConstructorsTest{
 class Pessoa{
 	
 	final String n ; //se uma variavel é final mas não foi inicializada, ela pode seer inicializada depois, 1x
-
+	
+	static int totalPessoas;
 
 	private String nome;
 	
@@ -70,12 +82,56 @@ class Pessoa{
 		this.nome = nome;
 	}*/
 
+	//com apenas 1 valor, chama o construtor com apenas 1 string
 	public Pessoa(String nome){
 		this.nome = nome;
+		System.out.println("chamou o construtor q nao é varargs");
 		this.n = "valor default"; //primeira e unicia inicialização perimitda
 		//this.n = "valor default"; nao compila. final n ja foi atribuido acima
 		//this.nome = "José";
+		totalPessoas++;
 	}
+
+	//com mais de 1 valor: chama o construtor com varargs
+	Pessoa(String ... args){
+		this.n = "valor default";
+		//this.nome = args[0];
+		System.out.println("chamou o varargs");	
+		totalPessoas++;	
+	}
+
+	Pessoa(int i){
+		//this();//chama o constutor padrão
+		this("maria", "jose");//chama o varargs
+		
+		System.out.println("chama o construtor com this");
+		totalPessoas++;
+	}
+
+
+	Pessoa(){
+		//só pode ter um this
+		//this precisa ser a primeira instrução
+		this(getTotalPessoas());//no this só pode chamar metodos static		
+		//this.n = "valor default";
+		//this();se chamar no construtor padrão, vai dar erro de compilação (chamada recursiva)
+		System.out.println("construtor padrão");
+		totalPessoas++;
+	}
+
+	static int getTotalPessoas(){
+		System.out.println("o total de pessoas é: " + totalPessoas);
+		return totalPessoas;
+	
+	}
+
+	
+	
+    
+}
+
+
+	
 
 }
 
