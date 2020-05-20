@@ -62,6 +62,16 @@ void
 volatile
 while
 
+## Encapsulamento (modificadores de acesso)
+* class/ interface: public, default
+* membros: 
+** private (apenas dentro da classe)
+** default: (não escreva default) dentro do arquivo ou mesmo pacotes
+** protected: herança, dentro de si, dentro do pacotes
+** public: aberta para qq um (precisa importar pacote)
+
+
+
 ## Tipos de Dados
 * valores padrão
 ** númerico:  byte, short, char, int, long, float, double = 0. qdo Char, não impresso.
