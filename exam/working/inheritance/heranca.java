@@ -93,7 +93,7 @@ class Neto extends Filho{
 
 class InheritanceTest{
 
-	public static void main(String [] args){
+	public static void main(String [] args) throws RuntimeException, IOException, java.sql.SQLException, FileNotFoundException{
 		
 		System.out.println("NOVO PAI");
 		Pai p[] = new Pai[]{new Pai(), null};
@@ -126,6 +126,127 @@ class InheritanceTest{
 		System.out.println(n[0]);
 
 
+		Modal m1 = new Modal();
+		Modal v[] = new Modal[3];
+		v[0] = m1;
+		v[0].liga();
+
+		Modal m2 = new Helicoptero();
+		v[1] = m2;
+		v[1].liga(); //compilação: verifica se Modal tem liga(). execução: chama o liga de helicoptero
+		//v[1].ligaHelicoptero();//compilação: verifica se Modal tem liga(). Não tem. Não compila
+
+		Helicoptero h1 = new Helicoptero(); 
+		//v[3] = h1;
+		//v[3].ligaHelicoptero(); nao compila
+		h1.ligaHelicoptero(); //compila
+
+		new ImplementaInterface().imprimirMensagem("Imprimindo texto de metodo de interface implementado");
+
+		h1.explodirHelicoptero();
+
+		new E().x(32);
+
 	}
 
 }
+
+
+class Modal{
+
+	void liga() throws IOException {System.out.println("Liga modal");}
+
+	final void explode(){System.out.println("explodiu modal!");}
+
+	Modal fabrica(){return new Modal();}
+
+}
+
+class Helicoptero extends Modal{
+	//sobreescrita - nome do metodo/parametros iguais ao do pai. Retorno compativel
+	//modificador de acesso do filho precisa ser igual ou maior q do pai: protected > default
+	//o throws do metodo filho precisa ser compativel com o throws do metodo pai ou não ter (java.sql.SQLException nao funciona)
+	protected void liga() throws FileNotFoundException {System.out.println("Liga helicoptero");}
+
+	public void ligaHelicoptero(){System.out.println("Liga helicoptero q nao tem no pai");}
+	
+	//nao dá pra sobreescrever metodo final
+	//void explode(){System.out.println("explodiu helicoptero!");}
+
+	Helicoptero fabrica(){return new Helicoptero();}
+
+	void explodirHelicoptero(){
+		System.out.println("explodiu helicoptero! com o explodir do super");
+		super.explode();
+	}
+
+
+}
+
+interface Interfaceando{
+
+	//por default, método de interface é public abstract
+	void imprimirMensagem(String mensagem);
+
+}
+
+class ImplementaInterface implements Interfaceando{
+	//metodo implementando precisa ser public pois o metodo da interface é public
+	public void imprimirMensagem(String mensagem){System.out.println(mensagem);}
+
+}
+
+abstract class TesteMetodoAbstrato extends ImplementaInterface {
+	//sobreescrevendo metodo concrte com um metodo abstrato
+	public abstract void imprimirMensagem(String mensagem);
+
+}
+
+
+class B {
+    void x(int i) throws IOException {
+	System.out.println("entrou em B:"  + i);
+        if(i<0) return;
+        this.x(-1);
+        System.out.println("c");
+    }
+}
+abstract class C extends B {
+    void x(int i) throws IOException {
+	System.out.println("entrou em C:"  + i);
+        System.out.println("b");
+        super.x(i);
+    }
+}
+abstract class D extends C {
+    void x(int i) throws IOException {
+        System.out.println("entrou em D:" + i);
+	super.x(i);
+    }
+}
+class E extends D {
+
+	E(){System.out.println("entrou em E");}
+}
+
+class TesteIf {
+     void x(int i) throws IOException {
+	System.out.println("entrou em B:"  + i);
+        if(i<0) return;
+        this.x(-1);
+        System.out.println("c");
+    }
+
+  public static void main(String [] args) throws IOException {
+	new TesteIf().x(-1);
+
+	}
+
+}
+
+
+
+
+
+
+
