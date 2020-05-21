@@ -244,6 +244,70 @@ class TesteIf {
 
 }
 
+class CastingTest{
+
+
+	public static void main(String [] args){
+		
+		Object objetos[] = new Object[100];
+		String s1 = "certificacao";
+		objetos[0] = s1;
+		String s2;
+		//s2 = objetos[0]; //mesmo objetos[0] ref um String, ref do tipo Object não pode ser atribuido diretamente a uma referencia do tipo String 
+		String s3 = (String) objetos[0]; //com casting implicito, é possível compilar e rodar
+
+		Transporte []t1 = new Moto[4]; //ok
+		Transporte t2[] = new Caminhao[1]; //ok
+		
+		Moto[] m1 = new Moto[2]; //apenas declarei, não estou usando
+		Caminhao c1[] = new Caminhao[1];
+
+		//c1[0] = m1[0]; //nao compila
+		//c1[0] = (Caminhao) m1[0]; //nao compila, nem com casting
+		t1[0] = m1[0];//ok
+		t1[1] = c1[0];//ok
+
+		//diretamente nao compila
+		//m1[1] = new Transporte();	
+
+		//m1[1] = (Moto) new Transporte(); compila mas nao roda
+
+		CarroAutomatico[] ca = new CarroAutomatico[1];
+		ca[0] = new CarroAutomatico();
+
+		Automatico a = ca[0]; //compila e roda
+
+		Caminhao c2[] = new Caminhao[]{new Caminhao()};
+
+		//t1[3] = ca[0]; //compila mas nao roda
+
+		//Automatico a2 = (Automatico) new Moto();//compila mas nao roda
+
+		System.out.println(c2[0] instanceof Caminhao);
+		System.out.println(new Moto() instanceof Moto);
+		
+
+	
+		
+		
+		
+
+	}
+}
+
+class Transporte{}
+
+class Moto extends Transporte{}
+
+class Caminhao extends Transporte{}
+
+interface Automatico{}
+
+
+class CarroAutomatico extends Transporte  implements  Automatico {}
+
+
+
 
 
 
