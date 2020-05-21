@@ -13,10 +13,10 @@ class A {
 	//B b = new C(); //compila e roda. C ext B
 	//C c = (C) new B();//compila mas nao roda. Nem todo B é um C
 	//Y y = new D(); //nao compila. D nao é um Y
-	//Z z = (Z) (B) new D();//compila e roda. C que é subtipo de B consegue chegar no Z
+	Z z = (Z) (B) new D();//compila e roda. C que é subtipo de B consegue chegar no Z
 	//Y y = (Y) new A(); compila por causa do casting mas nao roda pois A nao tem nada a ver com Y
 	//D d = (D) (Y) (B) new D();//compila mas nao roda. D nao consegue fazer cast de y	
-	D d = (B) (Z) (W) (Y) new D();//compila mas nao roda. D nao consegue fazer cast de y
+	//D d = (B) (Z) (W) (Y) new D();//compila mas nao roda. D nao consegue fazer cast de y
 
     //System.out.println(((B) (Z) (W) (Y) new D()) instanceof D);
 
