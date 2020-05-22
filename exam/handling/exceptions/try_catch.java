@@ -1,6 +1,7 @@
 package exam.handling.exceptions;
 
 import java.io.*;
+import java.util.*;
 
 //criando nova unchecked exception
 class ArgumentoNaoPassadoException extends RuntimeException{
@@ -42,11 +43,15 @@ class TryCatchTest{
 	//cuidado com a inicializacao das variaveis membro
 	//InputStream is = new FileInputStream("a.txt"); //nao compila. Tem q tratar como checked exception
 
-	TryCatchTest() throws FileNotFoundException {};//agora compila
+	TryCatchTest() throws FileNotFoundException {
+
+		//new TryCatchTest(); StackOverFlowError
+	
+	};//agora compila
 	
 
 
-	public static void main(String args[]) {
+	public static void main(String args[])  throws FileNotFoundException {
 
 		StackErros.metodo1(args);
 				
@@ -81,9 +86,24 @@ class TryCatchTest{
 
 		
 
+		ArrayList<String> lista = new ArrayList<>();		
 		
+		/*
+		erro : OutOfMemoryError
+		while(true){
+			lista.add("certificação")			;
+			
+		}
+		*/
 
+		new TryCatchTest();
 
+		
+		new A();
+
+		new Motor().liga();
+
+		//int  i = 1 / 0; compila. roda ArithmeticException
 
 	}
 
@@ -116,4 +136,19 @@ class A {
         new A().m();
         System.out.println("b");
     }
+}
+
+class Motor{
+	protected boolean status;
+	protected void liga(){
+		if (status == true) throw new IllegalStateException();
+		else status = true;}
+	protected void desliga(){
+		if (status == false) throw new IllegalStateException();
+		else status = false;
+
+}
+
+
+
 }
