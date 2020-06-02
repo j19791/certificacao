@@ -1,6 +1,8 @@
 # Repositório de todo material utilizado para certificação OCA Programmer
 
 ## dicas
+* java exam.java.basics.executable.ExecutableTest -Dkey1=abc Dkey2=dfe xpto bar
+* static public void main(String args[]) ou public static void main(String args[]) funcionam para transformar a classe em executavel
 * contagem de posição sempre começa do 0
 * fortemente tipado
 * atentar as pequenas regras necessárias para que o código compile
@@ -61,6 +63,18 @@ try
 void
 volatile
 while
+* unreachable code
+** while (false) { x=3; } Não compila. 
+** if (false) { x=3; } aqui não tem problema. Compila sem problemas
+* casting Y y = (Y) x; 
+* Basicamente o que você está falando para o compilador é "eu sei que em tempo de execução o que vai ter na variavel x é um tipo compatível com Y, então por favor, não dê erro de compilação.
+* Parâmetros de métodos também podem ser considerados variáveis locais ao método
+
+## Herança
+* Uma interface pode extender mais de uma interface e uma classe pode implementar varias interfaces
+interface Z {}
+interface W {};
+interface Y extends Z, W {}
 
 ## Encapsulamento (modificadores de acesso)
 * class/ interface: public, default

@@ -54,11 +54,11 @@ class StringTeste{
 
 		//String é um array
 		System.out.println(str1.charAt(0));//pega caracter na posição 0
-		//caso de index out of bounds exception. Compila mas não roda
+		//caso de index out of bounds exception. Compila mas não roda - argumentos invalidos
 		//System.out.println(str1.charAt(200));
 		//System.out.println(str1.charAt(-1));
 
-		System.out.println(str1.length()); //tamanho 14, ou seja, posições de 0 a 13
+		System.out.println(str1.length()); //tamanho 14, ou seja, posições de 0 a 13.lembre-se do parenteses. length() é um método de String e não uma propriedade de array/varargs
 		//index out of bounds exception
 		//System.out.println(str1.charAt(14));
 		
@@ -68,7 +68,7 @@ class StringTeste{
 		//espaçoes em branco contam
 		String str7 = "              ";
 		System.out.println(str7.length());//14. Pegadinha: length é um metodo com String (com ()). Em arrays, é um atributo. Sem ()
-		System.out.println(str7.isEmpty());//false
+		System.out.println(str7.isEmpty());//false - espaçoes em branco contam
 
 		//replace
 		String str8  = "Java Como Programar";
