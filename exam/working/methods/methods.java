@@ -91,3 +91,28 @@ abstract class ClasseAbstrata{
 
 class Cliente{}
 
+
+class A {
+	public static void main(String[] args) {
+		x(args.length); 
+		
+	}
+
+	static int x(int j) {
+	//static int x(final int l){
+		final int l = 5;
+
+		for(int i=0;i<100;i++) {
+			switch(i) {
+				case l: //nao compila: apesar de l ser final, o argumento precisa ser inicializado com um valor literal
+					System.out.println(l);
+					if(l==i) return 3;
+				case 0:
+					System.out.println(0);
+				}
+		}
+		System.out.println("End");
+		return -1;
+	}
+}
+
