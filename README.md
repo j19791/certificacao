@@ -2,6 +2,7 @@
 
 1. Java Basics 
 	1. Define the scope of variables 
+		1. for: as variaveis declaradas na área de inicialização do loop só podem ser usadas no corpo do loop
 	1. Define the structure of a Java class
 	1. Create executable Java applications with a main method; run a Java program from the command line; produce console output
 	1. Import other Java packages to make them accessible in your code
