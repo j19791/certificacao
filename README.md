@@ -1,11 +1,11 @@
 # Repositório de todo material utilizado para certificação OCA Programmer 1Z0-808
 
 1. Java Basics 
-1.1. Define the scope of variables 
-	1.1 Define the structure of a Java class
-	1.1 Create executable Java applications with a main method; run a Java program from the command line; produce console output
-	1.1 Import other Java packages to make them accessible in your code
-	1.1 Compare and contrast the features and components of Java such as: platform independence, object orientation, encapsulation, etc.
+	1. Define the scope of variables 
+	1. Define the structure of a Java class
+	1. Create executable Java applications with a main method; run a Java program from the command line; produce console output
+	1. Import other Java packages to make them accessible in your code
+	1. Compare and contrast the features and components of Java such as: platform independence, object orientation, encapsulation, etc.
 
 2. Using Operators and Decision Constructs 
 2.1 Use Java operators; use parentheses to override operator precedence
