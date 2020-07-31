@@ -7,11 +7,11 @@
 	1. Import other Java packages to make them accessible in your code
 	1. Compare and contrast the features and components of Java such as: platform independence, object orientation, encapsulation, etc.
 
-2. Using Operators and Decision Constructs 
-	2. Use Java operators; use parentheses to override operator precedence
-	2. Test equality between Strings and other objects using == and equals ()
-	2. Create if and if/else and ternary constructs 
-	2. Use a switch statement 
+1. Using Operators and Decision Constructs 
+	1. Use Java operators; use parentheses to override operator precedence
+	1. Test equality between Strings and other objects using == and equals ()
+	1. Create if and if/else and ternary constructs 
+	1. Use a switch statement 
 
 3. Using Loop Constructs 
 3.1 Create and use while loops
