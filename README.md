@@ -8,10 +8,10 @@
 	1. Compare and contrast the features and components of Java such as: platform independence, object orientation, encapsulation, etc.
 
 2. Using Operators and Decision Constructs 
-2.1 Use Java operators; use parentheses to override operator precedence
-2.2 Test equality between Strings and other objects using == and equals ()
-2.3 Create if and if/else and ternary constructs 
-2.4 Use a switch statement 
+	2. Use Java operators; use parentheses to override operator precedence
+	2. Test equality between Strings and other objects using == and equals ()
+	2. Create if and if/else and ternary constructs 
+	2. Use a switch statement 
 
 3. Using Loop Constructs 
 3.1 Create and use while loops
