@@ -26,8 +26,20 @@
 		1. java **cp /path/to/lib.jar** Test
 		1. Criar um jar da pasta certification: *jar **-cf library.jar** certification*		
 	1. Import other Java packages to make them accessible in your code
+		1. Classes *se enxergam* se estão no **mesmo pacote**
+		1. usar o **Full Qualified name** para acessar a *public class*  de outro pacote
+		1. **import Full Qualified name** para evitar o uso do *Full Qualified name* em vários pontos do código
+		1. **import com \*** para importar todas as classes do pacote. *Não importa subpacotes*. Cada subpacote deverá ser importado.
+		1. **classes com mesmo nome:** *import java.util.Date; import java.sql.Date;* não compila se usar variaveis de instancia com o tipo Date. Pode importar apenas 1 pacote e usar o *fqn* para declarar o tipo da variável.
+		1. *import java.util.\*; import java.sql.Date* : vai ser usado do Date do pacote sql (mais específico)
+		1. pacote **java.lang.\*** são implicitamente importadas. *String*
+		1. **import static model.Utils.\*** : importa todos os membros *static* da classe Utils		
 	1. Compare and contrast the features and components of Java such as: platform independence, object orientation, encapsulation, etc.
-
+		1. **bytecode** .class é interpretado pela **JVM** que converte em código de máquina, executado pelo **SO** nativo
+		1. programa **escrito** e **compilado** apenas 1x pode ser usado em diversas plataformas diferentes.
+		1. **OO:** estruturamos o código em entidades *objetos* (compontentes especializados) que possuem dados na forma de *atributos* e comportamento na forma de *métodos*
+		1. Cada objeto deve ter *única responsabilidade*, favorecer *reuso de código* e cada mudança no comportamento *reflete em todos os lugares* onde o objeto é usado.
+		1. *Encapsulamento* *privar* atributos e implmentação p/ q outros objetos manipule esses atributos. Liberar apenas por meio de métodos *public*
 1. Using Operators and Decision Constructs 
 	1. Use Java operators; use parentheses to override operator precedence
 	1. Test equality between Strings and other objects using == and equals ()
