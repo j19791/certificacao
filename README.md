@@ -2,9 +2,29 @@
 
 1. Java Basics 
 	1. Define the scope of variables 
-		1. for: as variaveis declaradas na área de inicialização do loop só podem ser usadas no corpo do loop
+		1. **for**: as variaveis declaradas na área de inicialização do loop só podem ser usadas no corpo do loop
+		1. **parametros de métodos** : variaveis locais dos métodos. Não podemos declarar novas variaveis locais com o mesmo nome
+		1. variáveis **static** podem ser acessadas por uma instance reference ou diretamente pela classe
+		1. variaveis de classe e de instancia não podem ter o mesmo nome
+		1. **shadowing** : declarar em métodos variaveis locais ou de parametros com o mesmo nome da variavel de instancia. Usar **this** para referenciar variaveis de instancia. Se nã usar this, o compilador vai usar a variável de menor escopo.
 	1. Define the structure of a Java class
+		1. **default package** : qdo não declara explitamente um pacote. Não podem ser importadas para uso em outros pacotes.
+		1. **membros de classe**: variaveis de instancia, construtores e métodos. Podemos ter membros de tipos diferentes com o mesmo nome.
+		1. **assinatura de um método**: nome do método e os tipos de parametros. Deve ter retorno. Pode ter o mesmo nome de um construtor.
+		1. **construtor:** a classe pode ter 0 a n construtores. Não devem ter retorno. Pode ter um *return* mas vazio
+		1. **interface**: possui métodos somente com assintura, sem implementação. Possível declarar *constantes* **final**
+		1. **public class** ou **public interface** : o nome do arquivo *.java* deve ter o nome dessa *class/interface*
+		1. só pode exitir *uma* **public class** ou **public interface** por arquivo *.java*		
 	1. Create executable Java applications with a main method; run a Java program from the command line; produce console output
+		1. *classe executavel* é aquela que possui o método **public static void main (String[] argumentos)** . Pode ter *static public* ou usar *varargs ...*
+		1. **java** HelloWorld *Mario* : passando 1 parametro para a execução do programa
+		1. **.class** é o *bytecode* gerado pelo *javac*
+		1. **package certification;** : javac *certification/Test.java*; java *certification.Test*
+		1. Passando **propriedades** na execução: java *-Dkey1=abc -Dkey2=def* Foo xpto bar 
+		1. **classpath**: diretorios, jar que contem as classes e pacotes da aplicação. Padrão é o *diretório corrente (.)* 
+		1. javac **cp /path/to/lib.jar** test.java
+		1. java **cp /path/to/lib.jar** Test
+		1. Criar um jar da pasta certification: *jar **-cf library.jar** certification*		
 	1. Import other Java packages to make them accessible in your code
 	1. Compare and contrast the features and components of Java such as: platform independence, object orientation, encapsulation, etc.
 
@@ -72,10 +92,8 @@
 
 
 
-
-
-
 ## dicas
+* case sensitive
 * java exam.java.basics.executable.ExecutableTest -Dkey1=abc Dkey2=dfe xpto bar
 * static public void main(String args[]) ou public static void main(String args[]) funcionam para transformar a classe em executavel
 * contagem de posição sempre começa do 0
