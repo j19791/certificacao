@@ -42,6 +42,66 @@
 		1. *Encapsulamento* *privar* atributos e implmentação p/ q outros objetos manipule esses atributos. Liberar apenas por meio de métodos *public*
 1. Using Operators and Decision Constructs 
 	1. Use Java operators; use parentheses to override operator precedence
+		1. **= atribuição** tipos compatíves ou o valor deverá ser = ou menos abrangente. tipos primitivos: copiamos o valor
+			1. double d = 20.0f; *float é menos abrangente que double*
+			1. float f = 40.0; *erro: double não cabe em float*
+			1. float h = 10l; *inteiros (long) cabe em decimal*
+			1. tipos menos abrangentes que int: **byte, short, char**
+				1. byte b = 200; *estoura byte:  -128 a 127 (único itervalo cobrado)*
+				1. char c2 = -1; *erro: só positivo*
+			1.*referência: polimorfismo*	
+				1. List<String> names = new ArrayList<>(); *<> operador diamante*
+				1. copiamos o valor da referência (o objeto é o mesmo)
+		1.**aritméticos**
+			1. **%** resto de divisão: *apenas inteiros*
+			1. o tipo do resultado da operação é no minimo **int** ou o **mais abrangente**
+				1.```java					
+					int age = 15;
+					long years = 5;
+					int afterThoseYears2 = age + years;// não compila, o maior tipo era long, devolve long
+					byte b = 1;
+					short s = 2;
+					byte b2 = i + s; //// não compila, ele devolve no mínimo int					
+				```
+			1.	**divisão por 0**: 
+				*inteiro:*```System.out.println(200 / 0); //ArithmeticException```
+				*decimal:*```System.out.println(200 / 0.0); //compila e roda:  infinito positivo```				
+				*NaN:* infinito positivo - infinito negativo
+		1.**comparação**:
+			1. sempre devolve um boolean
+			1. referencias e boolean somente com *== ou !=*
+			1. pode comparar *char* com *numérico* ```System.out.println('a' > 1);//true```
+		1.**lógicos**
+			1. *& | *: a segunda parte sempre é avaliada, podendo incrementar variaveis e tbm chamar métodos			
+			1. *curto circuito && ||: *  Quando já for possível determinar a resposta final olhando apenas para a primeira parte da expressão, a segunda não é avaliada
+			1. 
+			```java
+			System.out.println(1 == 2 & imprimir("hi"));// imprime hi, depois false
+			System.out.println(1 == 2 && imprimir("bye"));//imprime false
+			int i = 10;	System.out.println(i == 2 & i++ == 0);// imprime false, soma mesmo assim
+			int j = 10;	System.out.println(j == 2 && j++ == 0); // imprime false, não soma
+			```
+		1.**incremento/decremento**
+			1. *pré*: sempre a primeira coisa q é feita é o incrementar/decrementar
+			```java
+				int i = 10; System.out.println(++i); //imprime 11
+				int j =10;	System.out.println(j++); //imprime 10
+			```
+		1. **operações/atribuições de uma só vez**
+			```
+			short b2 = 3; b2 += 4; // compila, dá um desconto
+			b2 += 4003245; // -76: compila também, mas estoura o byte
+			```
+		1. **atribuição c/ o próprio incremento: ** a execução é do primeiro para o último elemento das somas, temos as reduções:
+			```java
+			int a = 10;
+			a += ++a + a + ++a;			
+			a = a + ++a + a + ++a;
+			a = 10 + 11 + a + ++a;
+			a = 10 + 11 + 11 + ++a;
+			a = 10 + 11 + 11 + 12;
+			a = 44;
+			```
 	1. Test equality between Strings and other objects using == and equals ()
 	1. Create if and if/else and ternary constructs 
 	1. Use a switch statement 
@@ -106,15 +166,13 @@
 
 ## dicas
 * case sensitive
-* java exam.java.basics.executable.ExecutableTest -Dkey1=abc Dkey2=dfe xpto bar
-* static public void main(String args[]) ou public static void main(String args[]) funcionam para transformar a classe em executavel
 * contagem de posição sempre começa do 0
 * fortemente tipado
 * atentar as pequenas regras necessárias para que o código compile
 * verifique cada ponto-e-vírgula, visibilidade, escopo de variáveis, nomes e parâmetros de métodos
 * Para compilar, estamos trabalhando com arquivos e diretórios, portanto javac b/A.java; enquanto, para rodar, estamos pensando em pacotes e classes: java b.A.
 * Podemos ter espaços em branco desde que não quebre uma palavra-chave, nome de método, classe etc. ao meio. Onde pode ter um espaço em branco, pode haver vários.
-* Nenhuma palavra-chave em Java possui caractere maiúsculo (são case sensistive)
+* Nenhuma palavra-chave em Java possui caractere maiúsculo
 abstract
 assert
 boolean
@@ -209,9 +267,9 @@ interface Y extends Z, W {}
 ** double d, D double 
 ** f, F float
 * tamanhos
-** byte - 1 byte (8 bits, de -128 a 127); (único itervalo cobrado)
+
 ** short - 2 bytes (16 bits, de –32.768 a 32.767);
-** char - 2 bytes (só positivo), (16 bits, de 0 a 65.535);
+
 ** int - 4 bytes (32 bits, de –2.147.483.648 a 2.147.483.647);
 ** long - 8 bytes (64 bits, de –9.223.372.036.854.775.808 a 9.223.372.036.854.775.807).
 * boolean em Java só pode ser false ou true. Não existe 0 para false ou 1 para true
@@ -219,21 +277,4 @@ interface Y extends Z, W {}
 * octal: int i = 0761; //497 (0 a 7)
 * hexadecimal: int i = 0xAB3400; // 11219968
 * binário:
-
-
-## javac 
-* digitar nome do arquivo sempre c/ extensão .java
-* não precisa ter classe main
- 
-
-
-
-
-
-
-## java
-
-* não digitar extensão .class
-* jar -cf bib.jar scjp  cria o arquivo bib.jar a partir do conteudo do diretorio scjp
-* java -cp bib.jar scjp.Prova executar nossa classe Prova.class usando esse bib.jar
 
