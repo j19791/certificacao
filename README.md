@@ -46,16 +46,16 @@
 			1. double d = 20.0f; *float é menos abrangente que double*
 			1. float f = 40.0; *erro: double não cabe em float*
 			1. float h = 10l; *inteiros (long) cabe em decimal*
-			1. tipos menos abrangentes que int: **byte, short, char**
+			1. tipos menos abrangentes que int: **byte, short, char** compilador verifica se esta no range do tipo
 				1. byte b = 200; *estoura byte:  -128 a 127 (único itervalo cobrado)*
 				1. char c2 = -1; *erro: só positivo*
-			1.*referência: polimorfismo*	
+			1. *referência: polimorfismo*	
 				1. List<String> names = new ArrayList<>(); *<> operador diamante*
 				1. copiamos o valor da referência (o objeto é o mesmo)
 		1.**aritméticos**
 			1. **%** resto de divisão: *apenas inteiros*
 			1. o tipo do resultado da operação é no minimo **int** ou o **mais abrangente**
-				1.```java					
+				1. ```java					
 					int age = 15;
 					long years = 5;
 					int afterThoseYears2 = age + years;// não compila, o maior tipo era long, devolve long
@@ -64,14 +64,15 @@
 					byte b2 = i + s; //// não compila, ele devolve no mínimo int					
 				```
 			1.	**divisão por 0**: 
-				*inteiro:*```System.out.println(200 / 0); //ArithmeticException```
-				*decimal:*```System.out.println(200 / 0.0); //compila e roda:  infinito positivo```				
-				*NaN:* infinito positivo - infinito negativo
-		1.**comparação**:
+				1. *inteiro:* ```System.out.println(200 / 0); //ArithmeticException```
+				1. *decimal:* ```System.out.println(200 / 0.0); //compila e roda:  infinito positivo```				
+				1. *NaN:* infinito positivo - infinito negativo
+		1. **comparação == != >, < **:
 			1. sempre devolve um boolean
 			1. referencias e boolean somente com *== ou !=*
 			1. pode comparar *char* com *numérico* ```System.out.println('a' > 1);//true```
-		1.**lógicos**
+			1. valores numéricos não considera seu tipo
+		1. **lógicos**
 			1. *& | *: a segunda parte sempre é avaliada, podendo incrementar variaveis e tbm chamar métodos			
 			1. *curto circuito && ||: *  Quando já for possível determinar a resposta final olhando apenas para a primeira parte da expressão, a segunda não é avaliada
 			1. 
@@ -81,7 +82,7 @@
 			int i = 10;	System.out.println(i == 2 & i++ == 0);// imprime false, soma mesmo assim
 			int j = 10;	System.out.println(j == 2 && j++ == 0); // imprime false, não soma
 			```
-		1.**incremento/decremento**
+		1. **incremento/decremento**
 			1. *pré*: sempre a primeira coisa q é feita é o incrementar/decrementar
 			```java
 				int i = 10; System.out.println(++i); //imprime 11
@@ -102,6 +103,36 @@
 			a = 10 + 11 + 11 + 12;
 			a = 44;
 			```
+		1. **diversas atribuições:** atribuir da direita p/ esquerda 
+			```java int a = 15, b= 20, c= 30; a = b = c; // b recebe c, a recebe b, a= 30 
+			int a = 15, b= 20, c= 30; a = (b = c + 5) + 5; // c + 5 = 35, b = 35, 35 + 5 = 40, a = 40```
+		1. **ternário** variavel = teste booleano ? verdadeiro : falso;
+		1. **referencia (.) :** p/ acessar atributos ou métodos de um obj
+		1. **concatenação de Strings (+) : **
+		1. **precedencia: **
+			1. pre incremento/decremento
+			1. mult/ div/ model
+			1. soma/ sub
+			1. pós incremento/decremento
+		1. **casting de primitivos**
+			1. atribuição somente se *compatível: * um tipo cabe no outro: 
+			
+			**byte -> short -> int -> long -> float -> double**  *autopromoção: qdo o tipo vai da direita p/ esquerda*
+			
+			**char -> int ** *autopromoção*
+			
+			1. **casting: ** direita p/ esquerda. Moldar o valor de um tipo em outro. Queremos e avisamos o compilador q sabemos da possibilidade de perca de precisão/ truncamneto
+			
+			```java
+			double d = 0, d2 = 3.1415;
+			float f = d; //não compila: double não cabe em float
+			float f = (float) d;
+			int i = (int) d2;//i= 3 (valor truncado)
+			```
+			1. short e char tem o mesmo tamanho mas **char é apenas >=0**
+			
+			
+		
 	1. Test equality between Strings and other objects using == and equals ()
 	1. Create if and if/else and ternary constructs 
 	1. Use a switch statement 
@@ -254,11 +285,8 @@ interface Y extends Z, W {}
 ** númerico:  byte, short, char, int, long, float, double = 0. qdo Char, não impresso.
 ** boolean false
 ** referencia null
-* todos menos char podem ser +/-
-* não precisa decorar tamanho
-* char é compatível com numerico
-* double, float: +/-0, +/- infinito, NaN
-* short e char tem o mesmo tamanho mas char é apenas >=0
+
+
 * valores literais
 * int padrão = numero sem casas decimais
 * double padrão = numero com casas decimais
