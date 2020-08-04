@@ -109,6 +109,11 @@
 		1. **ternário** variavel = teste booleano ? verdadeiro : falso;
 		1. **referencia (.) :** p/ acessar atributos ou métodos de um obj
 		1. **concatenação de Strings (+) : **
+		
+		```java
+			System.out.println(15 + ( 0 + " != 150")); // 15 + "0 != 150"; "150 != 150"
+		```
+		
 		1. **precedencia: **
 			1. pre incremento/decremento
 			1. mult/ div/ model
@@ -129,13 +134,93 @@
 			float f = (float) d;
 			int i = (int) d2;//i= 3 (valor truncado)
 			```
-			1. short e char tem o mesmo tamanho mas **char é apenas >=0**
-			
-			
-		
+			1. short e char tem o mesmo tamanho mas **char é apenas >=0**		
 	1. Test equality between Strings and other objects using == and equals ()
-	1. Create if and if/else and ternary constructs 
+		1. comparar dois objetos para ver se **apontam para o mesmo lugar**
+		
+		```java
+			String name1 = new String("Mario");	String name2 = new String("Mario");
+			System.out.println(name1 == name2); // false: 2 objetos criados com new		
+		```
+		
+		1. **Pool de Strings: ** 
+			1. antes de criar uma nova String, verifica-se se já existe no pool uma String com mesmo conteúdo. Se já existe, não cria nova, reutiliza. ``` String name1 = "Mario"; String name2 = "Mario"; System.out.println(name1 == name2);	//true	```
+			1. Só coloca no pool Strings criadas com literais
+			1. Quando concatenamos Strings (*literais em ambos os lados da concatenação*), o resultado tbm será colocado no pool ```String ab = "a" + "b";System.out.println("ab" == ab);//true```
+			1. Se um dos objetos concatenados não for literal, cria um novo obj fora do pool ```String a = "a"; String ab = a + "b"; System.out.println("ab" == ab); // false```
+			1. objetos *retornados de métodos* são novos objetos, não são buscados no pool ```String str = "12 text 345678"; String txt1 = "text";String txt2 = str.substring(3, 7); System.out.println(txt1 == txt2); // false ```
+				1. se o retorno do método for *exatamente igual ao conteúdo da String passada*, não é criado novo objeto ```String str = "HELLO WORLD";String upper = str.toUpperCase(); System.out.println(str == upper); // true ```
+			1. **contando Strings**				
+				``` 				
+				String h = new String ("hello ");//Cria 2 objetos, um literal (que vai para o pool) e o outro com o new
+				String h1 = "hello "; //nenhum objeto criado, usa o mesmo do pool
+				String w = "world"; //novo objeto criado e inserido no pool
+				System.out.println("hello ");//nenhum objeto criado, usa do pool
+				System.out.println(h1 + "world");//criado um novo objeto resultante da concatenação, mas este não vai para o pool: (variavel + literal)
+				System.out.println("Hello " == h1); //Novo objeto criado e colocado no pool (Hello com H maiúsculo).
+				//Logo temos 5 Strings criadas.
+				```
+				``` 
+				for(int i = 0; i< 10; i++)
+					System.out.println(method());
+				}
+				private static String method() {
+					String x = "x"; // A String será colocada no pool apenas na primeira execução do método. Apenas um objeto String será criado
+					return x.toString();
+				}
+				```
+				
+		1. **equals: ** sobreescrever método com seu critério de igualdade
+			1. **== :** *true* qdo comparando os mesmos objetos na memória 		
+				```java
+				System.out.println(s1.equals(s3)); // String mesmo conteúdo: true
+				new Client("Mario").equals(new Client("Mario"));//false : apesar do mesmo conteúdo, vc deverá sobreescrever o método equals na classe Client
+				
+				public boolean equals(Client second) {
+					return this.name.equals(second.name);
+				}
+				
+				new Client("Mario").equals(new Client("Mario"));//true
+				```	
+	1. Create if and if/else and ternary constructs ``` ```
+		1. controlar o *fluxo de execução* dos programas
+		1. a **condição** de um if deverá ser um valor **booleano** ``` if (2 - 1) \\erro: inteiro```
+		1. não existe *elseif* usar **else if**
+		1. **unreachable code** não compila qdo o código não foe executado sob nnehuma hipótese
+		``` 
+			public int method() {
+				return 5;
+				System.out.println("Will it run?"); //unreachable code
+			}
+		```
+			1. **if(false){...}** compila apesar de não executar nada dentro do bloco
+		
+		1. **missing return** não compila qdo falta um fluxo para execução d euma determinada condição. Todos os caminhos possíveis devem retornar o tipo indicado pelo método ou *lançar uma exception*
+		```
+			public int method(int x) {
+				if(x > 200) //e se x <= 200: ??? missing return mas foi lançado a RtE para não ocorrer o erro
+					return 5;
+				throw new RuntimeException();
+			}
+		```		
 	1. Use a switch statement 
+	 
+		int option = 1;
+		switch (**option**) { //o argumento deverá ser sempre compatível com **int, wrapper menor q Integer, String, Enum**
+			**case 1:** //o valor de cada case deverá ser compatível com o argumento do switch. Usar **literal, variavel final iniciada durante sua declaração com literal ou expressões com literal/ variavel final. null não é válido**
+				System.out.println("number 1");
+				**break;** para não executar os casos q vem abaixo
+			**default:** //qdo nenhum caso bater. Pode aparecer no meio dos cases
+				System.out.println("number n");
+				break;
+			case 2:			
+				System.out.println("number 2");
+				break;
+			case 3:
+				System.out.println("number 3");
+				break;
+		}	
+	
 
 1. Using Loop Constructs 
 	1. Create and use while loops
