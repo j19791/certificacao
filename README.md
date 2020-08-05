@@ -11,7 +11,7 @@
 		1. **default package** : qdo não declara explitamente um pacote. Não podem ser importadas para uso em outros pacotes.
 		1. **membros de classe**: variaveis de instancia, construtores e métodos. Podemos ter membros de tipos diferentes com o mesmo nome.
 		1. **assinatura de um método**: nome do método e os tipos de parametros. Deve ter retorno. Pode ter o mesmo nome de um construtor.
-		1. **construtor:** a classe pode ter 0 a n construtores. Não devem ter retorno. Pode ter um *return* mas vazio
+		1. **construtor**: a classe pode ter 0 a n construtores. Não devem ter retorno. Pode ter um *return* mas vazio
 		1. **interface**: possui métodos somente com assintura, sem implementação. Possível declarar *constantes* **final**
 		1. **public class** ou **public interface** : o nome do arquivo *.java* deve ter o nome dessa *class/interface*
 		1. só pode exitir *uma* **public class** ou **public interface** por arquivo *.java*		
@@ -30,14 +30,14 @@
 		1. usar o **Full Qualified name** para acessar a *public class*  de outro pacote
 		1. **import Full Qualified name** para evitar o uso do *Full Qualified name* em vários pontos do código
 		1. **import com \*** para importar todas as classes do pacote. *Não importa subpacotes*. Cada subpacote deverá ser importado.
-		1. **classes com mesmo nome:** *import java.util.Date; import java.sql.Date;* não compila se usar variaveis de instancia com o tipo Date. Pode importar apenas 1 pacote e usar o *fqn* para declarar o tipo da variável.
+		1. **classes com mesmo nome**: *import java.util.Date; import java.sql.Date;* não compila se usar variaveis de instancia com o tipo Date. Pode importar apenas 1 pacote e usar o *fqn* para declarar o tipo da variável.
 		1. *import java.util.\*; import java.sql.Date* : vai ser usado do Date do pacote sql (mais específico)
 		1. pacote **java.lang.\*** são implicitamente importadas. *String*
 		1. **import static model.Utils.\*** : importa todos os membros *static* da classe Utils		
 	1. Compare and contrast the features and components of Java such as: platform independence, object orientation, encapsulation, etc.
 		1. **bytecode** .class é interpretado pela **JVM** que converte em código de máquina, executado pelo **SO** nativo
 		1. programa **escrito** e **compilado** apenas 1x pode ser usado em diversas plataformas diferentes.
-		1. **OO:** estruturamos o código em entidades *objetos* (compontentes especializados) que possuem dados na forma de *atributos* e comportamento na forma de *métodos*
+		1. **OO**: estruturamos o código em entidades *objetos* (compontentes especializados) que possuem dados na forma de *atributos* e comportamento na forma de *métodos*
 		1. Cada objeto deve ter *única responsabilidade*, favorecer *reuso de código* e cada mudança no comportamento *reflete em todos os lugares* onde o objeto é usado.
 		1. *Encapsulamento* *privar* atributos e implmentação p/ q outros objetos manipule esses atributos. Liberar apenas por meio de métodos *public*
 1. Using Operators and Decision Constructs 
@@ -55,7 +55,7 @@
 		1.**aritméticos**
 			1. **%** resto de divisão: *apenas inteiros*
 			1. o tipo do resultado da operação é no minimo **int** ou o **mais abrangente**
-				1. ```java					
+				```java					
 					int age = 15;
 					long years = 5;
 					int afterThoseYears2 = age + years;// não compila, o maior tipo era long, devolve long
@@ -64,8 +64,8 @@
 					byte b2 = i + s; //// não compila, ele devolve no mínimo int					
 				```
 			1.	**divisão por 0**: 
-				1. *inteiro:* ```System.out.println(200 / 0); //ArithmeticException```
-				1. *decimal:* ```System.out.println(200 / 0.0); //compila e roda:  infinito positivo```				
+				1. *inteiro:* `System.out.println(200 / 0); //ArithmeticException`
+				1. *decimal:* `System.out.println(200 / 0.0); //compila e roda:  infinito positivo`
 				1. *NaN:* infinito positivo - infinito negativo
 		1. **comparação == != >, < **:
 			1. sempre devolve um boolean
@@ -75,7 +75,6 @@
 		1. **lógicos**
 			1. *& | *: a segunda parte sempre é avaliada, podendo incrementar variaveis e tbm chamar métodos			
 			1. *curto circuito && ||: *  Quando já for possível determinar a resposta final olhando apenas para a primeira parte da expressão, a segunda não é avaliada
-			1. 
 			```java
 			System.out.println(1 == 2 & imprimir("hi"));// imprime hi, depois false
 			System.out.println(1 == 2 && imprimir("bye"));//imprime false
@@ -89,7 +88,7 @@
 				int j =10;	System.out.println(j++); //imprime 10
 			```
 		1. **operações/atribuições de uma só vez**
-			```
+			```java
 			short b2 = 3; b2 += 4; // compila, dá um desconto
 			b2 += 4003245; // -76: compila também, mas estoura o byte
 			```
@@ -103,17 +102,12 @@
 			a = 10 + 11 + 11 + 12;
 			a = 44;
 			```
-		1. **diversas atribuições:** atribuir da direita p/ esquerda 
+		1. **diversas atribuições**: atribuir da direita p/ esquerda 
 			```java int a = 15, b= 20, c= 30; a = b = c; // b recebe c, a recebe b, a= 30 
 			int a = 15, b= 20, c= 30; a = (b = c + 5) + 5; // c + 5 = 35, b = 35, 35 + 5 = 40, a = 40```
 		1. **ternário** variavel = teste booleano ? verdadeiro : falso;
-		1. **referencia (.) :** p/ acessar atributos ou métodos de um obj
-		1. **concatenação de Strings (+) : **
-		
-		```java
-			System.out.println(15 + ( 0 + " != 150")); // 15 + "0 != 150"; "150 != 150"
-		```
-		
+		1. **referencia (.) **: p/ acessar atributos ou métodos de um obj
+		1. **concatenação de Strings (+) : ** ` System.out.println(15 + ( 0 + " != 150")); // 15 + "0 != 150"; "150 != 150"	`		
 		1. **precedencia: **
 			1. pre incremento/decremento
 			1. mult/ div/ model
@@ -151,7 +145,7 @@
 			1. objetos *retornados de métodos* são novos objetos, não são buscados no pool ```String str = "12 text 345678"; String txt1 = "text";String txt2 = str.substring(3, 7); System.out.println(txt1 == txt2); // false ```
 				1. se o retorno do método for *exatamente igual ao conteúdo da String passada*, não é criado novo objeto ```String str = "HELLO WORLD";String upper = str.toUpperCase(); System.out.println(str == upper); // true ```
 			1. **contando Strings**				
-				``` 				
+				```java 				
 				String h = new String ("hello ");//Cria 2 objetos, um literal (que vai para o pool) e o outro com o new
 				String h1 = "hello "; //nenhum objeto criado, usa o mesmo do pool
 				String w = "world"; //novo objeto criado e inserido no pool
@@ -171,7 +165,7 @@
 				```
 				
 		1. **equals: ** sobreescrever método com seu critério de igualdade
-			1. **== :** *true* qdo comparando os mesmos objetos na memória 		
+			1. **== **: *true* qdo comparando os mesmos objetos na memória 		
 				```java
 				System.out.println(s1.equals(s3)); // String mesmo conteúdo: true
 				new Client("Mario").equals(new Client("Mario"));//false : apesar do mesmo conteúdo, vc deverá sobreescrever o método equals na classe Client
@@ -187,7 +181,7 @@
 		1. a **condição** de um if deverá ser um valor **booleano** ``` if (2 - 1) \\erro: inteiro```
 		1. não existe *elseif* usar **else if**
 		1. **unreachable code** não compila qdo o código não foe executado sob nnehuma hipótese
-		``` 
+		```java 
 			public int method() {
 				return 5;
 				System.out.println("Will it run?"); //unreachable code
@@ -196,7 +190,7 @@
 			1. **if(false){...}** compila apesar de não executar nada dentro do bloco
 		
 		1. **missing return** não compila qdo falta um fluxo para execução d euma determinada condição. Todos os caminhos possíveis devem retornar o tipo indicado pelo método ou *lançar uma exception*
-		```
+		```java
 			public int method(int x) {
 				if(x > 200) //e se x <= 200: ??? missing return mas foi lançado a RtE para não ocorrer o erro
 					return 5;
@@ -206,29 +200,118 @@
 	1. Use a switch statement 
 	 
 		int option = 1;
+		
 		switch (**option**) { //o argumento deverá ser sempre compatível com **int, wrapper menor q Integer, String, Enum**
-			**case 1:** //o valor de cada case deverá ser compatível com o argumento do switch. Usar **literal, variavel final iniciada durante sua declaração com literal ou expressões com literal/ variavel final. null não é válido**
+		
+			**case 1**: //o valor de cada case deverá ser compatível com o argumento do switch. Usar **literal, variavel final iniciada durante sua declaração com literal ou expressões com literal/ variavel final. null não é válido**
+			
 				System.out.println("number 1");
+				
 				**break;** para não executar os casos q vem abaixo
-			**default:** //qdo nenhum caso bater. Pode aparecer no meio dos cases
+			
+			**default**: //qdo nenhum caso bater. Pode aparecer no meio dos cases
+			
 				System.out.println("number n");
+				
 				break;
+			
 			case 2:			
+			
 				System.out.println("number 2");
+				
 				break;
+			
 			case 3:
+				
 				System.out.println("number 3");
+				
 				break;
 		}	
 	
 
-1. Using Loop Constructs 
-	1. Create and use while loops
-	1. Create and use for loops including the enhanced for loop
-	1. Create and use do/while loops
-	1. Compare loop constructs
-	1. Use break and continue  
-
+1. Using **Loop** Constructs 
+	1. Create and use **while** loops
+		1. a *condição* deve ser *booleano*
+		1. Roda enquanto a condição for *true*. executado repetidamente até a condição se tornar *false*		
+		1. qdo o loop é explicitamente *infinito* e tem código depois do loop, não compila
+		```java
+		while(true) { // true, true, true ...
+			System.out.println("do something");
+		}		
+		return 1; // compile error```
+		
+		```java
+		final boolean CONDICAO = true;
+		while(CONDICAO) { // true, true, true ...
+			System.out.println("do something");
+		}		
+		return 1; // compile error```
+		1. qdo a variável *não é final, compila*
+		```java
+		boolean rodando = true; // não final
+		while(rodando) { // true? false?
+			System.out.println("do something");
+		}
+		return 1; // ok
+		```
+		1. **unreachable statement**: compile error. O compilador só consegue analisar o código com *literais ou constantes*
+		```java		
+	`	while(false) { /* code */ } //nao compila
+		while(1 > 2) { /* code */ }	//nao compila		
+		int a = 1, b = 2;
+			while(a > b) // compila
+				System.out.println("OI");			
+		```
+		
+	1. Create and use **for** loops including the **enhanced for** loop
+		1. *inicialização*: 
+			1. executada apenas 1x no começo do for. 
+			1. Permitido declarar variaveis de um mesmo tipo `for(int i = 1, j= 2;;){/code}` ou inicializar diversas variáveis de tipos diferentes. `for(a=1, b=2.0, c = true;;){//code}`
+		1. *condição*: verificada no começo de cada iteração. default: *true*
+		1. *comandos*:
+		1. *atualização*: 
+			1. executada no fim da iteração. 
+			1. p/ não ocorrer o *loop infinito*. 
+			1. Pode fazer varias atualizações `for(int i = 0, j= 0;i< 10; i++, j++){//code}
+			1. pode executar trecho de código `for(int i = 0, j= 0;i< 10; i+= 3, System.out.println(i++)){//code} 
+		1. argumentos são opcionais e são preenchidos com os valores default ```for(;;) {//code}```
+		1. **enhanced for**: 
+			1. percorre todos os elementos de uma *Collection*: `int i[] = {1,2,3,4,5}; for (int numbers : i){System.out.println(num);}`
+			1. *Não podemos modificar* o contéudo da collection q estamos percorrendo
+			1. não existe *contador*. Não é possível percorrer *+1 collection ao mesmo tempo*
+	1. Create and use **do/while** loops
+		1. a condição é testada após rodar o trecho do código *pelo menos 1x*
+		1. não esquecer do **;** `do{}while(condicao);` p/ não ocorrer erro de compilação
+		1. apenas 1 linha s/ chaves é permitido dentro do do/while. Caso tenha +1 sem chaves: erro de compilação		
+	1. **Compare loop** constructs
+		1. *while X do/while* : condição testada apenas depois de 1 interação do loop
+		1. *for X enhanced for* : não podemos remover, inicializar e percorrer + de 1 vez uma collection
+		1. *while X for* : for qdo sabemos exatamente a qtd de vezes q o laço deverá ser executado. While: qdo temos apenas uma condição verdadeira p/ repetir o laço		
+	1. Use **break** and **continue**
+		1. aplicavel em qq estrutura de laço
+		1. *break* : para o laço totalmente
+		1. *continue* : interrompe apenas  a iteração atual
+		1. compila while infinito c/ break 
+		1. qdo tem laços encaixados, o break ou continue vale p/ o + próximo (interno)
+		1. **labeled loops** 
+			1. rótulo deve referenciar apenas for, loop, switch
+			1. nomes dos rótulos podem ser repetidos desde q não haja conflito de escopo
+			1. um mesmo statement pode ter 2 labels `first: second: for (int i = 0; i < 10; i++) {`
+		```java
+		external: for (int i = 1; i < 10; i++) {
+			internal: for (int j = 1; j < 10; j++) {
+							if (i * j == 25) {
+								break external; // quebrando o for externo
+							}
+							if (i * j == 16) {
+								continue internal; // pulando um iteração do for interno
+							}
+						}
+					}	
+		```
+		1. *switch* só aceita *break*
+		
+		
 1. Working with Inheritance 
 	1. Describe inheritance and its benefits
 	1. Develop code that makes use of polymorphism; develop code that overrides methods;  differentiate between the type of a reference and the type of an object
