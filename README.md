@@ -312,8 +312,38 @@
 		1. *switch* só aceita *break*
 		
 		
-1. Working with Inheritance 
+1. Working with **Inheritance **
 	1. Describe inheritance and its benefits
+		1. a classe filha *especializa* a mais genérica
+		1. a classe mãe precisa ser visível e tbm um de seus contrutores
+		```java
+		class Parent {Parent(int x) {}}
+		class Child1 extends Parent{ // compile error
+			// implicit Child1() { super(); }
+		class Child2 extends Parent { Child2() {super(15); // ok}		
+		```
+		1. a classe mãe não pode ser *final* mas a filha pode
+		1. métodos e atributos são herdados *independentemente da visibilidade*. A claase filha pode não enxergar o membro herdado
+		```java
+		class X{ private int x; public void method(){}};
+		class Y extends X { public void method2(int x){this.x = x; //erro: nao enexerga private de outra classe, mesmo herdando  x  }  } 
+		```
+		1. não existe **herança de métodos de estáticos** : qdo herdamos uma classe c/ métodos *static*, podemos usa-los com o nome da classe filha
+			1. não colocar **super** dentro do contexto *static*. Não existe objeto
+			```java
+			class Z extends W {
+				public static void method() {
+					super.method(); // compile error
+				}
+			}
+			```
+			1. **abstract** não compila em métodos *static* pois não há herança
+			1. podemos escrever um método *static* na classe filha c/ o mesmo nome da classe pai mas não é *sobreescrita*
+			1. **binding do polimorfismo** : o método chamado é do pai ou da filha ?
+				1. *método de instancia* : tempo de execução. 
+				1. *método static* : tempo de compilação. Ignora o tipo de objeto referenciado. Utiliza o método da ref
+		1. **sobreescrita de atributos** : não existe. Vai ter o atributo com o mesmo nome da classe mãe, acessível com **super** ou da própria classe q sobreescreveu, acessível com **this**
+		1. **toString** sobreescrever de *Object* p/ devolver uma String q represente o objeto ```public String toString()```
 	1. Develop code that makes use of polymorphism; develop code that overrides methods;  differentiate between the type of a reference and the type of an object
 	1. Determine when casting is necessary
 	1. Use super and this to access objects and constructors
