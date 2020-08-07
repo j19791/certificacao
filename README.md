@@ -344,7 +344,38 @@
 				1. *método static* : tempo de compilação. Ignora o tipo de objeto referenciado. Utiliza o método da ref
 		1. **sobreescrita de atributos** : não existe. Vai ter o atributo com o mesmo nome da classe mãe, acessível com **super** ou da própria classe q sobreescreveu, acessível com **this**
 		1. **toString** sobreescrever de *Object* p/ devolver uma String q represente o objeto ```public String toString()```
-	1. Develop code that makes use of polymorphism; develop code that overrides methods;  differentiate between the type of a reference and the type of an object
+	1. Develop code that makes use of **polymorphism**; develop code that **overrides methods**;  differentiate between the **type of a reference** and the **type of an object**
+		1. **reescrita, sobrescrita** : subclasse redefine o comportamento do método herdado da superclasse
+			1. **polimorfismo** : 
+				1. *binding* :
+					1. 1) em *tempo de compilação*, verificar se o pai e os filhos possuem métodos sobreescritos. Verificação da existência do método
+					1. 2) em *tempo de execução*, o método invacado é o do objeto, não o da referencia *virtual method invocation*	
+					- [ ] desenhar
+					1. é o inverso dos métodos *static*
+					- [ ] desenhar
+					```java
+					class Vehicle {public void turnon() {System.out.println("Vehicle running!");}}
+					class Car extends Vehicle {public void turnon() {System.out.println("Car running!");} public void turnoff(){}}
+					
+					Vehicle v = new Car();
+					v.turnon(); // Car running!
+					v.turnoff(); //erro de compilação
+					```					
+			1. mesmo *nome*
+			1. *parametros* iguais em tipo e ordem
+			1. *retorno* do método igual ou mais específico (covariante). Não vale p/ primitivos
+			1. *visibilidade* igual ou maior q a mãe
+			1. número de *exceptions* lançadas *throws* devem ser o mesmo ou menor. Elas devem ser do mesmo tipo ou mais específico.
+				1. *RuntimeException* podem ser adicionadas s/ a restrição
+			1. método da mãe não pode ser *final*
+			1. *interface* : os métodos são implicitamente *public*
+			```java
+			interface A {void a();}
+			class B implements A {void a() {}} \\compile error: default é menos visivel q public
+			```
+			1. *abstract* : quem herdar dessa classe deverá sobreescrever obrigatoriamente o método do pai
+			
+			
 	1. Determine when casting is necessary
 	1. Use super and this to access objects and constructors
 	1. Use abstract classes and interfaces
