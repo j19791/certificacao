@@ -347,7 +347,7 @@
 	1. Develop code that makes use of **polymorphism**; develop code that **overrides methods**;  differentiate between the **type of a reference** and the **type of an object**
 		1. **reescrita, sobrescrita** : subclasse redefine o comportamento do método herdado da superclasse
 			1. **polimorfismo** : 
-				1. *binding* :
+				1. *binding* : (lookup)
 					1. 1) em *tempo de compilação*, verificar se o pai e os filhos possuem métodos sobreescritos. Verificação da existência do método
 					1. 2) em *tempo de execução*, o método invacado é o do objeto, não o da referencia *virtual method invocation*	
 					- [ ] desenhar
@@ -360,7 +360,8 @@
 					Vehicle v = new Car();
 					v.turnon(); // Car running!
 					v.turnoff(); //erro de compilação
-					```					
+					```	
+					
 			1. mesmo *nome*
 			1. *parametros* iguais em tipo e ordem
 			1. *retorno* do método igual ou mais específico (covariante). Não vale p/ primitivos
@@ -373,9 +374,27 @@
 			interface A {void a();}
 			class B implements A {void a() {}} \\compile error: default é menos visivel q public
 			```
-			1. *abstract* : quem herdar dessa classe deverá sobreescrever obrigatoriamente o método do pai
+		1. *abstract* : quem herdar dessa classe deverá sobreescrever obrigatoriamente o método do pai
+		1. **this** deixa explicito que o método sobreescrito da própria classe filha q deverá ser chamado
+		1. **super** deixa explicito que o método invocado deverá ser do pai sobreescrito 
+			```java
+			class A {public void method() {System.out.println("a");}}
+			class B extends A {
+				public void method() {System.out.println("b");super.method(); }//b,a
+				public void method2() {
+					method(); //(this), b,a
+					super.method(); }}	//a		
+			```
+			1. Car extends Vehicle : Car **é um** veículo - **polimorfismo**
+			1. método q recebe Vehicle pode receber qq *é um* : reaproveitamento do código
+			1. mudamos o tipo da referência mas nunca o *tipo do objeto*. Chamamos (referencimos) o obj de várias formas diferentes
+			1. referenciar pelo seu próprio tipo, classes pai, qualquer interface
+			1. método default ou private do pai em pacotes diferentes : não há sobreescrita. o binding só consegue acesso ao método que esta no mesmo pacote (da própria referencia)
+			- [ ] desenhar
 			
 			
+	
+	
 	1. Determine when casting is necessary
 	1. Use super and this to access objects and constructors
 	1. Use abstract classes and interfaces
