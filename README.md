@@ -390,14 +390,60 @@
 			1. mudamos o tipo da referência mas nunca o *tipo do objeto*. Chamamos (referencimos) o obj de várias formas diferentes
 			1. referenciar pelo seu próprio tipo, classes pai, qualquer interface
 			1. método default ou private do pai em pacotes diferentes : não há sobreescrita. o binding só consegue acesso ao método que esta no mesmo pacote (da própria referencia)
-			- [ ] desenhar
-			
-			
-	
-	
-	1. Determine when casting is necessary
-	1. Use super and this to access objects and constructors
-	1. Use abstract classes and interfaces
+			- [ ] desenhar	
+	1. Determine when **casting** is necessary
+		1. o compilador não conhece os valores das variáveis, apenas seu tipo `String recovered = objetos[0];` nem todo object é uma String
+		1. *moldar* a referencia p/ q compile `String recovered = (String) objetos[0];`
+		1. na **execução**, o casting vai ver se aquele objeto é compatível com o tipo do casting
+		1. alguns Vehicle são Moto `Moto m = (Moto) v`
+		1. Não é compatível : **classCastException**
+		1. casting **opcional** qdo não precisamos
+		1. *subindo* na hierarquia de classe: autopromoção. Descendo : casting é necessario. Sem caminho possível, compila mas não executa: *classCastException*
+		- [] desenhar
+		1. podemos implementar **multiplas interfaces**. Fazer casting p/ *interfaces* sempre vai compilar/executar `Car c = new Car();Runnable r = (Runnable) c;`
+		1. classe Car não implementa Runnable mas existe a possibilidade de algum tipo Car implementar a interface Runnable ?? Compila mas em tempo de execução pode dar erro se não tem o RunnableCar
+		1. se Car fosse *final*, e não implemente Runnable. Nenhuma filha de Car poderá implementar Runnable e o código não compila
+		1. **instanceof**
+		```java
+		Object c = new Car();
+		boolean b1 = c instanceof Car; // true
+		boolean b2 = c instanceof Motorcycle; // false
+		String s = "a"; boolean b = s instanceof java.util.List; // obviamente incompatível : compile error
+		```
+		
+	1. Use **super** and **this** to access **objects** and **constructors**
+		1. construtor pode ser *sobrecarregado* e ter qualquer *visibilidade*
+		1. p/ construir um obj da classe filha, obrigatoriamente precisamos chamar o construtor da classe mãe antes
+		1. **super()** não chamamos o construtor da classe mãe explicitamente. o compilador coloca automaticamente o *super()*
+		1. **this()** chama outro construtor mas da própria classe
+		1. *super() e this()* só podem aparecer como primeira instrução do contrutores e apenas uma chamada
+		1. **this e variaveis membro** variaveis membro com o mesmo nome da variável local: o acesso é da variável local. this: acessar variavel membro da pr´pria classe ou da classe pai		
+			1. classe mae e filha com variaveis membro de mesmo nome. Diferenciar usando *this* para a variavel da propria classe e *super* para acessar a variavel da mãe
+			1. se não incluir *this* ou *super* será acessado a variavel membro da filha
+			1. método **static** não tem *super* e *this* : o código não é executado dentro de um objeto
+			```java
+			class A{int i = 5;}
+			class Test extends A{int i = 10;
+				public static void main() {
+					this.i = 5; // this? compile error
+					super.i = 10; // super? compile error					
+					new A().i = 5;
+					new Test().i = 10;
+				}}			
+			```			
+	1. Use **abstract classes** and **interfaces**
+		1. *interfaces* não podem ter métodos *static*
+		1. uma classe abstrata pode não ter nenhum método abstratato
+		1. se a classe possui pelo menos 1 método abastrato, a classe precisa ser abstrata
+		1. método abstrato não tem corpo, somente sua definição
+		1. classe abstrata não pode ser instanciada diretamente
+		1. classe concreta q herda de uma abstrata, precisa reescrever e implementar seus métodos que ainda não foram implementados
+		1. subclasse abstrata não precisa implementar todos os métodos abstratos da classe pai. Não precisa nem ter a definição dos métodos abstratos
+		1. *interface* : declara métodos (por padrão: *public abstract*) q deverão ser implementados (todos) pelas classes concretas que queiram ser consideradas como tal
+		1. manter a visibilidade dos modificadores 
+		1. uma classe pode implementar diversar interfaces `abstract class MyType implements Serializable, Runnable`
+		1. uma interface pode herdar de diversas interfaces `interface C extends Runnable, Serializable {}`
+		1. declarar *variaveis* membro em uma interface: todas elas serão *constantes* `interface X {/* public static final */ int i = 5;}
 
 1. Working with Selected classes from the Java API 
 	1. Manipulate data using the StringBuilder class and its methods
