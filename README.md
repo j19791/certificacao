@@ -445,25 +445,150 @@
 		1. uma interface pode herdar de diversas interfaces `interface C extends Runnable, Serializable {}`
 		1. declarar *variaveis* membro em uma interface: todas elas serão *constantes* `interface X {/* public static final */ int i = 5;}
 
-1. Working with Selected classes from the Java API 
-	1. Manipulate data using the StringBuilder class and its methods
-	1. Create and manipulate Strings
-	1. Create and manipulate calendar data using classes from java.time.LocalDateTime,  java.time.LocalDate, java.time.LocalTime, java.time.format.DateTimeFormatter, java.time.Period
-	1. Declare and use an ArrayList of a given type 
-	1. Write a simple Lambda expression that consumes a Lambda Predicate expression
+1. Working with Selected classes from the **Java API** 
+	1. Manipulate data using the **StringBuilder** class and its methods
+		1. Strings *mutáveis*
+		1. concatenar *append* `StringBuffer sb = new StringBuffer();sb.append("Caelum");sb.append(" - ");sb.append("Alura - Casa do Código"); //// Caelum - Alura - Casa do Código`
+		1. criar objeto do tipo StringBUilder `new StringBuilder(); StringBuilder sb2 = new StringBuilder("java");StringBuilder sb3 = new StringBuilder(50) /* tamamnho inicial do array (length = 0)*/;StringBuilder sb4 = new StringBuilder(sb2);`
+		1. permite chamadas encadeadas : `new StringBuffer().append("Caelum").append(" - ").append("Ensino e Inovação") // Caelum - Ensino e Inovação`
+		```java
+		StringBuffer sb = new StringBuffer();
+		sb.append("Caelum - Inovação");
+		sb.insert(9, "Ensino e "); // inserir coisas no meio com indice Caelum - Ensino e Inovação 
+		sb.delete(6, 15); //indice inicial e final - Caelum e Inovação
+		new StringBuffer("guilherme").reverse(); //emrehliug		
+		```
+		1. *substring* não altera o valor do seu StringBuilder ou StringBuffer , mas retorna a String que você deseja.
+	1. Create and manipulate **Strings**
+		1. *imutáveis* 
+		1. criar `String implicit = "Java";String explicit = new String("Java"); char[] name = new char[]{'J', 'a', 'v', 'a'}; String fromArray = new String(name); String nameBuilder = new String(new StringBuilder("Java"));`
+		1. não é um tipo primitivo, pode ter valor *null* `String name = null; // explicit null`
+		1. conversão de *null* para String na concatenação: `String nulled = null; System.out.println("value: " + nulled); /* value: null */ System.out.println(nulled + " value"); // null value
+		1. conversão de *primitivos* p/ String `String name = "Java" + ' ' + "Certification" + ' ' + 1500; //Java Certification 1500`
+		1. cuidando c/a precedencia de operadores `String value = 15 + 00 + " certification"; \\ 15 certification`
+		1. todos os métodos devolvem uma nova String
+		```java
+			"Java".length(); //4
+			"".isEmpty(); /*true*/ " ".isEmpty(); /*false*/
+			substring(beginIndex, endIndex); /* inclui o caractere da posição inicial mas não o da final */ subString(beginIndex); /*a partir do indice passado até o fim */
+			"Java".substring(0, 4); /*Java*/ "Java".substring(0, 3)); /*Jav*/
+			replace(oldChar, newChar); /*substitui as ocorrências de um char por outro*/ replace(CharSequence target,CharSequence replacement);
+			trim() /*limpa os caracteres brancos das duas pontas do String*/
+			"Certification".compareTo("certification"); /* -32 lexicográfico: dictionary order, except that all the uppercase letters preceed all the lowercase letters. Retorna negativo caso a  String na qual o método for invocado vier antes;zero se for igual; positivo se vier depois do parâmetro passado */
+		```
+		1. *StringIndexOutOfBoundsException* `"guilherme".charAt(20); "guilherme".charAt(-1);`
+	1. Create and manipulate calendar data using classes from **java.time.LocalDateTime,  java.time.LocalDate, java.time.LocalTime, java.time.format.DateTimeFormatter, java.time.Period**
+		1. *imutáveis*
+		1. *LocalDate* yyyy-MM-dd
+		1. *LocalTime* hh:mm::ss.zzz			
+		1. *LocalDateTime* yyyy-MM-dd-hh:mm::ss.zzz
+		1. *MonthDay* MM-dd
+		1. *YearMonth* yyyy-MM
+		1. *now()* criando `LocalTime currentTime = LocalTime.now(); LocalDate.now(ZoneId.of("America/Sao_Paulo"));`
+		1. *of()* `LocalTime meioDia = LocalTime.of(12,0); LocalDate Natal = LocalDate.of(2014, Month.DECEMBER, 25); MonthDay.of(12, 25); LocalDateTime ldt = LocalDateTime.of(natal, meioDia);
+		1. *get* `ldt.getDayOfMonth(); ldt.getDayofYear(); /*349*/; ldt.getDayOfYeak(); /*Monday*/ ldt.getMonth() /*DECEMBER*/ ; ldt.getMonthValue(); /*12*/
+			1. *ChronoField* campo que será retornado `ldt.get(ChronoField.HOUR_OF_DAY) /*13*/; `
+		1. *is* comparações `natal.isEqual(LocalDate.of(2015, 4, 1));  natal.isSupported(ChronoField.HOUR_OF_DAY)) /*false*/; natal.isSupported(ChronoUnit.DAYS) /*Can I make operations with days?		*/` 
+		1. *with* obter versões modificadas `LocalDate d = LocalDate.of(2015, 4, 1) /*2015-04-01*/; d = d.withDayOfMonth(15).withMonth(3) /*2015-03-15*/; `
+		1. *plus minus* `LocalDate d = LocalDate.of(2013, 9, 7);d = d.plusDays(1).plusMonths(3).minusYears(2); /*2011-12-08*/`
+			1. *ChronoUnit* fazendo operações utilizando unidades de tempo, sem se preocupar c/ dias e meses `d = d.plusWeeks(3).minus(3, ChronoUnit.WEEKS);`
+		1.  *UnsupportedTemporalTypeException*
+		1. *to* ldt para ld ou lt: `LocalDateTime now = LocalDateTime.now(); LocalDate dateNow = now.toLocalDate(); // from datetime to date`
+		1. *at* ld ou lt p/ ldt  `LocalDateTime ldt = LocalDate.of(2020,08,17).atTime(LocaTime.now());`
+		1. *converter* 
+			1. *java.util.Date* *java.util.Calendar*
+			1. Date para ldt `LocalDateTime.ofInstant(new Date().toInstant(), ZoneId.systemDefault());`
+			1. Calendar para ldt `;LocalDateTime.ofInstant(Calendar.getInstance().toInstant(),ZoneId.systemDefault());
+			1. *Instant* representa a qtd de milisegundos desde 1/1/70
+			1. ldt p/ Date `Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC))`;
+		1. *Duration* `Instant t = Instant.now().plus(Duration.ofSeconds(10)); // now after 10 seconds`
+			1. só tem opção de *getSeconds*. Não tem de dias `long secondsSinceEpoch = Duration.between(Instant.EPOCH /*01/01/1970 00:00:00*/, Instant.now()).getSeconds(); //calcula o intervalo em segundos de duas datas` 
+			1. *ChronoUnit* calcula intervalo entre duas datas `ChronoUnit.YEARS.between(LocalDate.of(1983, 7, 22), LocalDate.of(2014, 12, 25)));`
+		1. *Period* calculo de intervalos, quebrando o periodo de tempo, em dia, mes, ano  `Period lifeTime = Period.between(LocalDate.of(1983, 7, 22), LocalDate.of(2014, 12, 25)); lifeTime.getYears()) /*31 years*/; lifeTime.getMonths() /* 5 months*/; lifeTime.getDays() /*3 dias*/;`
+		1. *DataTimeFormatter* métodos de formatação
+			1. pacote *java.time.format*			
+			```java
+			DateTimeFormatter.ofPattern("yyyy MM dd").format(LocalDate.of(1983, 7, 22)) /*1983 07 22*/;
+			LocalDate.of(1983, 7, 22).format(DateTimeFormatter.ofPattern("yyyy MM dd")));
+			DateTimeFormatter.ofPattern("dd/MM/yyyy").format(LocalDate.parse("23/04/1986",formatter)); // tranforma o texto 23/04/1986 em uma data			
+			```
+			1. *DateTimeFormatException*		
+	1. Declare and use an **ArrayList** of a given type 
+		1. *java.util.ArrayList*
+		```java
+		ArrayList<String> names = new ArrayList<String>();
+		ArrayList<Client> clients = new ArrayList<Client>();
+		
+		Client cliente = new Client(); cliente.setName("John");
+		clients.add(cliente);
+		
+		names.add("Certification");names.add("0, java"); //padrão adiciona no fim. Com indice, adiciona na posição
+		names.contains("java"); //true
+		names.remove("java") /*true, encontra e remove	*/; names.remove(0) /*remove e retorna Certification*/; //só remove a primeira ocorrencia daquele objeto
+		names.size(); //1
+		Object[] objectArray = names.toArray(); //converte p/ array
+		String[] names2 = names.toArray(new String[0]); //menor. Se o tamanho não é suficiente, cria um novo array do mesmo tamanho
+		String[] names3 = names.toArray(new String[names.size()]); //tamanho suficiente p/ os elemntos		
+		ArrayList<String> countries = new ArrayList<String>();countries.add("korea");countries.add("brazil");
+		ArrayList<String> everything = new ArrayList<String>(); everything.addAll(names); everything.addAll(countries);//adicionar 2 coleções em outra
+		names.get(0) /*Certification*/; clients.get(0).getName()); // John
+		cliente.setName("Mayer"); clients.get(0).getName()); // Mayer
+		names.set(0, "certification"); //altera elemento da posição
+		names.indexOf("certification")); // retorna a primeira posição do elemento passado, se não acha, retorna -1	
+		names.lastIndexOf("john")); // retorna a última posição do elemento, se não acha, retorna -1		
+		
+		Collection<String> strings = new ArrayList<String>();
+		Iterator<String> iterator = strings.iterator();
+		while (iterator.hasNext()) { //retorna booleano indicando se ainda há elementos p/ percorrer na coleção passada
+			String current = iterator.next(); //pula p/ o proximo elemento, devolvendo-o
+			System.out.println(current);
+		}		
+		```	
+	1. Write a simple **Lambda** expression that consumes a **Lambda Predicate** expression
+		1. trecho de código que pode ser passado como *parametro* para um método ou armazenado numa *variável*
+		1. *interface funcional* apenas com 1 método
+		1. *Predicate* interface q recebe um *objeto* e retorna um *boolean*
+		```java
+		Predicate<Person> matcher = new Predicate<Person>() { //classe anonima
+			@Override
+			public boolean test(Person p) {return p.getAge() >= 18;}
+		};
+		
+		class PersonFilter{
+			public List<Person> filter(List<Person> input,Predicate<Person> matcher){
+				List<Person> output = new ArrayList<>();
+				for (Person person : input) {
+					if(matcher.test(person)) 
+						output.add(person);
+				}
+				return output;
+			}}		
+		
+		List<Person> adults = new PersonFilter().filter(persons, matcher);
+		```
+		1. ( parameters ) -> { code }
+		```java
+		Predicate<Person> matcher = (Person p) -> {return p.getAge() >= 18;};
+		Predicate<Person> matcher = p -> p.getAge() >= 18;
+		List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
+		```
+		1. Se não houver parametros, é preciso incluir () `Runnable r = () -> System.out.println("a runnable object!");`
+		1. seu código interno pode interagir com *variaveis de instancia* desde q não sejam declaradas como *final*
+		1. dentro de métodos, só pode interagir com variaveis locais *final* ou variaveis q *não são alteradas*
+		1. variaveis do lambda estão *dentro do mesmo escopo do método*. Cuidado p/ não conflitar c/ as variáveis que ja foram declaradas no método
 
-1. Working With Java Data Types 
+1. Working With Java **Data Types**
 	1. Declare and initialize variables (including casting of primitive data types)
 	1. Differentiate between object reference variables and primitive variables
 	1. Know how to read or write to object fields
 	1. Explain an Object's Lifecycle (creation, "dereference by reassignment" and garbage collection)
 	1. Develop code that uses wrapper classes such as Boolean, Double, and Integer  
 
-1. Creating and Using Arrays 
+1. Creating and Using **Arrays**
 	1. Declare, instantiate, initialize and use a one-dimensional array
 	1. Declare, instantiate, initialize and use multi-dimensional arrays
 
-1. Working with Methods and Encapsulation 
+1. Working with **Methods** and **Encapsulation**
 	1. Create methods with arguments and return values; including overloaded methods
 	1. Apply the static keyword to methods and fields  
 	1. Create and overload constructors; differentiate between default and user defined constructors
@@ -471,7 +596,7 @@
 	1. Apply encapsulation principles to a class
 	1. Determine the effect upon object references and primitive values when they are passed  into methods that change the values
 
-1. Handling Exceptions 
+1. Handling **Exceptions**
 	1. Differentiate among checked exceptions, unchecked exceptions, and Errors
 	1. Create a try-catch block and determine how exceptions alter normal program flow
 	1. Describe the advantages of Exception handling 
