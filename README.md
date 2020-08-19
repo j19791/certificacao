@@ -578,11 +578,71 @@
 		1. variaveis do lambda estão *dentro do mesmo escopo do método*. Cuidado p/ não conflitar c/ as variáveis que ja foram declaradas no método
 
 1. Working With Java **Data Types**
-	1. Declare and initialize variables (including casting of primitive data types)
-	1. Differentiate between object reference variables and primitive variables
-	1. Know how to read or write to object fields
-	1. Explain an Object's Lifecycle (creation, "dereference by reassignment" and garbage collection)
-	1. Develop code that uses wrapper classes such as Boolean, Double, and Integer  
+	1. **Declare** and **initialize variables** (including casting of primitive data types)
+		1. explicitamente tipada
+		1. inicialização é obrigatória antes de serem usadas
+		1. variáveis locais : inicialização *explicita*
+		1. no *if*, a inicialização deverá er feita em todos os caminhos possíves
+		1. variável membro inicializada *implicitamente* com valores default
+			1. primitivos numéricos int = 0
+			1. primitivos numéricos c/ ponto flutuante  = 0.0
+			1. boolean = false
+			1. char = vazio = equivale a 0
+			1. String e Referencias = null
+		1. criação de *array* a inicialização é *implicita* `int numbers[] = new int[10]; numbers[0]; //0`
+		1. **tipos primitivos**
+			1. **numéricos** tood número simples (sem casa decimal) é int
+				1. **inteiro** podem ser +/-
+					1. *byte*  -128 a 127
+					1. *short*   
+					1. *char*  
+						1. *não pode ser negativo* mesmo tamanho do short mas a parte positiva é maior pois foi compensada c/ a ausência do negativo
+						1. inicializar com ' aspas simples `char c = 'A';`
+						1. inicializar c/ numeros q representam o char na tabela unicode `char c = 65; //A`
+						1. *\u* representação literal de um char unicode q não temos no teclado `char c = '\u03A9'; // unicode :letra omega `						 
+					1. *int*  
+					1. *long*  *l* *L*
+					1. **bases diferentes** 
+						1. *octal* começa c/ 0 a esquerda e vai de 0 a 7 `int i = 0761;`  
+						1. *hexadecimal* começa c/ 0x ou 0X. 0 a 9, A a F (10 a 15)
+						1. *binary* 0b ou 0B e pode usar apenas 0 e 1
+				1. **ponto flutuante** Pode assumir +/- infinity , +/- 0, NaN . Literal com casa decimal é double
+					1. *float* F f 
+					1. *double* *d* *D* para explicitar na inicialização 
+					1. *notação cientifica* `double d = 3.1E2 /*310.0*/; float f = 1E4F /* 10000.0f*/;`				
+			1. **não numerico**
+				1. *boolean*
+		1. **literais** valores das variáveis diretamente no código fonte
+			1. *underlines* só podem ser colocados c/ valores numéricos (se hexa A a F) em ambos os lados do _ `int a = 123_456_789;` A mesma regra vale p/ pontos flutuantes
+			1. *null, false, true* são literais e tbm palavras chaves
+		1. **identificadores** palavras p/ nomear variaveis, métodos, construtores, classes, interfaces
+			1. não pode ser palavra chave
+			1. Podem usar letras (unicode), números, $ e _ ; *-#.* não pode
+			1. O primeiro caractere não pode ser um número;
+			1. não tem limite de tamanho
+			1. *case sensitive*
+			
+		1. **palavras chave**  
+			```java
+			abstract assert boolean break byte case catch char class const continue default do double else enum extends false final finally float for goto if implements import 
+			int interface long native new null package private protected public return short static strictfp super switch synchronized this throw throws transient true try void volatile while
+			```
+			1. atenção: *instanceof* throw throws 		
+	1. Differentiate between **object reference** variables and **primitive** variables
+		1. *primitivos* armazenam valores
+			1. valores são *copiados* nas atribuições de primitivo p/ outro primitivo
+		1. *referencia* p/ acessar um método ou atributo de um *objeto*
+			1. *ponteiro* p/ o endereço aonde o obj se encontra na memória
+			1. os *endereços são copiados* nas atribuições de *referencia p/ referencia*. As duas variaveis *apontam p/ o mesmo obj*. elas são iguais `Car a = new Car(); a.age = 5; Car b = new Car();b.age = 5;Object c = a; a==b /*false*/; a==c; //true`			
+	1. Know how to *read* or *write* to **object fields**
+		1. não precisamos de operador qdo estamos dentro da classe. *this* é opcional
+	1. Explain an **Object's Lifecycle** (creation, "dereference by reassignment" and garbage collection)
+		1. *new* criação do objeto. nova instância `Person p; /*nao criado*/ p = new Person(); //criado`
+		1. *acessível* criado e atribuido a uma variável `new Person() /*apenas criado, inacessível*/; Person p = new Person(); //acessível`
+		1. *inacessível* não tem caminho p/ acessar o objeto `p =null;`. Quando o *escopo* da ref termina 
+			1. *elegível, passível* p/ o **Garbage Collector**
+		1. *qtd* de objetos criados: Veja os *literais String* q contam como objeto		
+	1. Develop code that uses **wrapper** classes such as Boolean, Double, and Integer  
 
 1. Creating and Using **Arrays**
 	1. Declare, instantiate, initialize and use a one-dimensional array
@@ -623,59 +683,7 @@
 * Para compilar, estamos trabalhando com arquivos e diretórios, portanto javac b/A.java; enquanto, para rodar, estamos pensando em pacotes e classes: java b.A.
 * Podemos ter espaços em branco desde que não quebre uma palavra-chave, nome de método, classe etc. ao meio. Onde pode ter um espaço em branco, pode haver vários.
 * Nenhuma palavra-chave em Java possui caractere maiúsculo
-abstract
-assert
-boolean
-break
-byte
-case
-catch
-char
-class
-const
-continue
-default
-do
-double
-else
-enum
-extends
-false
-final
-finally
-float
-for
-goto
-if
-implements
-import
-instanceof
-int
-interface
-long
-native
-new
-null
-package
-private
-protected
-public
-return
-short
-static
-strictfp
-super
-switch
-synchronized
-this
-throw
-throws
-transient
-true
-try
-void
-volatile
-while
+
 * unreachable code
 ** while (false) { x=3; } Não compila. 
 ** if (false) { x=3; } aqui não tem problema. Compila sem problemas
