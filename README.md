@@ -643,10 +643,87 @@
 			1. *elegível, passível* p/ o **Garbage Collector**
 		1. *qtd* de objetos criados: Veja os *literais String* q contam como objeto		
 	1. Develop code that uses **wrapper** classes such as Boolean, Double, and Integer  
+		1. classes que representam primitivos
+		1. char : Character. Apenas 1 construtor  `new Character(´d´);`
+		1. int: Integer
+		1. criando (wrappers numéricos) `Double d1 = new Double(22.5); Double d2 = new Double("22.5"); Integer.valueOf(1); Integer i = 1234;` 
+			1. *NumberFormatException*
+		1. boolean : Boolean `new Boolean(true); new Boolean("TRue") /*true*/; new Boolean("T"); //false`
+		1. convertendo
+			- [] desenhar
+			1. Wrappper p/ primitivo *xxxValue()* `new Long("123").doubleValue(); //convertendo Long para double`
+				1. todos os numericos se convertem entre si
+				1. Boolean, Character só convertem p/ boolean e char, respectivamente
+			1. String p/ primitivo *XXX.parseXXX("")* `double d = Double.parseDouble("123.00");
+				1. *NumberFormatException*
+				1. parser de números int c/ base `int i6 = Integer.parseInt("FF",16); //255 Hexa`
+			1. String p/ Wrapper
+				1. usar o próprio construtor do Wrapper
+				1. XXX.valueOf("") `Integer i2 = Integer.valueOf("5AF", 16);`
+			1. Wrapper p/ String
+				1. `String number = Integer.valueOf(256).toString();`
+				1. com base apenas Long e Integer `String l = Long.toString(20, 16); `
+				1. Integer e Long podem converter direto p/ base escolhida `String hexString = Long.toHexString(11); // B, Hexadecimal`
+			1. *Autoboxing* compilador é responsável por transformar os wrapper em primitivos *(unboxing)* e primitivos em Wrappers *(boxing)* `Integer intWrapper = Integer.valueOf(1);intWrapper++; //will unbox, increment, then box again.`
+			1. *comparando* 
+				1. `Integer i1 = 1234;Integer i2 = 1234; i1 == i2 /*false (duas ref apontando p/ obj dif)*/; i1.equals(i2) /*true*/; `
+				1. qdo o vlr é muito baixo, devido ao *cache*, a comparação pode ser *true* `Integer i1 = 123; Integer i2 = 123; i1 == i2 /*true*/;  i1.equals(i2)) /*true*/ ;`
+					1. Boolean, Byte, Short, Integer de -128 a 127, caracteres ASCII como letras e números
+		1. *NullPointerException*  operações c/ obj null `Integer a = null; int b = 44; a + b; //throws NPE	`
 
 1. Creating and Using **Arrays**
-	1. Declare, instantiate, initialize and use a one-dimensional array
-	1. Declare, instantiate, initialize and use multi-dimensional arrays
+	1. Declare, instantiate, initialize and use a **one-dimensional** array
+		1. armazenamento sequencial de variveis em memória de um tipo
+		1. são objetos
+		1. *primitivos*
+			1. *declarar* `int[] age;` e suas variações
+			1. *inicialização* 
+				1. **new** criação do novo obj e inicializadas implicitamente c/ vlr default. 
+				1. S/ o **new** Variaveis membro assumem vlr default. Variaveis locais ficam sem valor mesmo, podendo ocorrer erro de compilação
+				1. definir a capacidade `int[] ages = new int[10]; 
+					1. capacidade zero compila e roda
+					1. capacidade negativa compila mas joga *NegativeArraySizeException*
+				1. c/ valores conhecidos 
+					1. `int[] numbers = new int[]{1,2,5,7,5};`
+					1. pode inicializar c/ vlr nulos `Car[] cars = new Car[]{new Car(), null, new Car()};` 
+					1. declarar e inicializar *somente na mesma linha* `int[] numbers = {1,2,5,7,5};`
+			1. *acesso*
+				1. `numbers[0] = 10;` 
+				1. *ArrayIndexOutOfBoundsException* acessar posição q não existe
+			1. *percorrendo*
+				1. atributo *length* recupera capacidade
+				1. usar o *enhanced for*				
+		1. *referencias*
+			1. *inicializa* c/ valores *null*, cuidado c/ **NullPointerException**
+			1. usar *polimorfismo*
+			```java
+				abstract class Exam {}
+				class PracticalExam extends Exam {}
+				class TheoreticalExam extends Exam {}
+				class Test {public static void main(String[] args) {
+					Exam[] exams = new Exam[2];
+					exams[0] = new TheoreticalExam();
+					exams[1] = new PracticalExam();}}
+			```
+		1. *casting*	
+			1. não funciona com primitivos `int[] values = new int[10]; long[] vals = values; // compile error`
+			1. c/ ref é possível c/ o polimorfismo
+			1. *ClassCastException* não tente fazer casting de array c/ Object `Object[] values= new Object[2] values[0] = "Certification"; String[] vals = (String[]) values;`
+	1. Declare, instantiate, initialize and use **multi-dimensional** arrays
+		1. array de arrays
+		1. *declaração*
+		```java
+		int[][] table; 
+		int[][] cube[]; // Um array de três dimensões. 
+		int[] [][]hipercube[];  // Um array de quatro dimensões.
+		```
+		1. *inicialização* `int[][] table = new int[10][15];`
+			1. inicializar apenas a 1ª dimensão `int[][][] cube = new int[10][][]; `
+			1. inicializar posteriormente outras dimensões `int[][] weird = new int[2][]; weird[0] = new int[20]; weird[1] = new int[10];`
+			1. inicializar c/ valores `int[][] test = new int[][]{{1,2,3},{3,2,1},{1,1,1}};`
+		1. *acesso* `table[0][1];`
+			
+		
 
 1. Working with **Methods** and **Encapsulation**
 	1. Create methods with arguments and return values; including overloaded methods
