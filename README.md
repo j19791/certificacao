@@ -492,6 +492,7 @@
 		1. *with* obter versões modificadas `LocalDate d = LocalDate.of(2015, 4, 1) /*2015-04-01*/; d = d.withDayOfMonth(15).withMonth(3) /*2015-03-15*/; `
 		1. *plus minus* `LocalDate d = LocalDate.of(2013, 9, 7);d = d.plusDays(1).plusMonths(3).minusYears(2); /*2011-12-08*/`
 			1. *ChronoUnit* fazendo operações utilizando unidades de tempo, sem se preocupar c/ dias e meses `d = d.plusWeeks(3).minus(3, ChronoUnit.WEEKS);`
+			1. importar `java.time.temporal.ChronoUnit;`
 		1.  *UnsupportedTemporalTypeException*
 		1. *to* ldt para ld ou lt: `LocalDateTime now = LocalDateTime.now(); LocalDate dateNow = now.toLocalDate(); // from datetime to date`
 		1. *at* ld ou lt p/ ldt  `LocalDateTime ldt = LocalDate.of(2020,08,17).atTime(LocaTime.now());`
@@ -717,6 +718,7 @@
 		int[][] cube[]; // Um array de três dimensões. 
 		int[] [][]hipercube[];  // Um array de quatro dimensões.
 		```
+		- [] desenhar
 		1. *inicialização* `int[][] table = new int[10][15];`
 			1. inicializar apenas a 1ª dimensão `int[][][] cube = new int[10][][]; `
 			1. inicializar posteriormente outras dimensões `int[][] weird = new int[2][]; weird[0] = new int[20]; weird[1] = new int[10];`
@@ -726,15 +728,106 @@
 		
 
 1. Working with **Methods** and **Encapsulation**
-	1. Create methods with arguments and return values; including overloaded methods
-	1. Apply the static keyword to methods and fields  
-	1. Create and overload constructors; differentiate between default and user defined constructors
-	1. Apply access modifiers
-	1. Apply encapsulation principles to a class
-	1. Determine the effect upon object references and primitive values when they are passed  into methods that change the values
-
+	1. Create methods with **arguments** and **return** values; including **overloaded** methods
+		1. *assinatura*
+			1. *modificador de visibilidade*, inclusive o implicito *default / package private*
+			1. tipo de *retorno*
+				1. opcional *return* qdo o tipo é *void*				
+					1. pode ser usado como um *retorno antecipado* `void nothing(int i) {if(i >= 0) return; System.out.println("negative");}`
+					1. não pode ser *atribuido* a uma variável qdo o tipo é *void*
+				1. não pode ter nenhum código depois do *return*
+				1. com tipo de retorno definido, deverá retornar algo ou jogar exception em cada um dos caminhos possíveis do método `throw new RuntimeException()` Cobrir tudo
+			1. *nome* seguindo a regra dos *identificadores*
+			1. *parametros* (pode ser vazio) com tipo e nome
+				1. inicialização dos parametros é feito por quem invoca o método
+				1. não tem valores default, todos são obrigatórios
+				1. modificador *final* o parametro não pode ter seu valor modificado depois da chamada do método
+				1. *promoção*
+					1. *primitivos* o método espera double mas se passar qq outro tipo mais restritivo, este será promovido automaticamente p/ double
+					1. *polimorfismo* passar qq objeto que *seja um* objeto do tipo do parametro					
+			1. modificadores opcionais
+				1. *final* o método não pode ser sobreescrito nas classes filhas
+				1. *abstract* obriga as classes filhas a implmentarem o método. Não pode ter corpo
+				1. *static* o método deixa de ser de instancia e passa ser acessado diretamente pela classe
+				1. *throws* indica as exceptions q podem ser jogadas pelo método			
+		1. métodos *não abstratos* devem possuir *corpo*		
+	1. Apply the **static** keyword to methods and fields  
+		1. pertence a classe e não a cada objeto
+		1. não precisa ter um objeto instanciado da classe. Apenas seu nome
+		1. não usar um método/atributo de instancia dentro de um método *static* `public class Car{private int weight;public static int getWeight() {return weight; /*compile error*/}}`
+		1. `static int b = getMethod() /*0*/; public static int getMethod() {return a /*0, a ainda nao inicializada*/; } static int a = 15;`
+		1. membros estáticos podem ser acessados através de *instâncias da classe*
+		1. classe não pode possuir um *método não static* que *sobreescreve* um método static (mesmo em classe filha)
+		1. *binding* do método é feito em tempo de compilação
+		1. a inicialização de variaveis mebro static pode chamar metodos static `static int idade = grabAge(); static int grabAge() { return 18;}`			
+	1. Create and **overload constructors**; differentiate between **default** and **user defined constructors**
+		1. argumentos recebidos tem que ser diferentes no tipo ou quantidade
+		1. tipo de retorno e visibilidade não são suficientes p/ distinguir
+		1. em tempo de compilação é decidido o método q vai ser chamado
+		1. sobrecarga com polimorfismo (tipos parentes), o compilador invoca o mais especifico
+		1. forçar a invocação do mais genérico, *casting* `new Test().method((Object) "random");`
+		1. troca de ordem dos tipos dos parametros é sobrecarga mas pode não compilar qdo um tipo é mais especifico q o outro e na invocação é passado valores ambiguos
+		```java
+		void method(int i, double x) {} // ok
+		void method(double x, int i) {} // ok
+		new Test().method(2.0, 3); // double, int
+		new Test().method(2, 3.0); // int, double
+		new Test().method(2, 3); // compile error
+		void method(Object o, String s) {System.out.println("object");}
+		void method(String s, Object o) {System.out.println("string");}
+		new Xpto().method("string", "string"); // compile error
+		```
+		1. construtor **default** dado pelo compilador, não recebe argumentos, tem a visibilidade da classe e tem a chamada a **super()** `class A { /* implicito*/ A() {super();} /*default*/}` 
+		1. caso vc adicione um construtor qq, o construtor padrão *deixa de existir* e as invocações a ele passam a dar erros de compilação		
+		1. dentro do construtor vc pode acessar as variaveis membros
+		1. não esqueça que a inicialização das variavies membros são com os valores default e logo em seguida, os valores atribuidos dentro do construtor
+		```java
+		int length = getLength();
+		String lastname = "Silveira";
+		int getLength() {return lastname.length();} //compila mas NullPointerException
+		
+		String lastname = "Silveira"; //mudando a ordem das variaveis membro
+		int length = getLength();		
+		int getLength() {return lastname.length();} //compila e roda		
+		```
+		1. cuidado c/ o loop infinito `Test() {new Test(); // StackOverflow}` 
+		1. podem ter todos os modificadores de acesso
+		1. é comum criar um construtor privado e um método static p/ criar seu obj
+		1. métodos c/ o mesmo nome da classe e c/ tipo de retorno (mesmo void) são apenas métodos, não construtores	
+		1. construtores tbm podem ser sobrecarregados `class Test {public Test() {} public Test(int i) {}}`
+		1. *this()* um construtor pode invocar outro construtor na mesma classe `class Test {public Test() {System.out.println("simple");}public Test(int i) {this(); /*simple*/}}`
+			1. deve ser sempre a primeira instrução do construtor
+			1. não é possível ter duas chamadas a *this()*
+			1. pode passar instruções/métodos *static* como argumento `Test() {this(value());} private static String value() {return "value...";} Test(String s) {System.out.println(s);}`
+				1. não compila se passar métodos não static. O obj não terminou de ser construido ainda durante a execução do construtor
+		1. *loops* não compilam
+		1. metodo com parametros *varargs* . Se existe uma sobrecarga do método s/ parametros, inovacamos sem argumentos, o método chamado é o s/ argumentos		
+	1. Apply **access modifiers**
+		1. *visibilidade*
+		1. usar um único modificador de acesso por vez
+		1. classes e interfaces só podem ser *default* ou *public*
+		1. membros da classe recebem modificadores
+		1. parametros não recebem modificadores de visibilidade. Apenas o *final*
+			1. **public** acessado de qq componente em qq pacote
+			1. **protected** acessado por classes e interfaces no *mesmo pacote* e por *quem estenda, independente do pacote*
+			1. **default** *package private* visivel apenas dentro do mesmo pacote. 
+				1. Mesmo com *import*, as classes default não são visíveis. 
+				1. Se existem outras classes publicas no import, não ocorre erro na linha do import. Se importar especificamente uma classe default, o erro tbm é na instrução do import
+			1. **private** só podem ser acessadas de dentro da classe		
+	1. Apply **encapsulation** principles to a class (*information hiding*)		
+		1. *assinatura* do método é o que importa p/ o usuário da classe
+		1. é *o q ela faz* e não como q ela faz
+		1. *interface de uso* conjunto de assinaturas de métodos visiveis dentro de uma classe
+		1. encapasular é esconder seus atributos c/ private
+		1. especificação *javabeans* método público p/ acessar a leitura do atributo *getter*, escrita *setter* (c/ validação)		
+	1. Determine the effect upon **object references** and **primitive** values when they are **passed  into methods** that change the values
+		1. *passagem de parametros* por copia de valores. Mudanças nos valores das variaveis definidas na lista de parametros de um método não afetam variaveis de outros métodos
+			1. *primitivos* variaveis c/ mesmo nome em métodos diferentes. Alterações em uma das variaveis não altera o valor da outra
+			1. *de referência* 	variaveis não primitivas guardam referencias que apontam p/ o mesmo objeto. Modificações no obj podem ser feitas por n referencias. 
+		1. *pilha de execução* lugar onde são empilhados os métodos invocados na mesma ordem q foram chamados
+		1. *heap de objetos* lugar onde são guardados os objetos criados durante sua execução
 1. Handling **Exceptions**
-	1. Differentiate among checked exceptions, unchecked exceptions, and Errors
+	1. Differentiate among **checked** exceptions, **unchecked** exceptions, and **Errors**
 	1. Create a try-catch block and determine how exceptions alter normal program flow
 	1. Describe the advantages of Exception handling 
 	1. Create and invoke a method that throws an exception
