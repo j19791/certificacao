@@ -828,11 +828,61 @@
 		1. *heap de objetos* lugar onde são guardados os objetos criados durante sua execução
 1. Handling **Exceptions**
 	1. Differentiate among **checked** exceptions, **unchecked** exceptions, and **Errors**
-	1. Create a try-catch block and determine how exceptions alter normal program flow
-	1. Describe the advantages of Exception handling 
-	1. Create and invoke a method that throws an exception
+		1. providencias apropriadas qdo um erro de execução ocorrer. Controla o q deve acontecer
+		1. hierarquia de classes que modelam os erros
+		- [] desenhar
+			1. *Throwable*
+				1. **Error** erros de execução gerados por uma situação totalmente anormal que não deveria ser prevista pela aplicação
+					1. OutOfMemoryError* JVM não tem mais memória RAM disponível p/ as aplicações						
+				1. **Exception** responsabilidade das aplicações
+					1. dificil tratar todas as situações possíves q fogem do padrão do comportamento q estamos desejando
+					1. não queremos ter q verificar toda vez se o valor é válido; não queremos entupir o código c/ ifs
+					1. alternativa p/ controle de fluxo
+					1. permitem que *isolemos o tratamento* de um comportamento por blocos, separando a lógica do negócio do tratamento de erros
+					1. **unchecked** podem ser evitadas se programar mais cuidadosamente
+						1. **RuntimeException**
+						1. é opcional trata-las 
+					1. **checked** não são faceis de evitar. O compilador verifica se o programa pode lançar um checked exception e obriga-lo a tratar c/ *try-catch* ou *throws*
+						1. SQLException
+						1. IOException : FileNotFoundException
+						1. 
+	1. Create a **try-catch** block and determine how exceptions alter normal program flow		
+		1. **try {}** trecho do código que pode gerar um erro de execução
+			1. as linhas abaixo daquela q gerou o erro não são executadas
+			1. *JVM* redireciona o fluxo do try p/ o catch, faz o tratamento e continua o fluxo fora do bloco try/catch			
+		1. **catch (Throwable t){}** pegando e tratando todos os possíveis erros de execução. 
+			1. **catch (Exception e){}** fazer um catch em Throwable não é uma boa prática pois os *Error* não deveriam ser tratados pela aplicação
+			1. cuidado c/ *unreachable code* usar em uma *checked exception* somente se o bloco do try pode realmente lançar a checked exception em questão `try {System.out.println("SQLException");} catch(SQLException e){//não compila` 
+				1. compila `try {new FileInputStream("a.txt");} catch(FileNotFoundException e){ // tratamento de FileNotFoundException.}`
+			1. pode usar p/ os erros de execução q não são checked `try {System.out.println("Ok");} catch (RuntimeException e)`
+			1. se a exception *não é a q foi definida*, joga a exception como se não houvesse bloco try-catch
+			1. *polimorfismo* exemplo pegar IOException é o mesmo que pegar todas as filhas de IOException
+			1. multiplos catchs: invocado somente o + adequado. 
+				1. A ordem importa: o JVM procura o 1º catch q pode trabalhar a exception adequada. 
+				1. *unreachable code* Quando tem polimorfismo em multiplos catches, priorizar na ordem os mais especificos
+		1. **finally** seja no sucesso ou no fracasso, temos a obrigação de cumprir certas tarefas. Conexão deveria ser fechada, por exemplo
+			1. pode usar finally s/ o catch
+	1. Describe the **advantages** of Exception handling 
+	1. Create and invoke a **method that throws an exception**
+		1. um método eventualmente  não tem condições de tratar um determinado erro de execução
+		1. **throws** no caso de *checked exception* pode passar o erro p/ o próximo método da pilha mas é preciso deixar explito/avisado
+			1. qdo poder ocorrer erro na inicialização de variaveis membros, avisar c/ throws na assinatura do construtor `class FileAccess {private InputStream is = new FileInputStream("input.txt");FileAccess() throws IOException{}}`
+		1. **throw new RuntimeException()** ao indentificar uma situação errada, criar um erro de execução e lançar p/ quem o chamou
+			1. se é *checked exception* , avisar na assinatura do seu método com o *throws*
+			1. apenas instanciar a exception c/ *new* não vai joga-la
+			1. criando próprias exceptions `class FundoInsuficienteException extends Exception{}` p/ serem lançadas
 	1. Recognize common exception classes (such as NullPointerException, ArithmeticException, ArrayIndexOutOfBoundsException, ClassCastException)
-
+		1. **ArrayIndexOutOfBoundsException** acessar uma posição q não existe no *array*
+		1. **IndexOutOfBoundsException** acessar uma posição q não existe no *ArrayList*
+		1. **NullPointerException** qdo é usado o **.** com uma referencia *null*
+		1. **ClassCastException** casting p/ uma ref p/ um tipo incompatível
+		1. **NumberFormatException** não é possível *parsear* texto em números
+		1. **IllegalArgumentException** o método deve informar a quem o invocou que os valores passados nos seus parametros não são validos
+		1. **IllegalStateException** estado atual do obj não permite q ele seja executado
+		1. **ExceptionInInitializerError** não consegue carregar na memória todas as classes referenciadas pela aplicação qdo a JVM é disparada
+		1. **StackOverflowError** métodos invocados são empilhados na *Pilha de Execução*. A pilha tem um limite e pode estourar
+		1. **NoClassDefFoundError** todas as classes referenciadas devem estar no *classpath*
+		1. **OutOfMemoryError** qdo o *Garbage Collector* não consegue liberar da memória os objetos que não são mais utilizados
 1. Assume the following:
 	1. Missing package and import statements: If sample code do not include package or import statements, and the question does not explicitly refer to these missing statements, then assume that all sample code is in the same package, or import statements exist to support them.
 	1. No file or directory path names for classes: If a question does not state the file names or directory locations of classes, then assume one of the following, whichever will enable the code to compile and run:
@@ -842,14 +892,10 @@
 	1. Code fragments: A code fragment is a small section of source code that is presented without its context. Assume that all necessary supporting code exists and that the supporting environment fully supports the correct compilation and execution of the code shown and its omitted environment.
 	1. Descriptive comments: Take descriptive comments, such as "setter and getters go here," at face value. Assume that correct code exists, compiles, and runs successfully to create the described effect.
 
-
-
 ## dicas
 * case sensitive
 * contagem de posição sempre começa do 0
 * fortemente tipado
-* atentar as pequenas regras necessárias para que o código compile
-* verifique cada ponto-e-vírgula, visibilidade, escopo de variáveis, nomes e parâmetros de métodos
 * Para compilar, estamos trabalhando com arquivos e diretórios, portanto javac b/A.java; enquanto, para rodar, estamos pensando em pacotes e classes: java b.A.
 * Podemos ter espaços em branco desde que não quebre uma palavra-chave, nome de método, classe etc. ao meio. Onde pode ter um espaço em branco, pode haver vários.
 * Nenhuma palavra-chave em Java possui caractere maiúsculo
@@ -857,49 +903,6 @@
 * unreachable code
 ** while (false) { x=3; } Não compila. 
 ** if (false) { x=3; } aqui não tem problema. Compila sem problemas
-* casting Y y = (Y) x; 
-* Basicamente o que você está falando para o compilador é "eu sei que em tempo de execução o que vai ter na variavel x é um tipo compatível com Y, então por favor, não dê erro de compilação.
-* Parâmetros de métodos também podem ser considerados variáveis locais ao método
-
-## Herança
-* Uma interface pode extender mais de uma interface e uma classe pode implementar varias interfaces
-interface Z {}
-interface W {};
-interface Y extends Z, W {}
-
-## Encapsulamento (modificadores de acesso)
-* class/ interface: public, default
-* membros: 
-** private (apenas dentro da classe)
-** default: (não escreva default) dentro do arquivo ou mesmo pacotes
-** protected: herança, dentro de si, dentro do pacotes
-** public: aberta para qq um (precisa importar pacote)
 
 
-
-## Tipos de Dados
-* valores padrão
-** númerico:  byte, short, char, int, long, float, double = 0. qdo Char, não impresso.
-** boolean false
-** referencia null
-
-
-* valores literais
-* int padrão = numero sem casas decimais
-* double padrão = numero com casas decimais
-* explicitar tipos:
-** l, L long
-** double d, D double 
-** f, F float
-* tamanhos
-
-** short - 2 bytes (16 bits, de –32.768 a 32.767);
-
-** int - 4 bytes (32 bits, de –2.147.483.648 a 2.147.483.647);
-** long - 8 bytes (64 bits, de –9.223.372.036.854.775.808 a 9.223.372.036.854.775.807).
-* boolean em Java só pode ser false ou true. Não existe 0 para false ou 1 para true
-* tipos primitivos: atribuição é por cópia do valor
-* octal: int i = 0761; //497 (0 a 7)
-* hexadecimal: int i = 0xAB3400; // 11219968
-* binário:
 
