@@ -350,9 +350,8 @@
 				1. *binding* : (lookup)
 					1. 1) em *tempo de compilação*, verificar se o pai e os filhos possuem métodos sobreescritos. Verificação da existência do método
 					1. 2) em *tempo de execução*, o método invacado é o do objeto, não o da referencia *virtual method invocation*	
-					- [ ] desenhar
-					1. é o inverso dos métodos *static*
-					- [ ] desenhar
+					![Polimorfismo](/imagens/polimorfismo.jpg)
+					1. é o inverso dos métodos *static*					
 					```java
 					class Vehicle {public void turnon() {System.out.println("Vehicle running!");}}
 					class Car extends Vehicle {public void turnon() {System.out.println("Car running!");} public void turnoff(){}}
@@ -389,8 +388,7 @@
 			1. método q recebe Vehicle pode receber qq *é um* : reaproveitamento do código
 			1. mudamos o tipo da referência mas nunca o *tipo do objeto*. Chamamos (referencimos) o obj de várias formas diferentes
 			1. referenciar pelo seu próprio tipo, classes pai, qualquer interface
-			1. método default ou private do pai em pacotes diferentes : não há sobreescrita. o binding só consegue acesso ao método que esta no mesmo pacote (da própria referencia)
-			- [ ] desenhar	
+			1. método default ou private do pai em pacotes diferentes : não há sobreescrita. o binding só consegue acesso ao método que esta no mesmo pacote (da própria referencia)			
 	1. Determine when **casting** is necessary
 		1. o compilador não conhece os valores das variáveis, apenas seu tipo `String recovered = objetos[0];` nem todo object é uma String
 		1. *moldar* a referencia p/ q compile `String recovered = (String) objetos[0];`
@@ -399,7 +397,7 @@
 		1. Não é compatível : **classCastException**
 		1. casting **opcional** qdo não precisamos
 		1. *subindo* na hierarquia de classe: autopromoção. Descendo : casting é necessario. Sem caminho possível, compila mas não executa: *classCastException*
-		- [] desenhar
+		![casting](/imagens/casting.jpg)
 		1. podemos implementar **multiplas interfaces**. Fazer casting p/ *interfaces* sempre vai compilar/executar `Car c = new Car();Runnable r = (Runnable) c;`
 		1. classe Car não implementa Runnable mas existe a possibilidade de algum tipo Car implementar a interface Runnable ?? Compila mas em tempo de execução pode dar erro se não tem o RunnableCar
 		1. se Car fosse *final*, e não implemente Runnable. Nenhuma filha de Car poderá implementar Runnable e o código não compila
@@ -651,7 +649,7 @@
 			1. *NumberFormatException*
 		1. boolean : Boolean `new Boolean(true); new Boolean("TRue") /*true*/; new Boolean("T"); //false`
 		1. convertendo
-			- [] desenhar
+			![Wrapper](/imagens/wrapper.jpg)
 			1. Wrappper p/ primitivo *xxxValue()* `new Long("123").doubleValue(); //convertendo Long para double`
 				1. todos os numericos se convertem entre si
 				1. Boolean, Character só convertem p/ boolean e char, respectivamente
@@ -718,7 +716,7 @@
 		int[][] cube[]; // Um array de três dimensões. 
 		int[] [][]hipercube[];  // Um array de quatro dimensões.
 		```
-		- [] desenhar
+		![Array multi-dimensional](/imagens/array.jpg)
 		1. *inicialização* `int[][] table = new int[10][15];`
 			1. inicializar apenas a 1ª dimensão `int[][][] cube = new int[10][][]; `
 			1. inicializar posteriormente outras dimensões `int[][] weird = new int[2][]; weird[0] = new int[20]; weird[1] = new int[10];`
@@ -830,7 +828,7 @@
 	1. Differentiate among **checked** exceptions, **unchecked** exceptions, and **Errors**
 		1. providencias apropriadas qdo um erro de execução ocorrer. Controla o q deve acontecer
 		1. hierarquia de classes que modelam os erros
-		- [] desenhar
+		![Hierarquia de erros](/imagens/exceptions.jpg)
 			1. *Throwable*
 				1. **Error** erros de execução gerados por uma situação totalmente anormal que não deveria ser prevista pela aplicação
 					1. OutOfMemoryError* JVM não tem mais memória RAM disponível p/ as aplicações						
