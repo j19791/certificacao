@@ -1,13 +1,13 @@
 # Repositório de todo material utilizado para certificação OCA Programmer 1Z0-808
 
-1. Java Basics 
-	1. Define the scope of variables 
+1. Java **Basics**
+	1. Define the **scope of variables**
 		1. **for**: as variaveis declaradas na área de inicialização do loop só podem ser usadas no corpo do loop
 		1. **parametros de métodos** : variaveis locais dos métodos. Não podemos declarar novas variaveis locais com o mesmo nome
-		1. variáveis **static** podem ser acessadas por uma instance reference ou diretamente pela classe
+		1. variáveis **static** podem ser acessadas por uma referencia ou diretamente pela classe
 		1. variaveis de classe e de instancia não podem ter o mesmo nome
 		1. **shadowing** : declarar em métodos variaveis locais ou de parametros com o mesmo nome da variavel de instancia. Usar **this** para referenciar variaveis de instancia. Se nã usar this, o compilador vai usar a variável de menor escopo.
-	1. Define the structure of a Java class
+	1. Define the **structure** of a Java **class**
 		1. **default package** : qdo não declara explitamente um pacote. Não podem ser importadas para uso em outros pacotes.
 		1. **membros de classe**: variaveis de instancia, construtores e métodos. Podemos ter membros de tipos diferentes com o mesmo nome.
 		1. **assinatura de um método**: nome do método e os tipos de parametros. Deve ter retorno. Pode ter o mesmo nome de um construtor.
@@ -15,11 +15,11 @@
 		1. **interface**: possui métodos somente com assintura, sem implementação. Possível declarar *constantes* **final**
 		1. **public class** ou **public interface** : o nome do arquivo *.java* deve ter o nome dessa *class/interface*
 		1. só pode exitir *uma* **public class** ou **public interface** por arquivo *.java*		
-	1. Create executable Java applications with a main method; run a Java program from the command line; produce console output
+	1. Create executable Java applications with a **main** method; **run** a Java program from the command line; produce **console output**
 		1. *classe executavel* é aquela que possui o método **public static void main (String[] argumentos)** . Pode ter *static public* ou usar *varargs ...*
 		1. **java** HelloWorld *Mario* : passando 1 parametro para a execução do programa
 		1. **.class** é o *bytecode* gerado pelo *javac*
-		1. **package certification;** : javac *certification/Test.java*; java *certification.Test*
+		1. compilando e rodando c/ *package certification*  `javac certification/Test.java; java certification.Test`
 		1. Passando **propriedades** na execução: java *-Dkey1=abc -Dkey2=def* Foo xpto bar 
 		1. **classpath**: diretorios, jar que contem as classes e pacotes da aplicação. Padrão é o *diretório corrente (.)* 
 		1. javac **cp /path/to/lib.jar** test.java
@@ -881,14 +881,19 @@
 		1. **StackOverflowError** métodos invocados são empilhados na *Pilha de Execução*. A pilha tem um limite e pode estourar
 		1. **NoClassDefFoundError** todas as classes referenciadas devem estar no *classpath*
 		1. **OutOfMemoryError** qdo o *Garbage Collector* não consegue liberar da memória os objetos que não são mais utilizados
-1. Assume the following:
-	1. Missing package and import statements: If sample code do not include package or import statements, and the question does not explicitly refer to these missing statements, then assume that all sample code is in the same package, or import statements exist to support them.
-	1. No file or directory path names for classes: If a question does not state the file names or directory locations of classes, then assume one of the following, whichever will enable the code to compile and run:
-	1. All classes are in one file
-	1. Each class is contained in a separate file, and all files are in one directory
-	1. Unintended line breaks: Sample code might have unintended line breaks. If you see a line of code that looks like it has wrapped, and this creates a situation where the wrapping is significant (for example, a quoted String literal has wrapped), assume that the wrapping is an extension of the same line, and the line does not contain a hard carriage return that would cause a compilation failure.
-	1. Code fragments: A code fragment is a small section of source code that is presented without its context. Assume that all necessary supporting code exists and that the supporting environment fully supports the correct compilation and execution of the code shown and its omitted environment.
-	1. Descriptive comments: Take descriptive comments, such as "setter and getters go here," at face value. Assume that correct code exists, compiles, and runs successfully to create the described effect.
+
+## novidades Java
+* 1.5 autoboxing, varargs, import static, StringBuilder, foreach
+* 1.7 underline nos literais, operador diamente <>, 
+* 1.8 java.time, lambda
+
+## import
+* java.io 
+* java.util Calendar, Date, ArrayList
+* java.sql Date, SQLException
+* (implicito) java.lang String 
+	
+
 
 ## dicas
 * case sensitive
