@@ -22,18 +22,23 @@
 		1. compilando e rodando c/ *package certification*  `javac certification/Test.java; java certification.Test`
 		1. Passando **propriedades** na execução: java *-Dkey1=abc -Dkey2=def* Foo xpto bar 
 		1. **classpath**: diretorios, jar que contem as classes e pacotes da aplicação. Padrão é o *diretório corrente (.)* 
-		1. javac **cp /path/to/lib.jar** test.java
-		1. java **cp /path/to/lib.jar** Test
+		1. compilar a classe A.java, definida dentro do pacote b e adicionar o jar program.jar na busca de classes durante a compilação (.) diretório atual `javac -cp program.jar:. b/A.java`
+		1. rodar um .class de dentro de um jar `java cp /path/to/lib.jar pacote.Test
 		1. Criar um jar da pasta certification: *jar **-cf library.jar** certification*		
 	1. Import other Java packages to make them accessible in your code
 		1. Classes *se enxergam* se estão no **mesmo pacote**
 		1. usar o **Full Qualified name** para acessar a *public class*  de outro pacote
 		1. **import Full Qualified name** para evitar o uso do *Full Qualified name* em vários pontos do código
 		1. **import com \*** para importar todas as classes do pacote. *Não importa subpacotes*. Cada subpacote deverá ser importado.
-		1. **classes com mesmo nome**: *import java.util.Date; import java.sql.Date;* não compila se usar variaveis de instancia com o tipo Date. Pode importar apenas 1 pacote e usar o *fqn* para declarar o tipo da variável.
-		1. *import java.util.\*; import java.sql.Date* : vai ser usado do Date do pacote sql (mais específico)
+		1. **classes com mesmo nome**: 
+			1. `import java.util.Date; import java.sql.Date;` não compila: erro no import. 
+			1. Pode importar apenas 1 pacote e usar o *fqn* para declarar o tipo da variável.
+			1. `import java.util.*; import java.sql.Date`  vai ser usado do Date do pacote sql (mais específico)
+			1. import duplicado compila normalmente
 		1. pacote **java.lang.\*** são implicitamente importadas. *String*
-		1. **import static model.Utils.\*** : importa todos os membros *static* da classe Utils		
+		1. **import static** importa todos os membros *static* da classe Utils.  `import static model.Utils.*`
+			1. Atenção, o import static não importa a classe	
+			1. cuidado com o *static import*
 	1. Compare and contrast the features and components of Java such as: platform independence, object orientation, encapsulation, etc.
 		1. **bytecode** .class é interpretado pela **JVM** que converte em código de máquina, executado pelo **SO** nativo
 		1. programa **escrito** e **compilado** apenas 1x pode ser usado em diversas plataformas diferentes.
@@ -893,15 +898,9 @@
 * java.sql Date, SQLException
 * (implicito) java.lang String 
 	
-
-
 ## dicas
-* case sensitive
-* contagem de posição sempre começa do 0
-* fortemente tipado
-* Para compilar, estamos trabalhando com arquivos e diretórios, portanto javac b/A.java; enquanto, para rodar, estamos pensando em pacotes e classes: java b.A.
-* Podemos ter espaços em branco desde que não quebre uma palavra-chave, nome de método, classe etc. ao meio. Onde pode ter um espaço em branco, pode haver vários.
 * Nenhuma palavra-chave em Java possui caractere maiúsculo
+* array.length : length é uma propriedade do array. length() tá errado
 
 * unreachable code
 ** while (false) { x=3; } Não compila. 
