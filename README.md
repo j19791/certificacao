@@ -225,29 +225,31 @@
 1. Using **Loop** Constructs 
 	1. Create and use **while** loops
 		1. a *condição* deve ser *booleano*
+		1. pode ter uma operação na condição `while (i++<10)`
 		1. Roda enquanto a condição for *true*. executado repetidamente até a condição se tornar *false*		
 		1. qdo o loop é explicitamente *infinito* e tem código depois do loop, não compila
 		```java
 		while(true) { // true, true, true ...
 			System.out.println("do something");
 		}		
-		return 1; // compile error```
+		return 1; // compile error
 		
-		```java
+		
 		final boolean CONDICAO = true;
 		while(CONDICAO) { // true, true, true ...
 			System.out.println("do something");
 		}		
-		return 1; // compile error```
-		1. qdo a variável *não é final, compila*
-		```java
+		return 1; // compile error
+		
+		
 		boolean rodando = true; // não final
-		while(rodando) { // true? false?
+		while(rodando) { // true? false? //compila
 			System.out.println("do something");
 		}
 		return 1; // ok
 		```
-		1. **unreachable statement**: compile error. O compilador só consegue analisar o código com *literais ou constantes*
+		
+		1. **unreachable statement** compile error. O compilador só consegue analisar o código com *literais ou constantes*
 		```java		
 	`	while(false) { /* code */ } //nao compila
 		while(1 > 2) { /* code */ }	//nao compila		
@@ -257,17 +259,18 @@
 		```
 		
 	1. Create and use **for** loops including the **enhanced for** loop
-		1. *inicialização*: 
+		1. *inicialização*
 			1. executada apenas 1x no começo do for. 
 			1. Permitido declarar variaveis de um mesmo tipo `for(int i = 1, j= 2;;){/code}` ou inicializar diversas variáveis de tipos diferentes. `for(a=1, b=2.0, c = true;;){//code}`
-		1. *condição*: verificada no começo de cada iteração. default: *true*
-		1. *comandos*:
-		1. *atualização*: 
+		1. *condição* verificada no começo de cada iteração. default: *true*
+			1. cuidado c/ unreachable code `for(;false;) {System.out.println("a");break;} System.out.println("b"); //código dentro e depois do bloco do for nunca será executado pois false é literal` 
+		1. *comandos*
+		1. *atualização*
 			1. executada no fim da iteração. 
 			1. p/ não ocorrer o *loop infinito*. 
-			1. Pode fazer varias atualizações `for(int i = 0, j= 0;i< 10; i++, j++){//code}
-			1. pode executar trecho de código `for(int i = 0, j= 0;i< 10; i+= 3, System.out.println(i++)){//code} 
-		1. argumentos são opcionais e são preenchidos com os valores default ```for(;;) {//code}```
+			1. Pode fazer varias atualizações `for(int i = 0, j= 0;i< 10; i++, j++){//code}`
+			1. pode executar trecho de código como se fosse um bloco, mesmo as instruções sendo separadas por , `for(int i = 0, j= 0;i< 10; i+= 3, System.out.println(i++)){//code} `
+		1. argumentos são opcionais e são preenchidos com os valores default `for(;;) {} //`
 		1. **enhanced for**: 
 			1. percorre todos os elementos de uma *Collection*: `int i[] = {1,2,3,4,5}; for (int numbers : i){System.out.println(num);}`
 			1. *Não podemos modificar* o contéudo da collection q estamos percorrendo
