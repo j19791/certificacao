@@ -60,12 +60,14 @@
 				short s = 10; (short) char c = s; //com casting compila
 				char c = 10; short s = c; //apesar de terem 2 bytes, nao compila pois o range + do char > short (pois compensa o lado negativo q nao tem no char). Com casting funciona
 			```
+			1. o lado esquerdo de uma atribuição deve ser sempre uma variável, e não uma chamada a um método ou outro literal `"guilherme".substring(0,2) = "gua";` 
 			1. *referência: polimorfismo*	
 				1. `List<String> names = new ArrayList<>();` <> operador diamante
 				1. copiamos o valor da referência (o objeto é o mesmo)
 		1.**aritméticos**
 			1. **%** resto de divisão: *apenas inteiros*
 			1. o tipo do resultado da operação é no minimo **int** ou o **mais abrangente** . Não importa se a operação é feita c/o variáveis ou literais
+			1. o resultado é no minimo int, não importa se o tipo da variavel que for atribuida for double `double d =  5 / 2; //2` a parte decimal vai ser perdida
 				```java					
 					int age = 15; long years = 5;
 					int afterThoseYears2 = age + years;// não compila, o maior tipo era long, devolve long
@@ -442,7 +444,7 @@
 
 1. Working with Selected classes from the **Java API** 
 	1. Manipulate data using the **StringBuilder** class and its methods
-		1. Strings *mutáveis*
+		1. StringBuilder são *mutáveis*
 		1. concatenar *append* `StringBuffer sb = new StringBuffer();sb.append("Caelum");sb.append(" - ");sb.append("Alura - Casa do Código"); //// Caelum - Alura - Casa do Código`
 		1. criar objeto do tipo StringBUilder `new StringBuilder(); StringBuilder sb2 = new StringBuilder("java");StringBuilder sb3 = new StringBuilder(50) /* tamamnho inicial do array (length = 0)*/;StringBuilder sb4 = new StringBuilder(sb2);`
 		1. permite chamadas encadeadas : `new StringBuffer().append("Caelum").append(" - ").append("Ensino e Inovação") // Caelum - Ensino e Inovação`
@@ -454,20 +456,24 @@
 		new StringBuffer("guilherme").reverse(); //emrehliug		
 		```
 		1. *substring* não altera o valor do seu StringBuilder ou StringBuffer , mas retorna a String que você deseja.
+		1. *indexOf* e *lastIndexOf* retornam -1 qdo não encontra
 	1. Create and manipulate **Strings**
 		1. *imutáveis* 
 		1. criar `String implicit = "Java";String explicit = new String("Java"); char[] name = new char[]{'J', 'a', 'v', 'a'}; String fromArray = new String(name); String nameBuilder = new String(new StringBuilder("Java"));`
 		1. não é um tipo primitivo, pode ter valor *null* `String name = null; // explicit null`
-		1. conversão de *null* para String na concatenação: `String nulled = null; System.out.println("value: " + nulled); /* value: null */ System.out.println(nulled + " value"); // null value
+		1. não compila. Não existe construtor q recebe null `new String(null);`
+		1. *NullPointerException* `String s = null; String s2 = new String(s);`		
+		1. deverá ser sempre inicializada dentro de métodos, mesmo com null
+		1. conversão de *null* para String na concatenação `String nulled = null; System.out.println("value: " + nulled); /* value: null */ System.out.println(nulled + " value"); // null value
 		1. conversão de *primitivos* p/ String `String name = "Java" + ' ' + "Certification" + ' ' + 1500; //Java Certification 1500`
 		1. na concatenação, tbm existe a precedencia de operadores `String value = 15 + 00 + " certification"; \\ 15 certification`
 		1. todos os métodos devolvem uma nova String
 		```java
-			"Java".length(); //4
+			"Java".length(); //4 - cuidado c/ a propriedade length dos arrays
 			"".isEmpty(); /*true*/ " ".isEmpty(); /*false*/
 			substring(beginIndex, endIndex); /* inclui o caractere da posição inicial mas não o da final */ subString(beginIndex); /*a partir do indice passado até o fim */
 			"Java".substring(0, 4); /*Java*/ "Java".substring(0, 3)); /*Jav*/; //limite do endIndex é 4 nesse caso pois p/ descobrir o endIndex é 4-1 = 3 entao o substring vai de 0 a 3. Se beginIndex e endIndex for igual, nao retorna nada e nao da erro.
-			replace(oldChar, newChar); /*substitui as ocorrências de um char por outro*/ replace(CharSequence target,CharSequence replacement);
+			replace(oldChar, newChar); /*substitui as ocorrências de um char por outro*/ replace(CharSequence target,CharSequence replacement); //atenção: não existe replace sobrecarregado c/ (String, char) ou (char, String)
 			trim() /*limpa os caracteres brancos das duas pontas do String*/
 			"Certification".compareTo("certification"); /* -32 lexicográfico: dictionary order, except that all the uppercase letters preceed all the lowercase letters. Retorna negativo caso a  String na qual o método for invocado vier antes;zero se for igual; positivo se vier depois do parâmetro passado */
 		```
@@ -480,8 +486,8 @@
 		1. *MonthDay* MM-dd
 		1. *YearMonth* yyyy-MM
 		1. *now()* criando `LocalTime currentTime = LocalTime.now(); LocalDate.now(ZoneId.of("America/Sao_Paulo"));`
-		1. *of()* `LocalTime meioDia = LocalTime.of(12,0); LocalDate Natal = LocalDate.of(2014, Month.DECEMBER, 25); MonthDay.of(12, 25); LocalDateTime ldt = LocalDateTime.of(natal, meioDia);
-		1. *get* `ldt.getDayOfMonth(); ldt.getDayofYear(); /*349*/; ldt.getDayOfYeak(); /*Monday*/ ldt.getMonth() /*DECEMBER*/ ; ldt.getMonthValue(); /*12*/
+		1. *of()* `LocalTime meioDia = LocalTime.of(12,0); LocalDate Natal = LocalDate.of(2014, Month.DECEMBER, 25); MonthDay.of(12, 25); LocalDateTime ldt = LocalDateTime.of(natal, meioDia);`
+		1. *get* `ldt.getDayOfMonth(); ldt.getDayofYear(); /*349*/; ldt.getDayOfWeek(); /*Monday*/ ldt.getMonth() /*DECEMBER*/ ; ldt.getMonthValue(); /*12*/`
 			1. *ChronoField* campo que será retornado `ldt.get(ChronoField.HOUR_OF_DAY) /*13*/; `
 		1. *is* comparações `natal.isEqual(LocalDate.of(2015, 4, 1));  natal.isSupported(ChronoField.HOUR_OF_DAY)) /*false*/; natal.isSupported(ChronoUnit.DAYS) /*Can I make operations with days?		*/` 
 		1. *with* obter versões modificadas `LocalDate d = LocalDate.of(2015, 4, 1) /*2015-04-01*/; d = d.withDayOfMonth(15).withMonth(3) /*2015-03-15*/; `
@@ -494,7 +500,7 @@
 		1. *converter* 
 			1. *java.util.Date* *java.util.Calendar*
 			1. Date para ldt `LocalDateTime.ofInstant(new Date().toInstant(), ZoneId.systemDefault());`
-			1. Calendar para ldt `;LocalDateTime.ofInstant(Calendar.getInstance().toInstant(),ZoneId.systemDefault());
+			1. Calendar para ldt `;LocalDateTime.ofInstant(Calendar.getInstance().toInstant(),ZoneId.systemDefault());`
 			1. *Instant* representa a qtd de milisegundos desde 1/1/70
 			1. ldt p/ Date `Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC))`;
 		1. *Duration* `Instant t = Instant.now().plus(Duration.ofSeconds(10)); // now after 10 seconds`
@@ -518,13 +524,13 @@
 		Client cliente = new Client(); cliente.setName("John");
 		clients.add(cliente);
 		
-		names.add("Certification");names.add("0, java"); //padrão adiciona no fim. Com indice, adiciona na posição
+		names.add("Certification");names.add(0, "java"); //padrão adiciona no fim. Com indice, adiciona na posição. cuidado c/ a ordem dos parametros
 		names.contains("java"); //true
 		names.remove("java") /*true, encontra e remove	*/; names.remove(0) /*remove e retorna Certification*/; //só remove a primeira ocorrencia daquele objeto
 		names.size(); //1
-		Object[] objectArray = names.toArray(); //converte p/ array
-		String[] names2 = names.toArray(new String[0]); //menor. Se o tamanho não é suficiente, cria um novo array do mesmo tamanho
-		String[] names3 = names.toArray(new String[names.size()]); //tamanho suficiente p/ os elemntos		
+		Object[] objectArray = names.toArray(); //converte p/ array do Object, não de String
+		String[] names2 = names.toArray(new String[0]); //cria um array de String, menor. Se o tamanho não é suficiente, cria um novo array do mesmo tamanho
+		String[] names3 = names.toArray(new String[names.size()]); //cria um array de String, tamanho suficiente p/ os elemntos		
 		ArrayList<String> countries = new ArrayList<String>();countries.add("korea");countries.add("brazil");
 		ArrayList<String> everything = new ArrayList<String>(); everything.addAll(names); everything.addAll(countries);//adicionar 2 coleções em outra
 		names.get(0) /*Certification*/; clients.get(0).getName()); // John
