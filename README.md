@@ -308,7 +308,7 @@
 		1. *switch* só aceita *break*
 		
 		
-1. Working with **Inheritance **
+1. Working with **Inheritance**
 	1. Describe inheritance and its benefits
 		1. a classe filha *especializa* a mais genérica
 		1. a classe mãe precisa ser visível e tbm um de seus contrutores
@@ -324,7 +324,7 @@
 		class X{ private int x; public void method(){}};
 		class Y extends X { public void method2(int x){this.x = x; //erro: nao enexerga private de outra classe, mesmo herdando  x  }  } 
 		```
-		1. não existe **herança de métodos de estáticos** : qdo herdamos uma classe c/ métodos *static*, podemos usa-los com o nome da classe filha
+		1. não existe **herança de métodos de estáticos**  qdo herdamos uma classe c/ métodos *static*, podemos usa-los com o nome da classe filha
 			1. não colocar **super** dentro do contexto *static*. Não existe objeto
 			```java
 			class Z extends W {
@@ -335,10 +335,10 @@
 			```
 			1. **abstract** não compila em métodos *static* pois não há herança
 			1. podemos escrever um método *static* na classe filha c/ o mesmo nome da classe pai mas não é *sobreescrita*
-			1. **binding do polimorfismo** : o método chamado é do pai ou da filha ?
-				1. *método de instancia* : tempo de execução. 
-				1. *método static* : tempo de compilação. Ignora o tipo de objeto referenciado. Utiliza o método da ref
-		1. **sobreescrita de atributos** : não existe. Vai ter o atributo com o mesmo nome da classe mãe, acessível com **super** ou da própria classe q sobreescreveu, acessível com **this**
+			1. **binding do polimorfismo**  o método chamado é do pai ou da filha ?
+				1. *método de instancia*  tempo de execução. 
+				1. *método static*  tempo de compilação. Ignora o tipo de objeto referenciado. Utiliza o método da ref
+		1. **não existe sobreescrita de atributos**  Vai ter o atributo com o mesmo nome da classe mãe, acessível com **super** ou da própria classe q sobreescreveu, acessível com **this**
 		1. **toString** sobreescrever de *Object* p/ devolver uma String q represente o objeto ```public String toString()```
 	1. Develop code that makes use of **polymorphism**; develop code that **overrides methods**;  differentiate between the **type of a reference** and the **type of an object**
 		1. **reescrita, sobrescrita** : subclasse redefine o comportamento do método herdado da superclasse
@@ -366,8 +366,8 @@
 			1. método da mãe não pode ser *final*
 			1. *interface* : os métodos são implicitamente *public*
 			```java
-			interface A {void a();}
-			class B implements A {void a() {}} \\compile error: default é menos visivel q public
+			interface A {void a();//public}
+			class B implements A {void a() {}} //compile error: default é menos visivel q public
 			```
 		1. *abstract* : quem herdar dessa classe deverá sobreescrever obrigatoriamente o método do pai
 		1. **this** deixa explicito que o método sobreescrito da própria classe filha q deverá ser chamado
@@ -410,7 +410,8 @@
 		1. p/ construir um obj da classe filha, obrigatoriamente precisamos chamar o construtor da classe mãe antes
 		1. **super()** não chamamos o construtor da classe mãe explicitamente. o compilador coloca automaticamente o *super()*
 		1. **this()** chama outro construtor mas da própria classe
-		1. *super() e this()* só podem aparecer como primeira instrução do contrutores e apenas uma chamada
+			1. não podemos referenciar um método de instância ao invocar um construtor this `this(x()); //não compila`
+		1. *super() e this()* só podem aparecer como primeira instrução do contrutores e apenas uma chamada, mesmo se a classe possuir construtores sobrecarregados 
 		1. **this e variaveis membro** variaveis membro com o mesmo nome da variável local: o acesso é da variável local. this: acessar variavel membro da pr´pria classe ou da classe pai		
 			1. classe mae e filha com variaveis membro de mesmo nome. Diferenciar usando *this* para a variavel da propria classe e *super* para acessar a variavel da mãe
 			1. se não incluir *this* ou *super* será acessado a variavel membro da filha
