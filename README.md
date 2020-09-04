@@ -584,7 +584,7 @@
 		1. explicitamente tipada
 		1. inicialização é obrigatória antes de serem usadas (inclusive c/ primitivos)
 		1. variáveis locais : inicialização deverá ser *explicita*
-		1. no *if*, a inicialização deverá er feita em todos os caminhos possíves
+		1. no *if*, a inicialização deverá ser feita em todos os caminhos possíves
 		1. variável membro inicializada *implicitamente* com valores default
 			1. primitivos numéricos int = 0
 			1. primitivos numéricos c/ ponto flutuante  = 0.0
@@ -593,7 +593,7 @@
 			1. String e Referencias = null
 		1. criação de *array* a inicialização é *implicita* `int numbers[] = new int[10]; numbers[0]; //0`
 		1. **tipos primitivos**
-			1. **numéricos** tood número simples (sem casa decimal) é int
+			1. **numéricos** todo número simples (sem casa decimal) é int
 				1. **inteiro** podem ser +/-
 					1. *byte*  -128 a 127
 					1. *short*   
@@ -619,11 +619,11 @@
 			1. *null, false, true* são literais e tbm palavras chaves
 		1. **identificadores** palavras p/ nomear variaveis, métodos, construtores, classes, interfaces
 			1. não pode ser palavra chave
-			1. Podem usar letras (unicode), números, $ e _ ; *-#.* não pode
+			1. Podem usar letras (unicode), números, $ e _ ; 
+			1. *-#.* não pode
 			1. O primeiro caractere não pode ser um número;
 			1. não tem limite de tamanho
-			1. *case sensitive*
-			
+			1. *case sensitive*			
 		1. **palavras chave**  
 			```java
 			abstract assert boolean break byte case catch char class const continue default do double else enum extends false final finally float for goto if implements import 
@@ -656,7 +656,7 @@
 			1. Wrappper p/ primitivo *xxxValue()* `new Long("123").doubleValue(); //convertendo Long para double`
 				1. todos os numericos se convertem entre si
 				1. Boolean, Character só convertem p/ boolean e char, respectivamente
-			1. String p/ primitivo *XXX.parseXXX("")* `double d = Double.parseDouble("123.00");
+			1. String p/ primitivo *XXX.parseXXX("")* `double d = Double.parseDouble("123.00");`
 				1. *NumberFormatException*
 				1. parser de números int c/ base `int i6 = Integer.parseInt("FF",16); //255 Hexa`
 			1. String p/ Wrapper
