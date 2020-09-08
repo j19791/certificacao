@@ -682,11 +682,12 @@
 			1. *inicialização* 
 				1. **new** criação do novo obj e inicializadas implicitamente c/ vlr default. 
 				1. S/ o **new** Variaveis membro assumem vlr default. Variaveis locais ficam sem valor mesmo, podendo ocorrer erro de compilação
-				1. definir a capacidade `int[] ages = new int[10]; 
+				1. definir a capacidade `int[] ages = new int[10];`					
 					1. capacidade zero compila e roda
 					1. capacidade negativa compila mas joga *NegativeArraySizeException*
 				1. c/ valores conhecidos 
 					1. `int[] numbers = new int[]{1,2,5,7,5};`
+					1. ou vc passa o tamanho ou passa os valores. `int y[] = new int[3] {0,3,5}; //não compila`
 					1. pode inicializar c/ vlr nulos `Car[] cars = new Car[]{new Car(), null, new Car()};` 
 					1. declarar e inicializar *somente na mesma linha* `int[] numbers = {1,2,5,7,5};`
 			1. *acesso*
