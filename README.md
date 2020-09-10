@@ -99,6 +99,7 @@
 				int i = 10; System.out.println(++i); //imprime 11
 				int j =10;	System.out.println(j++); //imprime 10
 			```
+			1. só pode incrementar variáveis. Não usar incremento/ decremento com métodos
 		1. **operações/atribuições de uma só vez**
 			```java
 			short b2 = 3; b2 += 4; // compila, dá um desconto
@@ -209,7 +210,7 @@
 		```java
 		int option = 1;		
 		switch (option) { //o argumento deverá ser sempre compatível com int, wrapper menor q Integer, String, Enum
-			case 1: //o valor de cada case deverá ser compatível com o argumento do switch. Usar literal, variavel final iniciada durante sua declaração com literal ou expressões com literal/ variavel final. null não é válido
+			case 1: //o valor de cada case deverá ser compatível com o argumento do switch. Usar literal, variavel final inicializada durante sua declaração com literal ou expressões com literal/ variavel final. null não é válido
 				System.out.println("number 1");
 				break; //para não executar os casos q vem abaixo			
 			default: //qdo nenhum caso bater. Pode aparecer no meio dos cases			
@@ -733,6 +734,7 @@
 	1. Create methods with **arguments** and **return** values; including **overloaded** methods
 		1. *assinatura*
 			1. *modificador de visibilidade*, inclusive o implicito *default / package private*
+				1. não usar `default` qdo modificar métodos default - apenas usar nenhum modificador já é suficiente.
 			1. tipo de *retorno*
 				1. opcional *return* qdo o tipo é *void*				
 					1. pode ser usado como um *retorno antecipado* `void nothing(int i) {if(i >= 0) return; System.out.println("negative");}`
@@ -762,6 +764,7 @@
 		1. classe não pode possuir um *método não static* que *sobreescreve* um método static (mesmo em classe filha)
 		1. *binding* do método é feito em tempo de compilação
 		1. a inicialização de variaveis mebro static pode chamar metodos static `static int idade = grabAge(); static int grabAge() { return 18;}`			
+		1. não chamar outros métodos c/ this.method() dentro de um método static
 	1. Create and **overload constructors**; differentiate between **default** and **user defined constructors**
 		1. argumentos recebidos tem que ser diferentes no tipo ou quantidade
 		1. tipo de retorno e visibilidade não são suficientes p/ distinguir
@@ -780,7 +783,8 @@
 		new Xpto().method("string", "string"); // compile error
 		```
 		1. construtor **default** dado pelo compilador, não recebe argumentos, tem a visibilidade da classe e tem a chamada a **super()** `class A { /* implicito*/ A() {super();} /*default*/}` 
-		1. caso vc adicione um construtor qq, o construtor padrão *deixa de existir* e as invocações a ele passam a dar erros de compilação		
+		1. caso vc adicione um construtor qq, o construtor padrão *deixa de existir* e as invocações a ele passam a dar erros de compilação. 
+		1. construtor não padrão tem a visibilidade definida pelo programador. Se não definir, a visibilidade é default.
 		1. dentro do construtor vc pode acessar as variaveis membros
 		1. não esqueça que a inicialização das variavies membros são com os valores default e logo em seguida, os valores atribuidos dentro do construtor
 		```java
@@ -835,7 +839,7 @@
 		![Hierarquia de erros](/imagens/exceptions.jpg)
 			1. *Throwable*
 				1. **Error** erros de execução gerados por uma situação totalmente anormal que não deveria ser prevista pela aplicação
-					1. OutOfMemoryError* JVM não tem mais memória RAM disponível p/ as aplicações						
+					1. **OutOfMemoryError** JVM não tem mais memória RAM disponível p/ as aplicações						
 				1. **Exception** responsabilidade das aplicações
 					1. dificil tratar todas as situações possíves q fogem do padrão do comportamento q estamos desejando
 					1. não queremos ter q verificar toda vez se o valor é válido; não queremos entupir o código c/ ifs
@@ -846,8 +850,7 @@
 						1. é opcional trata-las 
 					1. **checked** não são faceis de evitar. O compilador verifica se o programa pode lançar um checked exception e obriga-lo a tratar c/ *try-catch* ou *throws*
 						1. SQLException
-						1. IOException : FileNotFoundException
-						1. 
+						1. IOException : FileNotFoundException						 
 	1. Create a **try-catch** block and determine how exceptions alter normal program flow		
 		1. **try {}** trecho do código que pode gerar um erro de execução
 			1. as linhas abaixo daquela q gerou o erro não são executadas
@@ -870,6 +873,7 @@
 		1. **throws** no caso de *checked exception* pode passar o erro p/ o próximo método da pilha mas é preciso deixar explito/avisado
 			1. qdo poder ocorrer erro na inicialização de variaveis membros, avisar c/ throws na assinatura do construtor `class FileAccess {private InputStream is = new FileInputStream("input.txt");FileAccess() throws IOException{}}`
 		1. **throw new RuntimeException()** ao indentificar uma situação errada, criar um erro de execução e lançar p/ quem o chamou
+			1. cuidado c/ *unreachable code* todo código abaixo de `throw new RuntimeException()` jamais será executado
 			1. se é *checked exception* , avisar na assinatura do seu método com o *throws*
 			1. apenas instanciar a exception c/ *new* não vai joga-la
 			1. criando próprias exceptions `class FundoInsuficienteException extends Exception{}` p/ serem lançadas
@@ -884,7 +888,7 @@
 		1. **ExceptionInInitializerError** não consegue carregar na memória todas as classes referenciadas pela aplicação qdo a JVM é disparada
 		1. **StackOverflowError** métodos invocados são empilhados na *Pilha de Execução*. A pilha tem um limite e pode estourar
 		1. **NoClassDefFoundError** todas as classes referenciadas devem estar no *classpath*
-		1. **OutOfMemoryError** qdo o *Garbage Collector* não consegue liberar da memória os objetos que não são mais utilizados
+		1. **OutOfMemoryError** qdo o *Garbage Collector* não consegue liberar da memória os objetos que não são mais utilizados ou loop infinito dentro do main
 
 ## novidades Java
 * 1.5 autoboxing, varargs, import static, StringBuilder, foreach
