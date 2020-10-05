@@ -1,6 +1,6 @@
 ## Anotações para certificação OCA Programmer 1Z0-808
 
-[Java Basics](#1.-Java-Basics)
+[Java Basics](#1.Java-Basics)
 
 1. Java Basics
 	1. Define the **scope of variables**
