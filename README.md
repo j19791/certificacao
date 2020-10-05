@@ -47,10 +47,8 @@
 		1. programa **escrito** e **compilado** apenas 1x pode ser usado em diversas plataformas diferentes.
 		1. **OO**: estruturamos o código em entidades *objetos* (compontentes especializados) que possuem dados na forma de *atributos* e comportamento na forma de *métodos*
 		1. Cada objeto deve ter *única responsabilidade*, favorecer *reuso de código* e cada mudança no comportamento *reflete em todos os lugares* onde o objeto é usado.
-		1. *Encapsulamento* *privar* atributos e implmentação p/ q outros objetos manipule esses atributos. Liberar apenas por meio de métodos *public*
-		
-[[↑] Back to top](## Anotações para certificação OCA Programmer 1Z0-808)
-
+		1. *Encapsulamento* *privar* atributos e implmentação p/ q outros objetos manipule esses atributos. Liberar apenas por meio de métodos *public*		
+	1. [[↑] Back to top](#Anotações-para-certificação-OCA-Programmer-1Z0-808)
 1. Using **Operators** and **Decision** Constructs 
 	1. Use Java **operators**; use **parentheses** to override operator **precedence**
 		1. **atribuição** tipos compatíves ou o valor deverá ser = ou menos abrangente. tipos primitivos: copiamos o valor
