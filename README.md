@@ -1,7 +1,8 @@
 ## Anotações para certificação OCA Programmer 1Z0-808
 
-[Java Basics](1. Java-Basics)
+[Java Basics](#Java-Basics)
 
+### Java Basics
 1. Java Basics
 	1. Define the **scope of variables**
 		1. **for**: as variaveis declaradas na área de inicialização do loop só podem ser usadas no corpo do loop
