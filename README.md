@@ -1,7 +1,8 @@
 ## Anotações para certificação OCA Programmer 1Z0-808
 
 [Java Basics](#Java-Basics)
-
+[Using Operators and Decision Constructs](#Using-Operators-and-Decision-Constructs)
+### Java Basics
 1. Java Basics
 	1. Define the **scope of variables**
 		1. **for**: as variaveis declaradas na área de inicialização do loop só podem ser usadas no corpo do loop
@@ -49,6 +50,7 @@
 		1. *Encapsulamento* *privar* atributos e implmentação p/ q outros objetos manipule esses atributos. Liberar apenas por meio de métodos *public*		
 	1. [[↑] Back to top](#Anotações-para-certificação-OCA-Programmer-1Z0-808)
 
+### Using Operators and Decision Constructs 
 1. Using **Operators** and **Decision** Constructs 
 	1. Use Java **operators**; use **parentheses** to override operator **precedence**
 		1. **atribuição** tipos compatíves ou o valor deverá ser = ou menos abrangente. tipos primitivos: copiamos o valor
