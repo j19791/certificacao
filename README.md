@@ -1,58 +1,59 @@
 ## Anotações para certificação OCA Programmer 1Z0-808
 
 [Java Basics](#Java-Basics)
+
 [Using Operators and Decision Constructs](#Using-Operators-and-Decision-Constructs)
+
 ### Java Basics
-1. Java Basics
-	1. Define the **scope of variables**
-		1. **for**: as variaveis declaradas na área de inicialização do loop só podem ser usadas no corpo do loop
-		1. **parametros de métodos** : variaveis locais dos métodos. Não podemos declarar novas variaveis locais com o mesmo nome
-		1. variáveis **static** podem ser acessadas por uma referencia ou diretamente pela classe
-		1. variaveis de classe e de instancia não podem ter o mesmo nome
-		1. **shadowing** : declarar em métodos variaveis locais ou de parametros com o mesmo nome da variavel de instancia. Usar **this** para referenciar variaveis de instancia. Se nã usar this, o compilador vai usar a variável de menor escopo.
-	1. Define the **structure** of a Java **class**
-		1. **default package** : qdo não declara explitamente um pacote. Não podem ser importadas para uso em outros pacotes.
-		1. **membros de classe**: variaveis de instancia, construtores e métodos. Podemos ter membros de tipos diferentes com o mesmo nome.
-		1. **assinatura de um método**: nome do método e os tipos de parametros. Deve ter retorno. Pode ter o mesmo nome de um construtor.
-		1. **construtor**: a classe pode ter 0 a n construtores. Não devem ter retorno. Pode ter um *return* mas vazio
-		1. **interface**: possui métodos somente com assintura, sem implementação. Possível declarar *constantes* **final**
-		1. **public class** ou **public interface** : o nome do arquivo *.java* deve ter o nome dessa *class/interface*
-		1. só pode exitir *uma* **public class** ou **public interface** por arquivo *.java*		
-	1. Create executable Java applications with a **main** method; **run** a Java program from the command line; produce **console output**
-		1. *classe executavel* é aquela que possui o método **public static void main (String[] argumentos)** . Pode ter *static public* ou usar *varargs ...*
-		1. **java** HelloWorld *Mario* : passando 1 parametro para a execução do programa
-		1. **.class** é o *bytecode* gerado pelo *javac*
-		1. compilando e rodando c/ *package certification*  `javac certification/Test.java; java certification.Test`
-		1. Passando **propriedades** na execução: java *-Dkey1=abc -Dkey2=def* Foo xpto bar 
-		1. **classpath**: diretorios, jar que contem as classes e pacotes da aplicação. Padrão é o *diretório corrente (.)* 
-		1. compilar a classe A.java, definida dentro do pacote b e adicionar o jar program.jar na busca de classes durante a compilação (.) diretório atual `javac -cp program.jar:. b/A.java`
-		1. rodar um .class de dentro de um jar `java cp /path/to/lib.jar pacote.Test
-		1. Criar um jar da pasta certification: *jar **-cf library.jar** certification*		
-	1. Import other Java packages to make them accessible in your code
-		1. Classes *se enxergam* se estão no **mesmo pacote**
-		1. usar o **Full Qualified name** para acessar a *public class*  de outro pacote
-		1. **import Full Qualified name** para evitar o uso do *Full Qualified name* em vários pontos do código
-		1. **import com \*** para importar todas as classes do pacote. *Não importa subpacotes*. Cada subpacote deverá ser importado.
-		1. **classes com mesmo nome**: 
-			1. `import java.util.Date; import java.sql.Date;` não compila: erro no import. 
-			1. Pode importar apenas 1 pacote e usar o *fqn* para declarar o tipo da variável.
-			1. `import java.util.*; import java.sql.Date`  vai ser usado do Date do pacote sql (mais específico)
-			1. import duplicado compila normalmente
-		1. pacote **java.lang.\*** são implicitamente importadas. *String*
-		1. **import static** importa todos os membros *static* da classe Utils.  `import static model.Utils.*`
-			1. Atenção, o import static não importa a classe	
-			1. cuidado com o *static import*
-	1. Compare and contrast the features and components of Java such as: platform independence, object orientation, encapsulation, etc.
-		1. **bytecode** .class é interpretado pela **JVM** que converte em código de máquina, executado pelo **SO** nativo
-		1. programa **escrito** e **compilado** apenas 1x pode ser usado em diversas plataformas diferentes.
-		1. **OO**: estruturamos o código em entidades *objetos* (compontentes especializados) que possuem dados na forma de *atributos* e comportamento na forma de *métodos*
-		1. Cada objeto deve ter *única responsabilidade*, favorecer *reuso de código* e cada mudança no comportamento *reflete em todos os lugares* onde o objeto é usado.
-		1. *Encapsulamento* *privar* atributos e implmentação p/ q outros objetos manipule esses atributos. Liberar apenas por meio de métodos *public*		
-	1. [[↑] Back to top](#Anotações-para-certificação-OCA-Programmer-1Z0-808)
+#### Define the **scope of variables**
+- **for**: as variaveis declaradas na área de inicialização do loop só podem ser usadas no corpo do loop
+- **parametros de métodos** : variaveis locais dos métodos. Não podemos declarar novas variaveis locais com o mesmo nome
+- variáveis **static** podem ser acessadas por uma referencia ou diretamente pela classe
+- variaveis de classe e de instancia não podem ter o mesmo nome
+- **shadowing** : declarar em métodos variaveis locais ou de parametros com o mesmo nome da variavel de instancia. Usar **this** para referenciar variaveis de instancia. Se nã usar this, o compilador vai usar a variável de menor escopo.
+#### Define the **structure** of a Java **class**
+- **default package** : qdo não declara explitamente um pacote. Não podem ser importadas para uso em outros pacotes.
+- **membros de classe**: variaveis de instancia, construtores e métodos. Podemos ter membros de tipos diferentes com o mesmo nome.
+- **assinatura de um método**: nome do método e os tipos de parametros. Deve ter retorno. Pode ter o mesmo nome de um construtor.
+- **construtor**: a classe pode ter 0 a n construtores. Não devem ter retorno. Pode ter um *return* mas vazio
+- **interface**: possui métodos somente com assintura, sem implementação. Possível declarar *constantes* **final**
+- **public class** ou **public interface** : o nome do arquivo *.java* deve ter o nome dessa *class/interface*
+- só pode exitir *uma* **public class** ou **public interface** por arquivo *.java*		
+#### Create executable Java applications with a **main** method; **run** a Java program from the command line; produce **console output**
+- *classe executavel* é aquela que possui o método **public static void main (String[] argumentos)** . Pode ter *static public* ou usar *varargs ...*
+- **java** HelloWorld *Mario* : passando 1 parametro para a execução do programa
+- **.class** é o *bytecode* gerado pelo *javac*
+- compilando e rodando c/ *package certification*  `javac certification/Test.java; java certification.Test`
+- Passando **propriedades** na execução: java *-Dkey1=abc -Dkey2=def* Foo xpto bar 
+- **classpath**: diretorios, jar que contem as classes e pacotes da aplicação. Padrão é o *diretório corrente (.)* 
+- compilar a classe A.java, definida dentro do pacote b e adicionar o jar program.jar na busca de classes durante a compilação (.) diretório atual `javac -cp program.jar:. b/A.java`
+- rodar um .class de dentro de um jar `java cp /path/to/lib.jar pacote.Test
+- Criar um jar da pasta certification: *jar **-cf library.jar** certification*		
+#### Import other Java packages to make them accessible in your code
+- Classes *se enxergam* se estão no **mesmo pacote**
+- usar o **Full Qualified name** para acessar a *public class*  de outro pacote
+- **import Full Qualified name** para evitar o uso do *Full Qualified name* em vários pontos do código
+- **import com \*** para importar todas as classes do pacote. *Não importa subpacotes*. Cada subpacote deverá ser importado.
+- **classes com mesmo nome**: 
+	- `import java.util.Date; import java.sql.Date;` não compila: erro no import. 
+	- Pode importar apenas 1 pacote e usar o *fqn* para declarar o tipo da variável.
+	- `import java.util.*; import java.sql.Date`  vai ser usado do Date do pacote sql (mais específico)
+	- import duplicado compila normalmente
+- pacote **java.lang.\*** são implicitamente importadas. *String*
+- **import static** importa todos os membros *static* da classe Utils.  `import static model.Utils.*`
+	- Atenção, o import static não importa a classe	
+	- cuidado com o *static import*
+#### Compare and contrast the features and components of Java such as: platform independence, object orientation, encapsulation, etc.
+- **bytecode** .class é interpretado pela **JVM** que converte em código de máquina, executado pelo **SO** nativo
+- programa **escrito** e **compilado** apenas 1x pode ser usado em diversas plataformas diferentes.
+- **OO**: estruturamos o código em entidades *objetos* (compontentes especializados) que possuem dados na forma de *atributos* e comportamento na forma de *métodos*
+- Cada objeto deve ter *única responsabilidade*, favorecer *reuso de código* e cada mudança no comportamento *reflete em todos os lugares* onde o objeto é usado.
+- *Encapsulamento* *privar* atributos e implmentação p/ q outros objetos manipule esses atributos. Liberar apenas por meio de métodos *public*		
+- [[↑] Back to top](#Anotações-para-certificação-OCA-Programmer-1Z0-808)
 
 ### Using Operators and Decision Constructs 
-1. Using **Operators** and **Decision** Constructs 
-	1. Use Java **operators**; use **parentheses** to override operator **precedence**
+#### Using **Operators** and **Decision** Constructs 
+	 Use Java **operators**; use **parentheses** to override operator **precedence**
 		1. **atribuição** tipos compatíves ou o valor deverá ser = ou menos abrangente. tipos primitivos: copiamos o valor
 			1.  float é menos abrangente que double `double d = 20.0f;`
 			1. double não cabe em float `float f = 40.0;`
