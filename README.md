@@ -52,185 +52,184 @@
 - [[↑] Back to top](#Anotações-para-certificação-OCA-Programmer-1Z0-808)
 
 ### Using Operators and Decision Constructs 
-#### Using **Operators** and **Decision** Constructs 
-	 Use Java **operators**; use **parentheses** to override operator **precedence**
-		1. **atribuição** tipos compatíves ou o valor deverá ser = ou menos abrangente. tipos primitivos: copiamos o valor
-			1.  float é menos abrangente que double `double d = 20.0f;`
-			1. double não cabe em float `float f = 40.0;`
-			1. inteiros (long) cabe em decimal `float h = 10l;`
-			1. tipos menos abrangentes que int: **byte, short, char** compilador verifica se esta no range do tipo
-				1. estoura byte:  -128 a 127 (único itervalo cobrado) `byte b = 200;` 
-				1. erro: só positivo `char c2 = -1;` 
-			1. cuidado c/ atribuição com variaveis de tipo mais abrangente 
-			```java
-				short s = 10; char c = s; //não compila pois s (não 10) é short q pode ser negativo
-				short s = 10; (short) char c = s; //com casting compila
-				char c = 10; short s = c; //apesar de terem 2 bytes, nao compila pois o range + do char > short (pois compensa o lado negativo q nao tem no char). Com casting funciona
-			```
-			1. o lado esquerdo de uma atribuição deve ser sempre uma variável, e não uma chamada a um método ou outro literal `"guilherme".substring(0,2) = "gua";` 
-			1. *referência: polimorfismo*	
-				1. `List<String> names = new ArrayList<>();` <> operador diamante
-				1. copiamos o valor da referência (o objeto é o mesmo)
-		1.**aritméticos**
-			1. **%** resto de divisão: *apenas inteiros*
-			1. o tipo do resultado da operação é no minimo **int** ou o **mais abrangente** . Não importa se a operação é feita c/o variáveis ou literais
-			1. o resultado é no minimo int, não importa se o tipo da variavel que for atribuida for double `double d =  5 / 2; //2` a parte decimal vai ser perdida
-				```java					
-					int age = 15; long years = 5;
-					int afterThoseYears2 = age + years;// não compila, o maior tipo era long, devolve long
-					byte b = 1;	short s = 2;
-					byte b2 = i + s; //// não compila, ele devolve no mínimo int					
-				```
-			1.	**divisão por 0**
-				1. *inteiro* `System.out.println(200 / 0); //ArithmeticException`
-				1. *decimal* `200 / 0.0; 3.0/0; 0.0/0; //compila e roda:  infinito positivo`
-				1. *NaN* infinito positivo - infinito negativo
-		1. **comparação** == != > >= <= < 
-			1. sempre devolve um boolean
-			1. referencias e boolean somente com *== ou !=*
-			1. pode comparar *char* com *numérico* `System.out.println('a' > 1);//true`
-			1. valores numéricos não considera seu tipo
-		1. **lógicos**
-			1. *& | * a segunda parte sempre é avaliada, podendo incrementar variaveis e tbm chamar métodos			
-			1. *curto circuito && ||*  Quando já for possível determinar a resposta final olhando apenas para a primeira parte da expressão, a segunda não é avaliada
-			```java
-			System.out.println(1 == 2 & imprimir("hi"));// imprime hi, depois false
-			System.out.println(1 == 2 && imprimir("bye"));//imprime false
-			int i = 10;	System.out.println(i == 2 & i++ == 0);// imprime false, soma mesmo assim
-			int j = 10;	System.out.println(j == 2 && j++ == 0); // imprime false, não soma
-			```
-			1. **^** ou exclusivo
-		1. **incremento/decremento**
-			1. *pré* sempre a primeira coisa q é feita é o incrementar/decrementar
-			```java
-				int i = 10; System.out.println(++i); //imprime 11
-				int j =10;	System.out.println(j++); //imprime 10
-			```
-			1. só pode incrementar variáveis. Não usar incremento/ decremento com métodos
-		1. **operações/atribuições de uma só vez**
-			```java
-			short b2 = 3; b2 += 4; // compila, dá um desconto
-			b2 += 4003245; // -76: compila também, mas estoura o byte
-			```
-		1. **atribuição c/ o próprio incremento** a execução é do primeiro para o último elemento das somas, temos as reduções:
-			```java
-			int a = 10;
-			a += ++a + a + ++a;			
-			a = a + ++a + a + ++a;
-			a = 10 + 11 + a + ++a;
-			a = 10 + 11 + 11 + ++a;
-			a = 10 + 11 + 11 + 12;
-			a = 44;
-			```
-		1. **diversas atribuições** atribuir da direita p/ esquerda 
-			```java
-			int a = 15, b= 20, c= 30; a = b = c; // b recebe c, a recebe b, a= 30 
-			int a = 15, b= 20, c= 30; a = (b = c + 5) + 5; // c + 5 = 35, b = 35, 35 + 5 = 40, a = 40
-			```
-		1. **ternário** `variavel = teste booleano ? verdadeiro : falso;`
-		1. **referencia (.) ** p/ acessar atributos ou métodos de um obj
-		1. **concatenação de Strings** `System.out.println(15 + ( 0 + " != 150")); // 15 + "0 != 150"; "150 != 150"	`		
-		1. **precedencia**
-			1. pre incremento/decremento
-			1. mult/ div/ % 
-			1. soma/ sub
-			1. pós incremento/decremento
-		1. **casting de primitivos**
-			1. atribuição somente se *compatível* um tipo cabe no outro: 			
-			**byte -> short -> int -> long -> float -> double**  *autopromoção: qdo o tipo vai da direita p/ esquerda*			
-			**char -> int ** *autopromoção*			
-			1. **casting** direita p/ esquerda. Moldar o valor de um tipo em outro. Queremos e avisamos o compilador q sabemos da possibilidade de perca de precisão/ truncamneto
-			```java
-			double d = 0, d2 = 3.1415;
-			float f = d; //não compila: double não cabe em float
-			float f = (float) d;
-			int i = (int) d2;//i= 3 (valor truncado)
-			```
-			1. short e char tem o mesmo tamanho mas **char é apenas positivo**		
-	1. Test equality between Strings and other objects using **==** and **equals()**
-		1. comparar dois objetos para ver se **apontam para o mesmo lugar**		
-		```java
-			String name1 = new String("Mario");	String name2 = new String("Mario");
-			System.out.println(name1 == name2); // false: 2 objetos criados com new		
-		```		
-		1. **Pool de Strings** 
-			1. antes de criar uma nova String, verifica-se se já existe no pool uma String com mesmo conteúdo. Se já existe, não cria nova, reutiliza. 
-				`String name1 = "Mario"; String name2 = "Mario"; System.out.println(name1 == name2);	//true`
-				1. Só coloca no pool Strings criadas com literais
-			1. Quando concatenamos Strings (*literais em ambos os lados da concatenação*), o resultado tbm será colocado no pool `String ab = "a" + "b";System.out.println("ab" == ab);//true`
-			1. Se um dos objetos concatenados não for literal, cria um novo obj fora do pool `String a = "a"; String ab = a + "b"; System.out.println("ab" == ab); // false`
-			1. objetos *retornados de métodos* são novos objetos, não são buscados no pool `String str = "12 text 345678"; String txt1 = "text";String txt2 = str.substring(3, 7); System.out.println(txt1 == txt2); // false `
-				1. se o retorno do método for *exatamente igual ao conteúdo da String passada*, não é criado novo objeto `String str = "HELLO WORLD";String upper = str.toUpperCase(); System.out.println(str == upper); // true `
-			1. **contando Strings**				
-				```java 				
-				String h = new String ("hello ");//Cria 2 objetos, um literal (que vai para o pool) e o outro com o new
-				String h1 = "hello "; //nenhum objeto criado, usa o mesmo do pool
-				String w = "world"; //novo objeto criado e inserido no pool
-				System.out.println("hello ");//nenhum objeto criado, usa do pool
-				System.out.println(h1 + "world");//criado um novo objeto resultante da concatenação, mas este não vai para o pool: (variavel + literal)
-				System.out.println("Hello " == h1); //Novo objeto criado e colocado no pool (Hello com H maiúsculo).
-				//Logo temos 5 Strings criadas.
-				```
-				``` 
-				for(int i = 0; i< 10; i++)
-					System.out.println(method());
-				}
-				private static String method() {
-					String x = "x"; // A String será colocada no pool apenas na primeira execução do método. Apenas um objeto String será criado
-					return x.toString();
-				}
-				```
-		1. **equals** sobreescrever método com seu critério de igualdade
-			1. **==** *true* qdo comparando os mesmos objetos na memória 		
-				```java
-				System.out.println(s1.equals(s3)); // String mesmo conteúdo: true
-				new Client("Mario").equals(new Client("Mario"));//false : apesar do mesmo conteúdo, vc deverá sobreescrever o método equals na classe Client
-				
-				public boolean equals(Client second) {
-					return this.name.equals(second.name);
-				}
-				
-				new Client("Mario").equals(new Client("Mario"));//true
-				```	
-	1. Create **if** and **if/else** and **ternary** constructs
-		1. controlar o *fluxo de execução* dos programas
-		1. a **condição** de um if deverá ser um valor **booleano** `if (2 - 1) \\erro: inteiro`
-		1. não existe *elseif* usar **else if**
-		1. **unreachable code** não compila qdo o código não foe executado sob nnehuma hipótese
-		```java 
-			public int method() {
-				return 5;
-				System.out.println("Will it run?"); //unreachable code
-			}
+#### Use Java **operators**; use **parentheses** to override operator **precedence**
+- **atribuição** tipos compatíves ou o valor deverá ser = ou menos abrangente. tipos primitivos: copiamos o valor
+	-  float é menos abrangente que double `double d = 20.0f;`
+	- double não cabe em float `float f = 40.0;`
+	- inteiros (long) cabe em decimal `float h = 10l;`
+	- tipos menos abrangentes que int: **byte, short, char** compilador verifica se esta no range do tipo
+		- estoura byte:  -128 a 127 (único itervalo cobrado) `byte b = 200;` 
+		- erro: só positivo `char c2 = -1;` 
+	- cuidado c/ atribuição com variaveis de tipo mais abrangente 
+	```java
+		short s = 10; char c = s; //não compila pois s (não 10) é short q pode ser negativo
+		short s = 10; (short) char c = s; //com casting compila
+		char c = 10; short s = c; //apesar de terem 2 bytes, nao compila pois o range + do char > short (pois compensa o lado negativo q nao tem no char). Com casting funciona
+	```
+	- o lado esquerdo de uma atribuição deve ser sempre uma variável, e não uma chamada a um método ou outro literal `"guilherme".substring(0,2) = "gua";` 
+	- *referência: polimorfismo*	
+		- `List<String> names = new ArrayList<>();` <> operador diamante
+		- copiamos o valor da referência (o objeto é o mesmo)
+1.**aritméticos**
+	- **%** resto de divisão: *apenas inteiros*
+	- o tipo do resultado da operação é no minimo **int** ou o **mais abrangente** . Não importa se a operação é feita c/o variáveis ou literais
+	- o resultado é no minimo int, não importa se o tipo da variavel que for atribuida for double `double d =  5 / 2; //2` a parte decimal vai ser perdida
+		```java					
+			int age = 15; long years = 5;
+			int afterThoseYears2 = age + years;// não compila, o maior tipo era long, devolve long
+			byte b = 1;	short s = 2;
+			byte b2 = i + s; //// não compila, ele devolve no mínimo int					
 		```
-			1. `if(false){...}` compila apesar de não executar nada dentro do bloco
-		1. **missing return** não compila qdo falta um fluxo para execução d euma determinada condição. Todos os caminhos possíveis devem retornar o tipo indicado pelo método ou *lançar uma exception*
-		```java
-			public int method(int x) {
-				if(x > 200) //e se x <= 200: ??? missing return mas foi lançado a RtE para não ocorrer o erro
-					return 5;
-				throw new RuntimeException();
-			}
-		```		
-	1. Use a **switch** statement 	 
-		1. expressões c/ literais no case `case 5 + 5 : ` são validas mas  `case > 10`não são validadas. Não pode duplicar valores dos cases, mesmo usando expressões.
-		```java
-		int option = 1;		
-		switch (option) { //o argumento deverá ser sempre compatível com int, wrapper menor q Integer, String, Enum
-			case 1: //o valor de cada case deverá ser compatível com o argumento do switch. Usar literal, variavel final inicializada durante sua declaração com literal ou expressões com literal/ variavel final. null não é válido
-				System.out.println("number 1");
-				break; //para não executar os casos q vem abaixo			
-			default: //qdo nenhum caso bater. Pode aparecer no meio dos cases			
-				System.out.println("number n");				
-				break;			
-			case 2:			
-				System.out.println("number 2");				
-				break;			
-			case 3:				
-				System.out.println("number 3");				
-				break;
-		}	
+	- **divisão por 0**
+		- *inteiro* `System.out.println(200 / 0); //ArithmeticException`
+		- *decimal* `200 / 0.0; 3.0/0; 0.0/0; //compila e roda:  infinito positivo`
+		- *NaN* infinito positivo - infinito negativo
+- **comparação** == != > >= <= < 
+	- sempre devolve um boolean
+	- referencias e boolean somente com *== ou !=*
+	- pode comparar *char* com *numérico* `System.out.println('a' > 1);//true`
+	- valores numéricos não considera seu tipo
+- **lógicos**
+	- *& | * a segunda parte sempre é avaliada, podendo incrementar variaveis e tbm chamar métodos			
+	- *curto circuito && ||*  Quando já for possível determinar a resposta final olhando apenas para a primeira parte da expressão, a segunda não é avaliada
+	```java
+	System.out.println(1 == 2 & imprimir("hi"));// imprime hi, depois false
+	System.out.println(1 == 2 && imprimir("bye"));//imprime false
+	int i = 10;	System.out.println(i == 2 & i++ == 0);// imprime false, soma mesmo assim
+	int j = 10;	System.out.println(j == 2 && j++ == 0); // imprime false, não soma
+	```
+	- **^** ou exclusivo
+- **incremento/decremento**
+	- *pré* sempre a primeira coisa q é feita é o incrementar/decrementar
+	```java
+		int i = 10; System.out.println(++i); //imprime 11
+		int j =10;	System.out.println(j++); //imprime 10
+	```
+	- só pode incrementar variáveis. Não usar incremento/ decremento com métodos
+- **operações/atribuições de uma só vez**
+	```java
+	short b2 = 3; b2 += 4; // compila, dá um desconto
+	b2 += 4003245; // -76: compila também, mas estoura o byte
+	```
+- **atribuição c/ o próprio incremento** a execução é do primeiro para o último elemento das somas, temos as reduções:
+	```java
+	int a = 10;
+	a += ++a + a + ++a;			
+	a = a + ++a + a + ++a;
+	a = 10 + 11 + a + ++a;
+	a = 10 + 11 + 11 + ++a;
+	a = 10 + 11 + 11 + 12;
+	a = 44;
+	```
+- **diversas atribuições** atribuir da direita p/ esquerda 
+	```java
+	int a = 15, b= 20, c= 30; a = b = c; // b recebe c, a recebe b, a= 30 
+	int a = 15, b= 20, c= 30; a = (b = c + 5) + 5; // c + 5 = 35, b = 35, 35 + 5 = 40, a = 40
+	```
+- **ternário** `variavel = teste booleano ? verdadeiro : falso;`
+- **referencia (.) ** p/ acessar atributos ou métodos de um obj
+- **concatenação de Strings** `System.out.println(15 + ( 0 + " != 150")); // 15 + "0 != 150"; "150 != 150"	`		
+- **precedencia**
+	- pre incremento/decremento
+	- mult/ div/ % 
+	- soma/ sub
+	- pós incremento/decremento
+- **casting de primitivos**
+	- atribuição somente se *compatível* um tipo cabe no outro: 			
+	**byte -> short -> int -> long -> float -> double**  *autopromoção: qdo o tipo vai da direita p/ esquerda*			
+	**char -> int ** *autopromoção*			
+	- **casting** direita p/ esquerda. Moldar o valor de um tipo em outro. Queremos e avisamos o compilador q sabemos da possibilidade de perca de precisão/ truncamneto
+	```java
+	double d = 0, d2 = 3.1415;
+	float f = d; //não compila: double não cabe em float
+	float f = (float) d;
+	int i = (int) d2;//i= 3 (valor truncado)
+	```
+	- short e char tem o mesmo tamanho mas **char é apenas positivo**		
+#### Test equality between Strings and other objects using **==** and **equals()**
+- comparar dois objetos para ver se **apontam para o mesmo lugar**		
+```java
+	String name1 = new String("Mario");	String name2 = new String("Mario");
+	System.out.println(name1 == name2); // false: 2 objetos criados com new		
+```		
+- **Pool de Strings** 
+	- antes de criar uma nova String, verifica-se se já existe no pool uma String com mesmo conteúdo. Se já existe, não cria nova, reutiliza. 
+		`String name1 = "Mario"; String name2 = "Mario"; System.out.println(name1 == name2);	//true`
+		- Só coloca no pool Strings criadas com literais
+	- Quando concatenamos Strings (*literais em ambos os lados da concatenação*), o resultado tbm será colocado no pool `String ab = "a" + "b";System.out.println("ab" == ab);//true`
+	- Se um dos objetos concatenados não for literal, cria um novo obj fora do pool `String a = "a"; String ab = a + "b"; System.out.println("ab" == ab); // false`
+	- objetos *retornados de métodos* são novos objetos, não são buscados no pool `String str = "12 text 345678"; String txt1 = "text";String txt2 = str.substring(3, 7); System.out.println(txt1 == txt2); // false `
+		- se o retorno do método for *exatamente igual ao conteúdo da String passada*, não é criado novo objeto `String str = "HELLO WORLD";String upper = str.toUpperCase(); System.out.println(str == upper); // true `
+	- **contando Strings**				
+		```java 				
+		String h = new String ("hello ");//Cria 2 objetos, um literal (que vai para o pool) e o outro com o new
+		String h1 = "hello "; //nenhum objeto criado, usa o mesmo do pool
+		String w = "world"; //novo objeto criado e inserido no pool
+		System.out.println("hello ");//nenhum objeto criado, usa do pool
+		System.out.println(h1 + "world");//criado um novo objeto resultante da concatenação, mas este não vai para o pool: (variavel + literal)
+		System.out.println("Hello " == h1); //Novo objeto criado e colocado no pool (Hello com H maiúsculo).
+		//Logo temos 5 Strings criadas.
 		```
+		``` 
+		for(int i = 0; i< 10; i++)
+			System.out.println(method());
+		}
+		private static String method() {
+			String x = "x"; // A String será colocada no pool apenas na primeira execução do método. Apenas um objeto String será criado
+			return x.toString();
+		}
+		```
+- **equals** sobreescrever método com seu critério de igualdade
+	- **==** *true* qdo comparando os mesmos objetos na memória 		
+		```java
+		System.out.println(s1.equals(s3)); // String mesmo conteúdo: true
+		new Client("Mario").equals(new Client("Mario"));//false : apesar do mesmo conteúdo, vc deverá sobreescrever o método equals na classe Client
+		
+		public boolean equals(Client second) {
+			return this.name.equals(second.name);
+		}
+		
+		new Client("Mario").equals(new Client("Mario"));//true
+		```	
+#### Create **if** and **if/else** and **ternary** constructs
+- controlar o *fluxo de execução* dos programas
+- a **condição** de um if deverá ser um valor **booleano** `if (2 - 1) \\erro: inteiro`
+- não existe *elseif* usar **else if**
+- **unreachable code** não compila qdo o código não foe executado sob nnehuma hipótese
+```java 
+	public int method() {
+		return 5;
+		System.out.println("Will it run?"); //unreachable code
+	}
+```
+	- `if(false){...}` compila apesar de não executar nada dentro do bloco
+- **missing return** não compila qdo falta um fluxo para execução d euma determinada condição. Todos os caminhos possíveis devem retornar o tipo indicado pelo método ou *lançar uma exception*
+```java
+	public int method(int x) {
+		if(x > 200) //e se x <= 200: ??? missing return mas foi lançado a RtE para não ocorrer o erro
+			return 5;
+		throw new RuntimeException();
+	}
+```		
+#### Use a **switch** statement 	 
+- expressões c/ literais no case `case 5 + 5 : ` são validas mas  `case > 10`não são validadas. Não pode duplicar valores dos cases, mesmo usando expressões.
+```java
+int option = 1;		
+switch (option) { //o argumento deverá ser sempre compatível com int, wrapper menor q Integer, String, Enum
+	case 1: //o valor de cada case deverá ser compatível com o argumento do switch. Usar literal, variavel final inicializada durante sua declaração com literal ou expressões com literal/ variavel final. null não é válido
+		System.out.println("number 1");
+		break; //para não executar os casos q vem abaixo			
+	default: //qdo nenhum caso bater. Pode aparecer no meio dos cases			
+		System.out.println("number n");				
+		break;			
+	case 2:			
+		System.out.println("number 2");				
+		break;			
+	case 3:				
+		System.out.println("number 3");				
+		break;
+}	
+```
 
 1. Using **Loop** Constructs 
 	1. Create and use **while** loops
