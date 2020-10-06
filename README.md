@@ -2,8 +2,7 @@
 
 [Java Basics](#Java-Basics)
 
-### Java Basics
-1. Java Basics
+### 1. Java Basics
 	1. Define the **scope of variables**
 		1. **for**: as variaveis declaradas na área de inicialização do loop só podem ser usadas no corpo do loop
 		1. **parametros de métodos** : variaveis locais dos métodos. Não podemos declarar novas variaveis locais com o mesmo nome
@@ -49,6 +48,7 @@
 		1. Cada objeto deve ter *única responsabilidade*, favorecer *reuso de código* e cada mudança no comportamento *reflete em todos os lugares* onde o objeto é usado.
 		1. *Encapsulamento* *privar* atributos e implmentação p/ q outros objetos manipule esses atributos. Liberar apenas por meio de métodos *public*		
 	1. [[↑] Back to top](#Anotações-para-certificação-OCA-Programmer-1Z0-808)
+
 1. Using **Operators** and **Decision** Constructs 
 	1. Use Java **operators**; use **parentheses** to override operator **precedence**
 		1. **atribuição** tipos compatíves ou o valor deverá ser = ou menos abrangente. tipos primitivos: copiamos o valor
