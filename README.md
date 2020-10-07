@@ -1,7 +1,7 @@
 ## Anotações para certificação OCA Programmer 1Z0-808
 
 [Java Basics](#Java-Basics)
-
+[Define the scope of variables](#Define-the-scope-of-variables)
 [Using Operators and Decision Constructs](#Using-Operators-and-Decision-Constructs)
 
 [Using Loop Constructs](#Using-Loop-Constructs) 
@@ -19,7 +19,8 @@
 [Handling Exceptions](#Handling-Exceptions)
 
 ### Java Basics
-#### Define the **scope of variables**
+
+#### Define the scope of variables
 - **for**: as variaveis declaradas na área de inicialização do loop só podem ser usadas no corpo do loop
 - **parametros de métodos** : variaveis locais dos métodos. Não podemos declarar novas variaveis locais com o mesmo nome
 - variáveis **static** podem ser acessadas por uma referencia ou diretamente pela classe
@@ -226,7 +227,7 @@
 		throw new RuntimeException();
 	}
 ```		
-#### Use a **switch** statement 	 
+#### Use a switch statement 	 
 - expressões c/ literais no case `case 5 + 5 : ` são validas mas  `case > 10`não são validadas. Não pode duplicar valores dos cases, mesmo usando expressões.
 ```java
 int option = 1;		
@@ -284,7 +285,7 @@ int a = 1, b = 2;
 		System.out.println("OI");			
 ```
 
-#### Create and use **for** loops including the **enhanced for** loop
+#### Create and use for loops including the enhanced for loop
 - *inicialização*
 	- executada apenas 1x no começo do for. 
 	- Permitido declarar variaveis de um mesmo tipo `for(int i = 1, j= 2;;){/code}` ou inicializar diversas variáveis de tipos diferentes. `for(a=1, b=2.0, c = true;;){//code}`
@@ -365,10 +366,11 @@ class Y extends X { public void method2(int x){this.x = x; //erro: nao enexerga 
 	- podemos escrever um método *static* na classe filha c/ o mesmo nome da classe pai mas não é *sobreescrita*
 	- **binding do polimorfismo**  o método chamado é do pai ou da filha ?
 		- *método de instancia*  tempo de execução. 
-		- *método static*  tempo de compilação. Ignora o tipo de objeto referenciado. Utiliza o método da ref
+		- *método static*  tempo de compilação. Ignora o tipo de objeto referenciado. Utiliza o método da ref. Não há polimorfismo com métodos static
+		- *variaveis membro* polimorfismo apenas p/ métodos não static. As variaveis são sempre da ref.
 - **não existe sobreescrita de atributos**  Vai ter o atributo com o mesmo nome da classe mãe, acessível com **super** ou da própria classe q sobreescreveu, acessível com **this**
 - **toString** sobreescrever de *Object* p/ devolver uma String q represente o objeto ```public String toString()```
-#### Develop code that makes use of **polymorphism**; develop code that **overrides methods**;  differentiate between the **type of a reference** and the **type of an object**
+#### Develop code that makes use of polymorphism; develop code that overrides methods;  differentiate between the type of a reference and the type of an object
 - **reescrita, sobrescrita** : subclasse redefine o comportamento do método herdado da superclasse
 	- **polimorfismo** : 
 		- *binding* : (lookup)
@@ -413,7 +415,8 @@ class Y extends X { public void method2(int x){this.x = x; //erro: nao enexerga 
 	- mudamos o tipo da referência mas nunca o *tipo do objeto*. Chamamos (referencimos) o obj de várias formas diferentes
 	- referenciar pelo seu próprio tipo, classes pai, qualquer interface
 	- método default ou private do pai em pacotes diferentes : não há sobreescrita. o binding só consegue acesso ao método que esta no mesmo pacote (da própria referencia)			
-#### Determine when **casting** is necessary
+#### Determine when casting is necessary
+- `((Y)x2).do2();` antes de invocar o método, é feito casting da variavel de referencia por causa do ()
 - o compilador não conhece os valores das variáveis, apenas seu tipo `String recovered = objetos[0];` nem todo object é uma String
 - *moldar* a referencia p/ q compile `String recovered = (String) objetos[0];`
 - na **execução**, o casting vai ver se aquele objeto é compatível com o tipo do casting
@@ -466,7 +469,7 @@ String s = "a"; boolean b = s instanceof java.util.List; // obviamente incompat�
 - manter a visibilidade dos modificadores 
 - uma classe pode implementar diversar interfaces `abstract class MyType implements Serializable, Runnable`
 - uma interface pode herdar de diversas interfaces `interface C extends Runnable, Serializable {}`
-- declarar *variaveis* membro em uma interface: todas elas serão *constantes* `interface X {/* public static final */ int i = 5;}
+- declarar *variaveis* membro em uma interface: todas elas serão *constantes* `interface X {/* public static final */ int i = 5;}`
 
 [[↑] Back to top](#Anotações-para-certificação-OCA-Programmer-1Z0-808)
 
@@ -844,8 +847,11 @@ int getLength() {return lastname.length();} //compila e roda
 	- pode passar instruções/métodos *static* como argumento `Test() {this(value());} private static String value() {return "value...";} Test(String s) {System.out.println(s);}`
 		- não compila se passar métodos não static. O obj não terminou de ser construido ainda durante a execução do construtor
 - *loops* não compilam
-- metodo com parametros *varargs* . Se existe uma sobrecarga do método s/ parametros, inovacamos sem argumentos, o método chamado é o s/ argumentos		
-#### Apply **access modifiers**
+- metodo com parametros *varargs* 
+	- Se existe uma sobrecarga do método s/ parametros, invocamos sem argumentos, o método chamado é o s/ argumentos
+	- métodos sobrecarregados c/ varargs são invocados por último. Dado prioridade aos métodos assinados c/ array ou objeto.
+	
+#### Apply access modifiers
 - *visibilidade*
 - usar um único modificador de acesso por vez
 - classes e interfaces só podem ser *default* ou *public*
@@ -856,8 +862,9 @@ int getLength() {return lastname.length();} //compila e roda
 	- **default** *package private* visivel apenas dentro do mesmo pacote. 
 		- Mesmo com *import*, as classes default não são visíveis. 
 		- Se existem outras classes publicas no import, não ocorre erro na linha do import. Se importar especificamente uma classe default, o erro tbm é na instrução do import
-	- **private** só podem ser acessadas de dentro da classe		
-#### Apply **encapsulation** principles to a class (*information hiding*)		
+	- **private** só podem ser acessadas de dentro da classe
+	
+#### Apply encapsulation principles to a class (information hiding)		
 - *assinatura* do método é o que importa p/ o usuário da classe
 - é *o q ela faz* e não como q ela faz
 - *interface de uso* conjunto de assinaturas de métodos visiveis dentro de uma classe
