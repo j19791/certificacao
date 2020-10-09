@@ -1,7 +1,7 @@
 ## Anotações para certificação OCA Programmer 1Z0-808
 
 [Java Basics](#Java-Basics)
-[Define the scope of variables](#Define-the-scope-of-variables)
+
 [Using Operators and Decision Constructs](#Using-Operators-and-Decision-Constructs)
 
 [Using Loop Constructs](#Using-Loop-Constructs) 
@@ -26,6 +26,7 @@
 - variáveis **static** podem ser acessadas por uma referencia ou diretamente pela classe
 - variaveis de classe e de instancia não podem ter o mesmo nome
 - **shadowing** : declarar em métodos variaveis locais ou de parametros com o mesmo nome da variavel de instancia. Usar **this** para referenciar variaveis de instancia. Se nã usar this, o compilador vai usar a variável de menor escopo.
+- **final** : garante que a referencia de objeto não pode referenciar outro objeto mas pode mudar o estado do objeto que é referenciado `final Fizz z = x; z.x = 6;`
 #### Define the **structure** of a Java **class**
 - **default package** : qdo não declara explitamente um pacote. Não podem ser importadas para uso em outros pacotes.
 - **membros de classe**: variaveis de instancia, construtores e métodos. Podemos ter membros de tipos diferentes com o mesmo nome.
@@ -153,7 +154,7 @@
 - **casting de primitivos**
 	- atribuição somente se *compatível* um tipo cabe no outro: 			
 	**byte -> short -> int -> long -> float -> double**  *autopromoção: qdo o tipo vai da direita p/ esquerda*			
-	**char -> int ** *autopromoção*			
+	**char -> int** *autopromoção*			
 	- **casting** direita p/ esquerda. Moldar o valor de um tipo em outro. Queremos e avisamos o compilador q sabemos da possibilidade de perca de precisão/ truncamneto
 	```java
 	double d = 0, d2 = 3.1415;
@@ -161,7 +162,8 @@
 	float f = (float) d;
 	int i = (int) d2;//i= 3 (valor truncado)
 	```
-	- short e char tem o mesmo tamanho mas **char é apenas positivo**		
+	- short e char tem o mesmo tamanho mas **char é apenas positivo**
+	- `static short method(short s){}; method(7); //erro` passagem de um valor de um tipo mais abrangente num metodo para um parametro de tipo menos abrangente não compila devido a perda de informação. Utilizar cast qdo possível
 #### Test equality between Strings and other objects using **==** and **equals()**
 - comparar dois objetos para ver se **apontam para o mesmo lugar**		
 ```java
