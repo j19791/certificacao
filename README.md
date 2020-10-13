@@ -106,6 +106,7 @@
 	- referencias e boolean somente com *== ou !=*
 	- pode comparar *char* com *numérico* `System.out.println('a' > 1);//true`
 	- valores numéricos não considera seu tipo
+	- não é possível comparar primitivo c/ array
 - **lógicos**
 	- *& | * a segunda parte sempre é avaliada, podendo incrementar variaveis e tbm chamar métodos			
 	- *curto circuito && ||*  Quando já for possível determinar a resposta final olhando apenas para a primeira parte da expressão, a segunda não é avaliada
@@ -430,7 +431,7 @@ class Y extends X { public void method2(int x){this.x = x; //erro: nao enexerga 
 - podemos implementar **multiplas interfaces**. Fazer casting p/ *interfaces* sempre vai compilar/executar `Car c = new Car();Runnable r = (Runnable) c;`
 - classe Car não implementa Runnable mas existe a possibilidade de algum tipo Car implementar a interface Runnable ?? Compila mas em tempo de execução pode dar erro se não tem o RunnableCar
 - se Car fosse *final*, e não implemente Runnable. Nenhuma filha de Car poderá implementar Runnable e o código não compila
-- **instanceof**
+- **instanceof** um obj pode ser uma instância dos seus pais não importa se são classes ou interfaces
 ```java
 Object c = new Car();
 boolean b1 = c instanceof Car; // true
