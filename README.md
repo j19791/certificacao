@@ -43,7 +43,7 @@
 - Passando **propriedades** na execução: java *-Dkey1=abc -Dkey2=def* Foo xpto bar 
 - **classpath**: diretorios, jar que contem as classes e pacotes da aplicação. Padrão é o *diretório corrente (.)* 
 - compilar a classe A.java, definida dentro do pacote b e adicionar o jar program.jar na busca de classes durante a compilação (.) diretório atual `javac -cp program.jar:. b/A.java`
-- rodar um .class de dentro de um jar `java cp /path/to/lib.jar pacote.Test
+- rodar um .class de dentro de um jar `java cp /path/to/lib.jar pacote.Test`
 - Criar um jar da pasta certification: *jar **-cf library.jar** certification*		
 #### Import other Java packages to make them accessible in your code
 - Classes *se enxergam* se estão no **mesmo pacote**
