@@ -41,6 +41,10 @@
 - **.class** é o *bytecode* gerado pelo *javac*
 - compilando e rodando c/ *package certification*  `javac certification/Test.java; java certification.Test`
 - Passando **propriedades** na execução: java *-Dkey1=abc -Dkey2=def* Foo xpto bar 
+```java
+java.util.Properties p = System.getProperties();
+p.getProperty("key1");		
+```
 - **classpath**: diretorios, jar que contem as classes e pacotes da aplicação. Padrão é o *diretório corrente (.)* 
 - compilar a classe A.java, definida dentro do pacote b e adicionar o jar program.jar na busca de classes durante a compilação (.) diretório atual `javac -cp program.jar:. b/A.java`
 - rodar um .class de dentro de um jar `java cp /path/to/lib.jar pacote.Test`
