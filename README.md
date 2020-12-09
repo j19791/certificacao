@@ -48,7 +48,15 @@ p.getProperty("key1");
 - **classpath**: diretorios, jar que contem as classes e pacotes da aplicação. Padrão é o *diretório corrente (.)* 
 - compilar a classe A.java, definida dentro do pacote b e adicionar o jar program.jar na busca de classes durante a compilação (.) diretório atual `javac -cp program.jar:. b/A.java`
 - rodar um .class de dentro de um jar `java cp /path/to/lib.jar pacote.Test`
-- Criar um jar da pasta certification: *jar **-cf library.jar** certification*		
+- Criar um jar da pasta certification: *jar **-cf library.jar** certification*
+- **printf** %[index$][flags][width][.precision]type
+	- type
+		- %b boolean
+		- %c char
+		- %d inteiros
+		- %f decimais
+		- %s String
+		- %n Quebra de linha
 #### Import other Java packages to make them accessible in your code
 - Classes *se enxergam* se estão no **mesmo pacote**
 - usar o **Full Qualified name** para acessar a *public class*  de outro pacote
@@ -91,9 +99,9 @@ p.getProperty("key1");
 	- *referência: polimorfismo*	
 		- `List<String> names = new ArrayList<>();` <> operador diamante
 		- copiamos o valor da referência (o objeto é o mesmo)
-1.**aritméticos**
+- **aritméticos**
 	- **%** resto de divisão: *apenas inteiros*
-	- o tipo do resultado da operação é no minimo **int** ou o **mais abrangente** . Não importa se a operação é feita c/o variáveis ou literais
+	- o tipo do resultado da operação com variaveis é no minimo **int** ou o **tipo mais abrangente** . Não importa se a operação é feita c/o variáveis ou literais
 	- o resultado é no minimo int, não importa se o tipo da variavel que for atribuida for double `double d =  5 / 2; //2` a parte decimal vai ser perdida
 		```java					
 			int age = 15; long years = 5;
