@@ -57,6 +57,19 @@ p.getProperty("key1");
 		- %f decimais
 		- %s String
 		- %n Quebra de linha
+	- index: a primeira posição é 1
+	- width: qtd minima de caracteres p/ imprimir. Completa c/ espaçoes à esquerda ou não faz nada qdo ultrapassar o valor especificado
+	- flags: 
+		- + inclui sinal positivo ou negativo nos numeros
+		- ( numeros negativos aparecem entre parenteses
+		- -n alinha à esquerda: precisa do tamanho n
+		- 0n completa c/ zeros a esquerda. Precisa do tamanho n. Com String gera exception
+		- , habilita separação de casa milhar e decimal. Pode ser usado com Locale 
+		```
+		Locale br = new Locale("pt","BR");
+		System.out.printf(br,"%,f %n", 123456.789); // 123.456,789000
+		```
+		- .n numero de casas depois do separador decimal. Precisa de n casas
 #### Import other Java packages to make them accessible in your code
 - Classes *se enxergam* se estão no **mesmo pacote**
 - usar o **Full Qualified name** para acessar a *public class*  de outro pacote

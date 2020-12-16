@@ -25,8 +25,23 @@ class FormatacaoTest{
 		System.out.printf("%2$s %1$s", "Hello", "World"); //index : p/ fugir da ordem sequencial - atenção: começa do 1
 		
 		//MissingFormatArgumentException: não tem o index 3
-		//System.out.printf("%3$s %1$s", "Hello", "World"); 		
+		//System.out.printf("%3$s %1$s", "Hello", "World"); 	
 
+		//width		
+		int $i = 1;
+		byte $_j = -1;
+
+
+		System.out.printf("%n Testando width: %1$5d", $i); //incluir espaço de 5 caracteres p/ imprimir, alinhado a direita
+
+				double _1$ = 1.0;
+
+		//flags
+		System.out.printf("%n Testando flags: %1$+5d; %d", $_j); //incluir + /-
+	
+		System.out.printf("%n Testando flags: %1$+d", $i); 
+
+		System.out.printf("%n com separador decimal: %1$,f", _1$)		;
 		
 	}
 
