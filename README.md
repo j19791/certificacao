@@ -109,11 +109,11 @@ p.getProperty("key1");
 		char c = 10; short s = c; //apesar de terem 2 bytes, nao compila pois o range + do char > short (pois compensa o lado negativo q nao tem no char). Com casting funciona
 	```
 	- o lado esquerdo de uma atribuição deve ser sempre uma variável, e não uma chamada a um método ou outro literal `"guilherme".substring(0,2) = "gua";` 
-	- *referência: polimorfismo*	
+	- **referência: polimorfismo**
 		- `List<String> names = new ArrayList<>();` <> operador diamante
 		- copiamos o valor da referência (o objeto é o mesmo)
 - **aritméticos**
-	- **%** resto de divisão: *apenas inteiros*
+	- **%** resto de divisão. O tipo resultado segue a regre das outras operações 
 	- o tipo do resultado da operação com variaveis é no minimo **int** ou o **tipo mais abrangente** . Não importa se a operação é feita c/o variáveis ou literais
 	- o resultado é no minimo int, não importa se o tipo da variavel que for atribuida for double `double d =  5 / 2; //2` a parte decimal vai ser perdida
 		```java					
@@ -170,7 +170,7 @@ p.getProperty("key1");
 	int a = 15, b= 20, c= 30; a = (b = c + 5) + 5; // c + 5 = 35, b = 35, 35 + 5 = 40, a = 40
 	```
 - **ternário** `variavel = teste booleano ? verdadeiro : falso;`
-- **referencia (.) ** p/ acessar atributos ou métodos de um obj
+- **referencia . ** p/ acessar atributos ou métodos de um obj
 - **concatenação de Strings** `System.out.println(15 + ( 0 + " != 150")); // 15 + "0 != 150"; "150 != 150"	`		
 - **precedencia**
 	- pre incremento/decremento
@@ -246,7 +246,7 @@ p.getProperty("key1");
 		System.out.println("Will it run?"); //unreachable code
 	}
 ```
-	- `if(false){...}` compila apesar de não executar nada dentro do bloco
+	- ` if(false){...} ` compila apesar de não executar nada dentro do bloco
 - **missing return** não compila qdo falta um fluxo para execução d euma determinada condição. Todos os caminhos possíveis devem retornar o tipo indicado pelo método ou *lançar uma exception*
 ```java
 	public int method(int x) {
@@ -282,7 +282,8 @@ switch (option) { //o argumento deverá ser sempre compatível com int, wrapper 
 - a *condição* deve ser *booleano*
 - pode ter uma operação na condição `while (i++<10)`
 - Roda enquanto a condição for *true*. executado repetidamente até a condição se tornar *false*		
-- qdo o loop é explicitamente *infinito* e tem código depois do loop, não compila
+- qdo o loop é explicitamente *infinito* e tem código depois do loop, não compila (unreachable statement). 
+- Se não tem código depois do loop, compila e executa infinitamente.
 ```java
 while(true) { // true, true, true ...
 	System.out.println("do something");
@@ -306,7 +307,7 @@ return 1; // ok
 
 - **unreachable statement** compile error. O compilador só consegue analisar o código com *literais ou constantes*
 ```java		
-`	while(false) { /* code */ } //nao compila
+while(false) { /* code */ } //nao compila
 while(1 > 2) { /* code */ }	//nao compila		
 int a = 1, b = 2;
 	while(a > b) // compila
@@ -316,7 +317,7 @@ int a = 1, b = 2;
 #### Create and use for loops including the enhanced for loop
 - *inicialização*
 	- executada apenas 1x no começo do for. 
-	- Permitido declarar variaveis de um mesmo tipo `for(int i = 1, j= 2;;){/code}` ou inicializar diversas variáveis de tipos diferentes. `for(a=1, b=2.0, c = true;;){//code}`
+	- Permitido declarar variaveis de um mesmo tipo `for(int i = 1, j= 2;;){//code}` ou inicializar diversas variáveis de tipos diferentes. `for(a=1, b=2.0, c = true;;){//code}`
 - *condição* verificada no começo de cada iteração. default: *true*
 	- cuidado c/ unreachable code `for(;false;) {System.out.println("a");break;} System.out.println("b"); //código dentro e depois do bloco do for nunca será executado pois false é literal` 
 - *comandos*
@@ -610,6 +611,7 @@ while (iterator.hasNext()) { //retorna booleano indicando se ainda há elementos
 - trecho de código que pode ser passado como *parametro* para um método ou armazenado numa *variável*
 - *interface funcional* apenas com 1 método
 - *Predicate* interface q recebe um *objeto* e retorna um *boolean*
+- `import java.util.function.*;` 
 ```java
 Predicate<Person> matcher = new Predicate<Person>() { //classe anonima
 	@Override
