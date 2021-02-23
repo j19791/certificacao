@@ -505,6 +505,7 @@ String s = "a"; boolean b = s instanceof java.util.List; // obviamente incompat�
 ### Working with Selected classes from the **Java API** 
 
 #### Manipulate data using the **StringBuilder** class and its methods
+- StringBuffer (thread-safe) e StringBuilder têm exatamente a mesma interface. Use sempre que possível a StringBuilder qdo não há compartilhamento entre threads (+ rápida por não tratar locks).
 - StringBuilder são *mutáveis*
 - concatenar *append* `StringBuffer sb = new StringBuffer();sb.append("Caelum");sb.append(" - ");sb.append("Alura - Casa do Código"); //// Caelum - Alura - Casa do Código`
 - criar objeto do tipo StringBUilder `new StringBuilder(); StringBuilder sb2 = new StringBuilder("java");StringBuilder sb3 = new StringBuilder(50) /* tamamnho inicial do array (length = 0)*/;StringBuilder sb4 = new StringBuilder(sb2);`
@@ -519,13 +520,13 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 - *substring* não altera o valor do seu StringBuilder ou StringBuffer , mas retorna a String que você deseja.
 - *indexOf* e *lastIndexOf* retornam -1 qdo não encontra
 #### Create and manipulate **Strings**
-- *imutáveis* 
+- *imutáveis* : o valor da String não muda quando usada um método seu. Só muda quando é feita uma re-atribuição p/ a mesma variavel.
 - criar `String implicit = "Java";String explicit = new String("Java"); char[] name = new char[]{'J', 'a', 'v', 'a'}; String fromArray = new String(name); String nameBuilder = new String(new StringBuilder("Java"));`
 - não é um tipo primitivo, pode ter valor *null* `String name = null; // explicit null`
 - não compila. Não existe construtor q recebe null `new String(null);`
 - *NullPointerException* `String s = null; String s2 = new String(s);`		
 - deverá ser sempre inicializada dentro de métodos, mesmo com null
-- conversão de *null* para String na concatenação `String nulled = null; System.out.println("value: " + nulled); /* value: null */ System.out.println(nulled + " value"); // null value
+- conversão de *null* para String na concatenação `String nulled = null; System.out.println("value: " + nulled); /* value: null */ System.out.println(nulled + " value"); // null value`
 - conversão de *primitivos* p/ String `String name = "Java" + ' ' + "Certification" + ' ' + 1500; //Java Certification 1500`
 - na concatenação, tbm existe a precedencia de operadores `String value = 15 + 00 + " certification"; \\ 15 certification`
 - todos os métodos devolvem uma nova String
@@ -534,7 +535,7 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 	"".isEmpty(); /*true*/ " ".isEmpty(); /*false*/
 	substring(beginIndex, endIndex); /* inclui o caractere da posição inicial mas não o da final */ subString(beginIndex); /*a partir do indice passado até o fim */
 	"Java".substring(0, 4); /*Java*/ "Java".substring(0, 3)); /*Jav*/; //limite do endIndex é 4 nesse caso pois p/ descobrir o endIndex é 4-1 = 3 entao o substring vai de 0 a 3. Se beginIndex e endIndex for igual, nao retorna nada e nao da erro.
-	replace(oldChar, newChar); /*substitui as ocorrências de um char por outro*/ replace(CharSequence target,CharSequence replacement); //atenção: não existe replace sobrecarregado c/ (String, char) ou (char, String)
+	replace(oldChar, newChar); /*substitui as ocorrências de um char por outro*/ replace(CharSequence target,CharSequence replacement); //atenção: não existe replace sobrecarregado c/ (String, char) ou (char, String). É case sensitive
 	trim() /*limpa os caracteres brancos das duas pontas do String*/
 	"Certification".compareTo("certification"); /* -32 lexicográfico: dictionary order, except that all the uppercase letters preceed all the lowercase letters. Retorna negativo caso a  String na qual o método for invocado vier antes;zero se for igual; positivo se vier depois do parâmetro passado */
 ```
@@ -677,7 +678,7 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 		- **ponto flutuante** Pode assumir +/- infinity , +/- 0, NaN . Literal com casa decimal é double
 			- *float* F f 
 			- *double* *d* *D* para explicitar na inicialização 
-			- *notação cientifica* `double d = 3.1E2 /*310.0*/; float f = 1E4F /* 10000.0f*/;`				
+			- *notação cientifica* o literal default é double `double d = 3.1E2 /*310.0*/; float f = 1E4F /* 10000.0f*/;`				
 	- **não numerico**
 		- *boolean*
 - **literais** valores das variáveis diretamente no código fonte
@@ -685,7 +686,9 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 	- *null, false, true* são literais e tbm palavras chaves
 - **identificadores** palavras p/ nomear variaveis, métodos, construtores, classes, interfaces
 	- não pode ser palavra chave
-	- Podem usar letras (unicode), números, $ e _ ; 
+	- Podem usar letras (unicode), números, $ e _ ;
+	- unicode `char \u0062 = 'a'; ` \u0062 é b
+	- `ch\u0061r c = 'a';` funciona
 	- *-#.* não pode
 	- O primeiro caractere não pode ser um número;
 	- não tem limite de tamanho
@@ -747,8 +750,7 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 - armazenamento sequencial de variveis em memória de um tipo
 - são objetos
 - *primitivos*
-	- *declarar* `int[] age;` e suas variações
-		- `Boolean []ba[];` é válido
+	- *declarar* `int[] age;` e suas variações		
 	- *inicialização* 
 		- **new** criação do novo obj e inicializadas implicitamente c/ vlr default. 
 		- S/ o **new** Variaveis membro assumem vlr default. Variaveis locais ficam sem valor mesmo, podendo ocorrer erro de compilação
