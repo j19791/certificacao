@@ -80,6 +80,7 @@ p.getProperty("key1");
 	- Pode importar apenas 1 pacote e usar o *fqn* para declarar o tipo da variável.
 	- `import java.util.*; import java.sql.Date`  vai ser usado do Date do pacote sql (mais específico)
 	- import duplicado compila normalmente
+	- import não importa membros especificos da classe. Importa a classe e todos os seus membros.
 - pacote **java.lang.\*** são implicitamente importadas. *String*
 - **import static** importa todos os membros *static* da classe Utils.  `import static model.Utils.*`
 	- Atenção, o import static não importa a classe	
@@ -420,8 +421,8 @@ class Y extends X { public void method2(int x){this.x = x; //erro: nao enexerga 
 	- *parametros* iguais em tipo e ordem
 	- *retorno* do método igual ou mais específico (covariante). Não vale p/ primitivos
 	- *visibilidade* igual ou maior q a mãe
-	- número de *exceptions* lançadas *throws* devem ser o mesmo ou menor. Elas devem ser do mesmo tipo ou mais específico.
-		- *RuntimeException* podem ser adicionadas s/ a restrição
+	- número de *exceptions* checked lançadas *throws* devem ser o mesmo ou menor. Elas devem ser do mesmo tipo ou mais específico.
+		- *RuntimeException* e suas filhas que tbm são unchecked podem ser adicionadas s/ a restrição
 	- método da mãe não pode ser *final*
 	- *interface* : os métodos são implicitamente *public*
 	```java
@@ -476,6 +477,7 @@ String s = "a"; boolean b = s instanceof java.util.List; // obviamente incompat�
 	- classe mae e filha com variaveis membro de mesmo nome. Diferenciar usando *this* para a variavel da propria classe e *super* para acessar a variavel da mãe
 	- se não incluir *this* ou *super* será acessado a variavel membro da filha
 	- método **static** não tem *super* e *this* : o código não é executado dentro de um objeto
+	- *this* pode ser usada p/ acessar variaveis membro *static* s/ problemas 
 	```java
 	class A{int i = 5;}
 	class Test extends A{int i = 10;
@@ -943,8 +945,10 @@ int getLength() {return lastname.length();} //compila e roda
 	- multiplos catchs: invocado somente o + adequado. 
 		- A ordem importa: o JVM procura o 1º catch q pode trabalhar a exception adequada. 
 		- *unreachable code* Quando tem polimorfismo em multiplos catches, priorizar na ordem os mais especificos
+		- se ocorrer um erro dentro do bloco catch, o erro é jogado p/ fora do bloco e o bloco pai que deverá ou não tratar esse erro.
 - **finally** seja no sucesso ou no fracasso, temos a obrigação de cumprir certas tarefas. Conexão deveria ser fechada, por exemplo
 	- pode usar finally s/ o catch
+	- finally jamais devera vir antes do catch: a ordem tem q ser try + catch ou try + finally ou try + catch + finally
 #### Describe the **advantages** of Exception handling 
 #### Create and invoke a **method that throws an exception**
 - um método eventualmente  não tem condições de tratar um determinado erro de execução
@@ -980,6 +984,7 @@ int getLength() {return lastname.length();} //compila e roda
 * java.util Calendar, Date, ArrayList
 * java.sql Date, SQLException
 * (implicito) java.lang String 
+* java.lang.Math.* 
 	
 ## dicas
 * Nenhuma palavra-chave em Java possui caractere maiúsculo

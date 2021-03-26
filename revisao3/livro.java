@@ -1,3 +1,26 @@
+ import java.util.*;
+ import java.util.Locale;
+// import java.util.Locale.UK; UK não é uma classe
+ import java.util.Locale.*;
+ //import static java.util.*; //import static nao importa classe
+ //import static java.util.Locale; //import static nao importa classe
+ //import static java.util.Locale.UK;
+ import static java.util.Locale.*;
+
+
+import static java.lang.Math.sqrt; 
+import static java.lang.Math.*;
+
+//nao funciona os imports abaixo
+//import static Math.*;
+//import static Math.sqrt;
+
+import p1.Importada;
+import p1.Importada.*; //?? nao da pra criar uma pasta chamada Importada com uma classe Importada dentro da pasta p1
+import p1.ImportadaPac.*; 
+import static p1.Importada.construir;
+
+
 class Livro{
 
 	String teste;
@@ -170,3 +193,66 @@ class RQ800_20 {
 				
 	}
 }
+
+class RQ700_20 {
+	public static void main(String[] args) {
+		System.out.println(sqrt(49));
+	}
+}
+
+class RQ700_10 {
+	public static void main(String[] args) {
+		System.out.println(Locale.UK); // Locale string for UK is "en_GB".
+}
+}
+
+
+class TestaImports{
+
+	public static void main(String args[]){
+
+		p1.Importada $i = Importada.construir();
+		$i.getSb();
+		p1.ImportadaPac.A a;
+	}
+
+
+}
+
+class TestaStatic{
+
+	static int i;
+	int j;
+
+	int getStatic(){
+		return i++;	
+	}
+
+	static int testar(){
+		return i;
+	}
+
+	/*static int testarMStaticVNS(){
+		return j; non-static var nao pode ser acessada dentro de um metodo static
+	}*/
+
+	int getMethodStatic(){
+
+		return testar();
+	}
+
+	public static void main(String[] args){
+
+		new TestaStatic().getStatic();
+		new TestaStatic().getMethodStatic();
+		new TestaStatic().testar(); //non-static context pode chamar metodo static
+		TestaStatic.testar();
+		//TestaStatic.getMethodStatic(); static-context nao pode chamar um metodo nao static
+		
+	}
+
+
+}
+
+
+
