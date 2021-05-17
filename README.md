@@ -511,6 +511,7 @@ String s = "a"; boolean b = s instanceof java.util.List; // obviamente incompat�
 - StringBuilder são *mutáveis*
 - concatenar *append* `StringBuffer sb = new StringBuffer();sb.append("Caelum");sb.append(" - ");sb.append("Alura - Casa do Código"); //// Caelum - Alura - Casa do Código`
 - criar objeto do tipo StringBUilder `new StringBuilder(); StringBuilder sb2 = new StringBuilder("java");StringBuilder sb3 = new StringBuilder(50) /* tamamnho inicial do array (length = 0)*/;StringBuilder sb4 = new StringBuilder(sb2);`
+- não compila se tentar criar atribuindo diretamente uma String `StringBuilder b = "rumble";//nao compila` 
 - permite chamadas encadeadas : `new StringBuffer().append("Caelum").append(" - ").append("Ensino e Inovação") // Caelum - Ensino e Inovação`
 ```java
 StringBuffer sb = new StringBuffer();
@@ -521,6 +522,7 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 ```
 - *substring* não altera o valor do seu StringBuilder ou StringBuffer , mas retorna a String que você deseja.
 - *indexOf* e *lastIndexOf* retornam -1 qdo não encontra
+- não compila quando tenta comparar String e StringBuilder usando ==
 #### Create and manipulate **Strings**
 - *imutáveis* : o valor da String não muda quando usada um método seu. Só muda quando é feita uma re-atribuição p/ a mesma variavel.
 - criar `String implicit = "Java";String explicit = new String("Java"); char[] name = new char[]{'J', 'a', 'v', 'a'}; String fromArray = new String(name); String nameBuilder = new String(new StringBuilder("Java"));`
@@ -542,6 +544,7 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 	"Certification".compareTo("certification"); /* -32 lexicográfico: dictionary order, except that all the uppercase letters preceed all the lowercase letters. Retorna negativo caso a  String na qual o método for invocado vier antes;zero se for igual; positivo se vier depois do parâmetro passado */
 ```
 - *StringIndexOutOfBoundsException* `"guilherme".charAt(20); "guilherme".charAt(-1);`
+- Variável String não pode ser atribuida com valores númericos, booleano ou char a menos que exista uma concatenação com uma String (literal ou variável). `String $s = 1 + "" +  false + "" + 'a';`
 #### Create and manipulate calendar data using classes from **java.time.LocalDateTime,  java.time.LocalDate, java.time.LocalTime, java.time.format.DateTimeFormatter, java.time.Period**
 - *imutáveis*
 - *LocalDate* yyyy-MM-dd
@@ -549,6 +552,7 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 - *LocalDateTime* yyyy-MM-dd-hh:mm::ss.zzz
 - *MonthDay* MM-dd
 - *YearMonth* yyyy-MM
+- atenção: LocalDate, LocalTime e LocalDateTime não possuem construtor
 - *now()* criando `LocalTime currentTime = LocalTime.now(); LocalDate.now(ZoneId.of("America/Sao_Paulo"));`
 - *of()* `LocalTime meioDia = LocalTime.of(12,0); LocalDate Natal = LocalDate.of(2014, Month.DECEMBER, 25); MonthDay.of(12, 25); LocalDateTime ldt = LocalDateTime.of(natal, meioDia);`
 - *get* `ldt.getDayOfMonth(); ldt.getDayofYear(); /*349*/; ldt.getDayOfWeek(); /*Monday*/ ldt.getMonth() /*DECEMBER*/ ; ldt.getMonthValue(); /*12*/`
@@ -581,6 +585,8 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 	- *DateTimeFormatException*		
 #### Declare and use an **ArrayList** of a given type 
 - *java.util.ArrayList*
+- atenção: não tem length() (String) ou length (Array). ArrayList usa size()
+- ArrayList sobreescreve metodo equals :  mesmos elementos na mesma ordem.
 ```java
 ArrayList<String> names = new ArrayList<String>();
 ArrayList<Client> clients = new ArrayList<Client>();
@@ -686,6 +692,7 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 - **literais** valores das variáveis diretamente no código fonte
 	- *underlines* só podem ser colocados c/ valores numéricos (se hexa A a F) em ambos os lados do _ `int a = 123_456_789;` A mesma regra vale p/ pontos flutuantes
 	- *null, false, true* são literais e tbm palavras chaves
+	- `int a = -0;` é permitido
 - **identificadores** palavras p/ nomear variaveis, métodos, construtores, classes, interfaces
 	- não pode ser palavra chave
 	- Podem usar letras (unicode), números, $ e _ ;
@@ -884,6 +891,10 @@ int getLength() {return lastname.length();} //compila e roda
 - metodo com parametros *varargs* 
 	- Se existe uma sobrecarga do método s/ parametros, invocamos sem argumentos, o método chamado é o s/ argumentos
 	- métodos sobrecarregados c/ varargs são invocados por último. Dado prioridade aos métodos assinados c/ array ou objeto.
+```java
+void yingyang(Integer[] ints) {
+void yingyang(Integer... ints) { //nao compila
+```
 	
 #### Apply access modifiers
 - *visibilidade*

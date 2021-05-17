@@ -1,0 +1,38 @@
+(c)
+The program will throw a java.lang.ClassCastException in the assignment at (3),
+when run. The statement at (1) will compile, since the assignment is done from a
+subclass reference to a superclass reference. The cast at (2) assures the compiler that
+arrA will refer to an object that can be referenced by arrB. This will work when run,
+since arrA will refer to an object of type B[]. The cast at (3) will also assure the compiler
+that arrA will refer to an object that can be referenced by arrB. This will not
+work when run, since arrA will refer to an object of type A[].
+7.21 (d)
+(4) will cause a compile-time error, since it attempts to assign a reference value of
+a supertype object to a reference of a subtype. The type of the source reference
+value is MyClass and the type of the destination reference is MySubclass. (1) and (2)
+will compile, since the reference is assigned a reference value of the same type. (3)
+will also compile, since the reference is assigned a reference value of a subtype.
+7.22 (e)
+Only the assignment I1 b = obj3 is valid. The assignment is allowed, since C3
+extends C1, which implements I1. The assignment obj2 = obj1 is not legal, since C1
+is not a subclass of C2. The assignments obj3 = obj1 and obj3 = obj2 are not legal,
+since neither C1 nor C2 is a subclass of C3. The assignment I1 a = obj2 is not legal,
+since C2 does not implement I1. Assignment I2 c = obj1 is not legal, since C1 does
+not implement I2.
+7.23 (b)
+The statement would be legal at compile time, since the reference x might actually
+refer to an object of the type Sub. The cast tells the compiler to go ahead and allow
+the assignment. At runtime, the reference x may turn out to denote an object of the
+type Super instead. If this happens, the assignment will be aborted and a ClassCast-
+Exception will be thrown.
+7.24 (c)
+Only A a = d is legal. The reference value in d can be assigned to a, since D implements
+A. The statements c = d and d = c are illegal, since there is no subtypesupertype
+relationship between C and D. Even though a cast is provided, the
+statement d = (D) c is illegal. The object referred to by c cannot possibly be of
+type D, since D is not a subclass of C. The statement c = b is illegal, since assigning
+a reference value of a reference of type B to a reference of type C requires a cast.
+7.25 (a), (b), and (c)
+The program will print A, B, and C when run. The object denoted by the reference a
+is of type C. The object is also an instance of A and B, since C is a subclass of B and B
+is a subclass of A. The object is not an instance of D.
