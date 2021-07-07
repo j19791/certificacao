@@ -245,19 +245,23 @@ p.getProperty("key1");
 #### Use a switch statement 	 
 - expressões c/ literais no case `case 5 + 5 : ` são validas mas  `case > 10`não são validadas. Não pode duplicar valores dos cases, mesmo usando expressões.
 ```java
-int option = 1;		
-switch (option) { //o argumento deverá ser sempre compatível com int, wrapper menor q Integer, String, Enum
-	case 1: //o valor de cada case deverá ser compatível com o argumento do switch. Usar literal, variavel final inicializada durante sua declaração com literal ou expressões com literal/ variavel final. null não é válido
+int option = 4;		
+final int c1 = 5;
+switch (option) { //o argumento deverá ser sempre compatível com int, wrapper menor ou igual q Integer, String, Enum
+	case c1: //o valor de cada case deverá ser compatível com o argumento do switch. Usar literal, variavel final inicializada durante sua declaração com literal ou expressões com literal/ variavel final. null não é válido. Não pode duplicar cases
 		System.out.println("number 1");
 		break; //para não executar os casos q vem abaixo			
 	default: //qdo nenhum caso bater. Pode aparecer no meio dos cases			
 		System.out.println("number n");				
 		break;			
-	case 2:			
+	case 1+1:			
 		System.out.println("number 2");				
 		break;			
-	case 3:				
+	case 2+c1:				
 		System.out.println("number 3");				
+		break;
+	case 4:
+	System.out.println("number 4");				
 		break;
 }	
 ```
@@ -303,6 +307,7 @@ int a = 1, b = 2;
 
 #### Create and use for loops including the enhanced for loop
 - *inicialização*
+	- `for(;;){}` compila e roda infinitamente      
 	- executada apenas 1x no começo do for. 
 	- Permitido declarar variaveis de um mesmo tipo `for(int i = 1, j= 2;;){//code}` ou inicializar diversas variáveis de tipos diferentes. `for(a=1, b=2.0, c = true;;){//code}`
 - *condição* verificada no começo de cada iteração. default: *true*
@@ -543,6 +548,7 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 - *of()* `LocalTime meioDia = LocalTime.of(12,0); LocalDate Natal = LocalDate.of(2014, Month.DECEMBER, 25); MonthDay.of(12, 25); LocalDateTime ldt = LocalDateTime.of(natal, meioDia);`
 - *get* `ldt.getDayOfMonth(); ldt.getDayofYear(); /*349*/; ldt.getDayOfWeek(); /*Monday*/ ldt.getMonth() /*DECEMBER*/ ; ldt.getMonthValue(); /*12*/`
 	- *ChronoField* campo que será retornado `ldt.get(ChronoField.HOUR_OF_DAY) /*13*/; `
+	- java.time.temporal.ChronoField;
 - *is* comparações `natal.isEqual(LocalDate.of(2015, 4, 1));  natal.isSupported(ChronoField.HOUR_OF_DAY)) /*false*/; natal.isSupported(ChronoUnit.DAYS) /*Can I make operations with days?		*/` 
 - *with* obter versões modificadas `LocalDate d = LocalDate.of(2015, 4, 1) /*2015-04-01*/; d = d.withDayOfMonth(15).withMonth(3) /*2015-03-15*/; `
 - *plus minus* `LocalDate d = LocalDate.of(2013, 9, 7);d = d.plusDays(1).plusMonths(3).minusYears(2); /*2011-12-08*/`
