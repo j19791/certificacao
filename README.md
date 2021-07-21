@@ -548,24 +548,25 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 - *of()* `LocalTime meioDia = LocalTime.of(12,0); LocalDate Natal = LocalDate.of(2014, Month.DECEMBER, 25); MonthDay.of(12, 25); LocalDateTime ldt = LocalDateTime.of(natal, meioDia);`
 - *get* `ldt.getDayOfMonth(); ldt.getDayofYear(); /*349*/; ldt.getDayOfWeek(); /*Monday*/ ldt.getMonth() /*DECEMBER*/ ; ldt.getMonthValue(); /*12*/`
 	- *ChronoField* campo que será retornado `ldt.get(ChronoField.HOUR_OF_DAY) /*13*/; `
-	- java.time.temporal.ChronoField;
+	- importar `java.time.temporal.ChronoField;`
 - *is* comparações `natal.isEqual(LocalDate.of(2015, 4, 1));  natal.isSupported(ChronoField.HOUR_OF_DAY)) /*false*/; natal.isSupported(ChronoUnit.DAYS) /*Can I make operations with days?		*/` 
 - *with* obter versões modificadas `LocalDate d = LocalDate.of(2015, 4, 1) /*2015-04-01*/; d = d.withDayOfMonth(15).withMonth(3) /*2015-03-15*/; `
 - *plus minus* `LocalDate d = LocalDate.of(2013, 9, 7);d = d.plusDays(1).plusMonths(3).minusYears(2); /*2011-12-08*/`
-	- *ChronoUnit* fazendo operações utilizando unidades de tempo, sem se preocupar c/ dias e meses `d = d.plusWeeks(3).minus(3, ChronoUnit.WEEKS);`
+- *ChronoUnit* fazendo operações utilizando unidades de tempo, sem se preocupar c/ dias e meses. calcula intervalo entre duas datas 	
 	- importar `java.time.temporal.ChronoUnit;`
--  *UnsupportedTemporalTypeException*
+	- `d = d.plusWeeks(3).minus(3, ChronoUnit.WEEKS);`
+	- `ChronoUnit.YEARS.between(LocalDate.of(1983, 7, 22), LocalDate.of(2014, 12, 25)));`
+	-  *UnsupportedTemporalTypeException*
+- *Instant* representa a qtd de milisegundos desde 1/1/70 `Instant t = Instant.now().plus(Duration.ofSeconds(10)); // now after 10 seconds`
 - *to* ldt para ld ou lt: `LocalDateTime now = LocalDateTime.now(); LocalDate dateNow = now.toLocalDate(); // from datetime to date`
 - *at* ld ou lt p/ ldt  `LocalDateTime ldt = LocalDate.of(2020,08,17).atTime(LocaTime.now());`
 - *converter* 
 	- *java.util.Date* *java.util.Calendar*
 	- Date para ldt `LocalDateTime.ofInstant(new Date().toInstant(), ZoneId.systemDefault());`
-	- Calendar para ldt `;LocalDateTime.ofInstant(Calendar.getInstance().toInstant(),ZoneId.systemDefault());`
-	- *Instant* representa a qtd de milisegundos desde 1/1/70
+	- Calendar para ldt `;LocalDateTime.ofInstant(Calendar.getInstance().toInstant(),ZoneId.systemDefault());`	
 	- ldt p/ Date `Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC))`;
-- *Duration* `Instant t = Instant.now().plus(Duration.ofSeconds(10)); // now after 10 seconds`
-	- só tem opção de *getSeconds*. Não tem de dias `long secondsSinceEpoch = Duration.between(Instant.EPOCH /*01/01/1970 00:00:00*/, Instant.now()).getSeconds(); //calcula o intervalo em segundos de duas datas` 
-	- *ChronoUnit* calcula intervalo entre duas datas `ChronoUnit.YEARS.between(LocalDate.of(1983, 7, 22), LocalDate.of(2014, 12, 25)));`
+- *Duration* 
+	- só *getSeconds*. Não tem data `long secondsSinceEpoch = Duration.between(Instant.EPOCH /*01/01/1970 00:00:00*/, Instant.now()).getSeconds(); //calcula o intervalo em segundos de duas datas` 
 - *Period* calculo de intervalos, quebrando o periodo de tempo, em dia, mes, ano  `Period lifeTime = Period.between(LocalDate.of(1983, 7, 22), LocalDate.of(2014, 12, 25)); lifeTime.getYears()) /*31 years*/; lifeTime.getMonths() /* 5 months*/; lifeTime.getDays() /*3 dias*/;`
 - *DataTimeFormatter* métodos de formatação
 	- pacote *java.time.format*			
@@ -574,7 +575,8 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 	LocalDate.of(1983, 7, 22).format(DateTimeFormatter.ofPattern("yyyy MM dd")));
 	DateTimeFormatter.ofPattern("dd/MM/yyyy").format(LocalDate.parse("23/04/1986",formatter)); // tranforma o texto 23/04/1986 em uma data			
 	```
-	- *DateTimeFormatException*		
+	- *DateTimeFormatException*
+	![conversões](/imagens/java.time.jpg)
 #### Declare and use an **ArrayList** of a given type 
 - *java.util.ArrayList*
 - atenção: não tem length() (String) ou length (Array). ArrayList usa size()
@@ -641,7 +643,7 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 - seu código interno pode interagir com *variaveis de instancia* desde q não sejam declaradas como *final*
 - dentro de métodos, só pode interagir com variaveis locais *final* ou variaveis q *não são alteradas*
 - variaveis do lambda estão *dentro do mesmo escopo do método*. Cuidado p/ não conflitar c/ as variáveis que ja foram declaradas no método
-
+![Predicate](/imagens/Predicate_Lambda.jpg)
 [[↑] Back to top](#Anotações-para-certificação-OCA-Programmer-1Z0-808)
 
 ### Working With Java Data Types
