@@ -798,7 +798,11 @@ int[] [][]hipercube[];  // Um array de quatro dimensões.
 ![Array multi-dimensional](/imagens/array.jpg)
 - *inicialização* `int[][] table = new int[10][15];`
 	- inicializar apenas a 1ª dimensão `int[][][] cube = new int[10][][]; `
-	- inicializar posteriormente outras dimensões `int[][] weird = new int[2][]; weird[0] = new int[20]; weird[1] = new int[10];`
+	- inicializar posteriormente outras dimensões 
+	```java
+	int[][] weird = new int[2][]; weird[0] = new int[20]; weird[1] = new int[10];
+	int[][][] weird = new int[2][][]; weird[0] = new int[20][];	weird[0][0] = new int[2];
+	```	
 	- inicializar c/ valores `int[][] test = new int[][]{{1,2,3},{3,2,1},{1,1,1}};`
 - *acesso* `table[0][1];`
 	
@@ -980,6 +984,7 @@ void yingyang(Integer... ints) { //nao compila
 [[↑] Back to top](#Anotações-para-certificação-OCA-Programmer-1Z0-808)
 
 ### novidades Java
+* 1.4
 * 1.5 autoboxing, varargs, import static, StringBuilder, foreach
 * 1.7 underline nos literais, operador diamente <>, 
 * 1.8 java.time, lambda
