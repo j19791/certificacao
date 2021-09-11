@@ -986,7 +986,7 @@ void yingyang(Integer... ints) { //nao compila
 ### novidades Java
 * 1.4
 * 1.5 autoboxing, varargs, import static, StringBuilder, foreach
-* 1.7 underline nos literais, operador diamente <>, 
+* 1.7 underline nos literais, operador diamente <>, try-with-resources
 * 1.8 java.time, lambda
 
 ### import
