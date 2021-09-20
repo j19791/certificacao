@@ -639,7 +639,9 @@ Predicate<Person> matcher = (Person p) -> {return p.getAge() >= 18;};
 Predicate<Person> matcher = p -> p.getAge() >= 18;
 List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 ```
-- Se não houver parametros, é preciso incluir () `Runnable r = () -> System.out.println("a runnable object!");`
+- return precisa ser usado se incluir bloco
+- não pode colocar tipo do parametro
+- Se houver parametros () é opcional, caso contrário, é preciso incluir () `Runnable r = () -> System.out.println("a runnable object!");`
 - seu código interno pode interagir com *variaveis de instancia* desde q não sejam declaradas como *final*
 - dentro de métodos, só pode interagir com variaveis locais *final* ou variaveis q *não são alteradas*
 - variaveis do lambda estão *dentro do mesmo escopo do método*. Cuidado p/ não conflitar c/ as variáveis que ja foram declaradas no método
