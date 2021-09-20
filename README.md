@@ -639,8 +639,11 @@ Predicate<Person> matcher = (Person p) -> {return p.getAge() >= 18;};
 Predicate<Person> matcher = p -> p.getAge() >= 18;
 List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 ```
-- return precisa ser usado se incluir bloco
-- não pode colocar tipo do parametro
+- pode colocar o tipo do parametro quando envoltos em parenteses
+- blocos {} 
+	- com código precisam ter ;  
+	- sem {} é opcional ;
+	- pode incluir return 
 - Se houver parametros () é opcional, caso contrário, é preciso incluir () `Runnable r = () -> System.out.println("a runnable object!");`
 - seu código interno pode interagir com *variaveis de instancia* desde q não sejam declaradas como *final*
 - dentro de métodos, só pode interagir com variaveis locais *final* ou variaveis q *não são alteradas*
