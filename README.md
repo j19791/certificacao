@@ -743,7 +743,12 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 		- `String number = Integer.valueOf(256).toString();`
 		- com base apenas Long e Integer `String l = Long.toString(20, 16); `
 		- Integer e Long podem converter direto p/ base escolhida `String hexString = Long.toHexString(11); // B, Hexadecimal`
-	- *Autoboxing* compilador é responsável por transformar os wrapper em primitivos *(unboxing)* e primitivos em Wrappers *(boxing)* `Integer intWrapper = Integer.valueOf(1);intWrapper++; //will unbox, increment, then box again.`
+	- *Autoboxing* compilador é responsável por transformar os wrapper em primitivos *(unboxing)* e primitivos em Wrappers *(boxing)* 
+		```java
+		Integer intWrapper = Integer.valueOf(1);intWrapper++; //will unbox, increment, then box again.
+		boolean isValid = new Boolean (true)
+		```
+		
 	- *comparando* 
 		- `Integer i1 = 1234;Integer i2 = 1234; i1 == i2 /*false (duas ref apontando p/ obj dif)*/; i1.equals(i2) /*true*/; `
 		- qdo o vlr é muito baixo, devido ao *cache*, a comparação pode ser *true* `Integer i1 = 123; Integer i2 = 123; i1 == i2 /*true*/;  i1.equals(i2)) /*true*/ ;`
