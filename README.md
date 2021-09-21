@@ -25,6 +25,7 @@
 - **parametros de métodos** : variaveis locais dos métodos. Não podemos declarar novas variaveis locais com o mesmo nome
 - variáveis **static** podem ser acessadas por uma referencia ou diretamente pela classe
 - variaveis de classe e de instancia não podem ter o mesmo nome
+- variavel local primitiva precisa ser sempre atribuida c/ um valor se esta for usada no código. Se não for usada (apenas declarada), compila e roda.
 - **shadowing** : declarar em métodos variaveis locais ou de parametros com o mesmo nome da variavel de instancia. Usar **this** para referenciar variaveis de instancia. Se nã usar this, o compilador vai usar a variável de menor escopo.
 - **final** : garante que a referencia de objeto não pode referenciar outro objeto mas pode mudar o estado do objeto que é referenciado `final Fizz z = x; z.x = 6;`
 #### Define the **structure** of a Java **class**
@@ -127,6 +128,7 @@ p.getProperty("key1");
 	System.out.println(1 == 2 && imprimir("bye"));//imprime false
 	int i = 10;	System.out.println(i == 2 & i++ == 0);// imprime false, soma mesmo assim
 	int j = 10;	System.out.println(j == 2 && j++ == 0); // imprime false, não soma
+	System.out.println(false & true); //false
 	```
 	- **^** ou exclusivo
 - **incremento/decremento**
@@ -158,11 +160,14 @@ p.getProperty("key1");
 	```
 - **ternário** `variavel = teste booleano ? verdadeiro : falso;`
 - **referencia . ** p/ acessar atributos ou métodos de um obj
-- **concatenação de Strings** `System.out.println(15 + ( 0 + " != 150")); // 15 + "0 != 150"; "150 != 150"	`		
+- **concatenação de Strings** 
+	- `System.out.println(15 + ( 0 + " != 150")); // 15 + "0 != 150"; "150 != 150"	`
+	- operações com boolean + String não é possível `System.out.println(false & true + "Hello World"); //não compila. Compila apenas se colocar parenteses na operação c/ booleans`		
 - **precedencia**
 	- pre incremento/decremento
 	- mult/ div/ % 
 	- soma/ sub
+	- && || (lógicos)
 	- pós incremento/decremento
 - **casting de primitivos**
 	- atribuição somente se *compatível* um tipo cabe no outro: 			
@@ -444,6 +449,7 @@ class Y extends X { public void method2(int x){this.x = x; //erro: nao enexerga 
 - alguns Vehicle são Moto `Moto m = (Moto) v`
 - Não é compatível : **classCastException**
 - casting **opcional** qdo não precisamos
+- pode realizar casting numa referencia null `Pai p = null; Filha f = (Filha) p;`
 - *subindo* na hierarquia de classe: autopromoção. Descendo : casting é necessario. Sem caminho possível, compila mas não executa: *classCastException*
 ![casting](/imagens/casting.jpg)
 - podemos implementar **multiplas interfaces**. Fazer casting p/ *interfaces* sempre vai compilar/executar `Car c = new Car();Runnable r = (Runnable) c;`
@@ -513,7 +519,7 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 ```
 - *substring* não altera o valor do seu StringBuilder ou StringBuffer , mas retorna a String que você deseja.
 - *indexOf* e *lastIndexOf* retornam -1 qdo não encontra
-- não compila quando tenta comparar String e StringBuilder usando ==
+- não compila quando tenta comparar String e StringBuilder usando == ou equals
 #### Create and manipulate **Strings**
 - *imutáveis* : o valor da String não muda quando usada um método seu. Só muda quando é feita uma re-atribuição p/ a mesma variavel.
 - criar `String implicit = "Java";String explicit = new String("Java"); char[] name = new char[]{'J', 'a', 'v', 'a'}; String fromArray = new String(name); String nameBuilder = new String(new StringBuilder("Java"));`
@@ -574,12 +580,14 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 	DateTimeFormatter.ofPattern("yyyy MM dd").format(LocalDate.of(1983, 7, 22)) /*1983 07 22*/;
 	LocalDate.of(1983, 7, 22).format(DateTimeFormatter.ofPattern("yyyy MM dd")));
 	DateTimeFormatter.ofPattern("dd/MM/yyyy").format(LocalDate.parse("23/04/1986",formatter)); // tranforma o texto 23/04/1986 em uma data			
+	LocalDateTime.parse("2011-12-03T00:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME);//não esquecer do T na separacao do string dataThora
 	```
 	- *DateTimeFormatException*
 	![conversões](/imagens/java.time.jpg)
 #### Declare and use an **ArrayList** of a given type 
 - *java.util.ArrayList*
 - atenção: não tem length() (String) ou length (Array). ArrayList usa size()
+- primitivos não poder ser usados em ArrayList. Wrappers respectivos sim.
 - ArrayList sobreescreve metodo equals :  mesmos elementos na mesma ordem.
 ```java
 ArrayList<String> names = new ArrayList<String>();
@@ -642,6 +650,7 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 - pode colocar o tipo do parametro quando envoltos em parenteses
 - blocos {} 
 	- com código precisam ter ;  
+	- sem código, o; é opcional
 	- sem {} é opcional ;
 	- pode incluir return 
 - Se houver parametros () é opcional, caso contrário, é preciso incluir () `Runnable r = () -> System.out.println("a runnable object!");`
@@ -690,6 +699,7 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 		- *boolean*
 - **literais** valores das variáveis diretamente no código fonte
 	- *underlines* só podem ser colocados c/ valores numéricos (se hexa A a F) em ambos os lados do _ `int a = 123_456_789;` A mesma regra vale p/ pontos flutuantes
+		- `int b1 = 0b_1; \\não compila`
 	- *null, false, true* são literais e tbm palavras chaves
 	- `int a = -0;` é permitido
 - **identificadores** palavras p/ nomear variaveis, métodos, construtores, classes, interfaces
@@ -873,7 +883,7 @@ new Xpto().method("string", "string"); // compile error
 ```
 - construtor **default** dado pelo compilador, não recebe argumentos, tem a visibilidade da classe e tem a chamada a **super()** `class A { /* implicito*/ A() {super();} /*default*/}` 
 - caso vc adicione um construtor qq, o construtor padrão *deixa de existir* e as invocações a ele passam a dar erros de compilação. 
-- construtor não padrão tem a visibilidade definida pelo programador. Se não definir, a visibilidade é default.
+- construtor não padrão tem a visibilidade definida pelo programador (pode ser private e protected também). Se não definir, a visibilidade é default.
 - dentro do construtor vc pode acessar as variaveis membros
 - não esqueça que a inicialização das variavies membros são com os valores default e logo em seguida, os valores atribuidos dentro do construtor
 ```java
@@ -1015,5 +1025,8 @@ void yingyang(Integer... ints) { //nao compila
 ** switch("guilherme") case "guilherme" : ...; case "42": ...; case default ...;  compila e roda s/ problemas
 ** if (false) { x=3; } aqui não tem problema. Compila sem problemas
 
+** não cai mas é útil
+- BigDecimal: melhorar forma p/ tratar moeda. Trata números c/ ponto flutuante s/ perder sua precisão.
+- enum
 
 
