@@ -466,6 +466,26 @@ String s = "a"; boolean b = s instanceof java.util.List; // obviamente incompat�
 #### Use **super** and **this** to access **objects** and **constructors**
 - construtor pode ser *sobrecarregado* e ter qualquer *visibilidade*
 - p/ construir um obj da classe filha, obrigatoriamente precisamos chamar o construtor da classe mãe antes
+- **this** dentro do construtor contem o objeto com suas variaveis preenchidas c/ valores passados ou não dentro do construtor
+```java
+public class Network {
+
+	 int id;
+	 Network p;
+	 String s;
+	
+	 Network(){	 }
+	 
+	Network(int x, Network n){
+		id = x;
+		p = this; //this: id = 1,  p = null
+		if(n != null) p= n;
+	}
+	
+	main()
+	Network n1 = new Network(1, null);
+
+```
 - **super()** não chamamos o construtor da classe mãe explicitamente. o compilador coloca automaticamente o *super()*
 - **this()** chama outro construtor mas da própria classe
 	- não podemos referenciar um método de instância ao invocar um construtor this `this(x()); //não compila`
