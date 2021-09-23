@@ -162,7 +162,13 @@ p.getProperty("key1");
 - **referencia . ** p/ acessar atributos ou métodos de um obj
 - **concatenação de Strings** 
 	- `System.out.println(15 + ( 0 + " != 150")); // 15 + "0 != 150"; "150 != 150"	`
-	- operações com boolean + String não é possível `System.out.println(false & true + "Hello World"); //não compila. Compila apenas se colocar parenteses na operação c/ booleans`		
+	- operações com boolean + String não é possível `System.out.println(false & true + "Hello World"); //não compila. Compila apenas se colocar parenteses na operação c/ booleans`
+	- o sentido da concatenação é da esquerda p/ direita a menos que se coloque parenteses
+		```
+			"" + 2 + 7; //=27
+			"" + (2 + 7); //=9 
+			2 + 7 + ""; //=9
+		```			  		
 - **precedencia**
 	- pre incremento/decremento
 	- mult/ div/ % 
@@ -230,6 +236,7 @@ p.getProperty("key1");
 #### Create **if** and **if/else** and **ternary** constructs
 - controlar o *fluxo de execução* dos programas
 - a **condição** de um if deverá ser um valor **booleano** `if (2 - 1) \\erro: inteiro`
+- booleanos podem ser atribuidos dentro de um if `boolean b1 =false, b2 =true; if(b1=b2) \\b1 agora é true`
 - não existe *elseif* usar **else if**
 - **unreachable code** não compila qdo o código não foe executado sob nnehuma hipótese
 ```java 
@@ -1048,5 +1055,15 @@ void yingyang(Integer... ints) { //nao compila
 ** não cai mas é útil
 - BigDecimal: melhorar forma p/ tratar moeda. Trata números c/ ponto flutuante s/ perder sua precisão.
 - enum
+	- nao podem ser locais. Podem ser de var de instancia ou ser um componente independente do arquivo (como interface ou outras classes)
+```java
+enum Days {M, T, W, TH, F, SA, SU };
+
+for (Days d : Days.values()) //Days.values() retorna um array de Days
+		    System.out.printf("%1$s", d);
+		    
+		System.out.printf("%n %1$b %n %2$b", Days.M == Days.M, Days.M.equals(Days.M)); //permitido usar == e equals sem problemas
+
+```
 
 
