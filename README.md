@@ -168,7 +168,8 @@ p.getProperty("key1");
 			"" + 2 + 7; //=27
 			"" + (2 + 7); //=9 
 			2 + 7 + ""; //=9
-		```			  		
+		```
+	- uma concatenção de String sempre cria um novo objeto em memória			  		
 - **precedencia**
 	- pre incremento/decremento
 	- mult/ div/ % 
@@ -424,7 +425,7 @@ class Y extends X { public void method2(int x){this.x = x; //erro: nao enexerga 
 	- *parametros* iguais em tipo e ordem
 	- *retorno* do método igual ou mais específico (covariante). Não vale p/ primitivos
 	- *visibilidade* igual ou maior q a mãe
-	- número de *exceptions* checked lançadas *throws* devem ser o mesmo ou menor. Elas devem ser do mesmo tipo ou mais específico.
+	- número de *exceptions* checked lançadas *throws* devem ser o mesmo ou menor (ou nnehuma). Elas devem ser do mesmo tipo ou mais específico.
 		- *RuntimeException* e suas filhas que tbm são unchecked podem ser adicionadas s/ a restrição
 	- método da mãe não pode ser *final*
 	- *interface* : os métodos são implicitamente *public*
@@ -959,6 +960,7 @@ void yingyang(Integer... ints) { //nao compila
 - é *o q ela faz* e não como q ela faz
 - *interface de uso* conjunto de assinaturas de métodos visiveis dentro de uma classe
 - encapasular é esconder seus atributos c/ private
+- o getter deverá retornar uma copia do objeto mutável (lista, StringBuilder) e não diretamente a referencia p/ a referencia da classe
 - especificação *javabeans* método público p/ acessar a leitura do atributo *getter*, escrita *setter* (c/ validação)		
 #### Determine the effect upon **object references** and **primitive** values when they are **passed  into methods** that change the values
 - *passagem de parametros* por copia de valores. Mudanças nos valores das variaveis definidas na lista de parametros de um método não afetam variaveis de outros métodos
@@ -1005,6 +1007,7 @@ void yingyang(Integer... ints) { //nao compila
 - **finally** seja no sucesso ou no fracasso, temos a obrigação de cumprir certas tarefas. Conexão deveria ser fechada, por exemplo
 	- pode usar finally s/ o catch
 	- finally jamais devera vir antes do catch: a ordem tem q ser try + catch ou try + finally ou try + catch + finally
+	- erros ou exceptions dentro de blocos catch ou finally podem ocorrer e se não forem tratados, a JVM vão trata-los como erros/ exceptions normalmente e parar a execução do programa. 
 #### Describe the **advantages** of Exception handling 
 #### Create and invoke a **method that throws an exception**
 - um método eventualmente  não tem condições de tratar um determinado erro de execução
