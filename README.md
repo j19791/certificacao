@@ -70,8 +70,9 @@ p.getProperty("key1");
 	- import não importa membros especificos da classe. Importa a classe e todos os seus membros.
 - pacote **java.lang.\*** são implicitamente importadas. *String*
 - **import static** importa todos os membros *static* da classe Utils.  `import static model.Utils.*`
-	- Atenção, o import static não importa a classe	
+	- Atenção, o import static não importa a classe	`import static java.util.Collections; \\não compila`
 	- cuidado com o *static import*
+	- não especificar parametros de um método quando apenas o método é importado;
 #### Compare and contrast the features and components of Java such as: platform independence, object orientation, encapsulation, etc.
 - **bytecode** .class é interpretado pela **JVM** que converte em código de máquina, executado pelo **SO** nativo
 - programa **escrito** e **compilado** apenas 1x pode ser usado em diversas plataformas diferentes.
@@ -868,6 +869,7 @@ int[] [][]hipercube[];  // Um array de quatro dimensões.
 			- não pode ser *atribuido* a uma variável qdo o tipo é *void*
 		- não pode ter nenhum código depois do *return*
 		- com tipo de retorno definido, deverá retornar algo ou jogar exception em cada um dos caminhos possíveis do método `throw new RuntimeException()` Cobrir tudo
+		- `return null` apenas quando o tipo de retorno é um objeto. Não compila como retorno com tipos primitivos
 	- *nome* seguindo a regra dos *identificadores*
 	- *parametros* (pode ser vazio) com tipo e nome
 		- inicialização dos parametros é feito por quem invoca o método
@@ -954,6 +956,7 @@ void yingyang(Integer... ints) { //nao compila
 		- Mesmo com *import*, as classes default não são visíveis. 
 		- Se existem outras classes publicas no import, não ocorre erro na linha do import. Se importar especificamente uma classe default, o erro tbm é na instrução do import
 	- **private** só podem ser acessadas de dentro da classe
+	- atributos final precisam ser inicializados na declaração, no bloco de inicialização ou no construtor (quando é atributo de instancia)
 	
 #### Apply encapsulation principles to a class (information hiding)		
 - *assinatura* do método é o que importa p/ o usuário da classe
@@ -961,7 +964,10 @@ void yingyang(Integer... ints) { //nao compila
 - *interface de uso* conjunto de assinaturas de métodos visiveis dentro de uma classe
 - encapasular é esconder seus atributos c/ private
 - o getter deverá retornar uma copia do objeto mutável (lista, StringBuilder) e não diretamente a referencia p/ a referencia da classe
-- especificação *javabeans* método público p/ acessar a leitura do atributo *getter*, escrita *setter* (c/ validação)		
+- especificação *javabeans* 
+	- método público p/ acessar a leitura do atributo *getter* 
+	- escrita *setter* (c/ validação)		
+	- *is* getter boolean
 #### Determine the effect upon **object references** and **primitive** values when they are **passed  into methods** that change the values
 - *passagem de parametros* por copia de valores. Mudanças nos valores das variaveis definidas na lista de parametros de um método não afetam variaveis de outros métodos
 	- *primitivos* variaveis c/ mesmo nome em métodos diferentes. Alterações em uma das variaveis não altera o valor da outra
@@ -1068,5 +1074,13 @@ for (Days d : Days.values()) //Days.values() retorna um array de Days
 		System.out.printf("%n %1$b %n %2$b", Days.M == Days.M, Days.M.equals(Days.M)); //permitido usar == e equals sem problemas
 
 ```
-
+- blocos *static*
+	- 1º : inicialização de atributos
+	- 2º : execução de blocos de inicialização static
+		- inicializa apenas membros static
+		- executado apenas uma vez
+	- 2º : execução de blocos de inicialização instancia
+		- somente executados c/ new
+		- pode tbm inicializar membros static
+	- 3: construtores
 
