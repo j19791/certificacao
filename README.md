@@ -34,6 +34,7 @@
 - **assinatura de um método**: nome do método e os tipos de parametros. Deve ter retorno. Pode ter o mesmo nome de um construtor.
 - **construtor**: a classe pode ter 0 a n construtores. Não devem ter retorno. Pode ter um *return* mas vazio
 - **interface**: possui métodos somente com assintura, sem implementação. Possível declarar *constantes* **final**
+	- a partir do Java 8, intefaces podem ter métodos default ou static e ambos c/ implementação  
 - **public class** ou **public interface** : o nome do arquivo *.java* deve ter o nome dessa *class/interface*
 - só pode exitir *uma* **public class** ou **public interface** por arquivo *.java*		
 #### Create executable Java applications with a **main** method; **run** a Java program from the command line; produce **console output**
@@ -516,10 +517,12 @@ public class Network {
 	```			
 #### Use **abstract classes** and **interfaces**
 - *interfaces* não podem ter métodos *static*
-- uma classe abstrata pode não ter nenhum método abstratato
+	- a partir do java 8 pode ter métodos static mas é necessário implementar o método;
+- interfaces não herda de Object
+- uma classe abstrata pode não ter nenhum método abstrato
 - se a classe possui pelo menos 1 método abastrato, a classe precisa ser abstrata
 - método abstrato não tem corpo, somente sua definição
-- classe abstrata não pode ser instanciada diretamente
+- classe abstrata e interfaces não poden ser instanciadas diretamente
 - classe concreta q herda de uma abstrata, precisa reescrever e implementar seus métodos que ainda não foram implementados
 - subclasse abstrata não precisa implementar todos os métodos abstratos da classe pai. Não precisa nem ter a definição dos métodos abstratos
 - *interface* : declara métodos (por padrão: *public abstract*) q deverão ser implementados (todos) pelas classes concretas que queiram ser consideradas como tal
@@ -762,6 +765,7 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 - *qtd* de objetos criados: Veja os *literais String* q contam como objeto		
 #### Develop code that uses **wrapper** classes such as Boolean, Double, and Integer  
 - classes que representam primitivos
+- são filhos de *Number*
 - char : Character. Apenas 1 construtor  `new Character(´d´);`
 - int: Integer
 - criando (wrappers numéricos) `Double d1 = new Double(22.5); Double d2 = new Double("22.5"); Integer.valueOf(1); Integer i = 1234;` 
@@ -890,7 +894,7 @@ int[] [][]hipercube[];  // Um array de quatro dimensões.
 - não usar um método/atributo de instancia dentro de um método *static* `public class Car{private int weight;public static int getWeight() {return weight; /*compile error*/}}`
 - `static int b = getMethod() /*0*/; public static int getMethod() {return a /*0, a ainda nao inicializada*/; } static int a = 15;`
 - membros estáticos podem ser acessados através de *instâncias da classe*
-- classe não pode possuir um *método não static* que *sobreescreve* um método static (mesmo em classe filha)
+- classe fiha não pode possuir um *método não static* que *sobreescreve* um método static. Ambos ou nenhum deve ser static.
 - *binding* do método é feito em tempo de compilação
 - a inicialização de variaveis mebro static pode chamar metodos static `static int idade = grabAge(); static int grabAge() { return 18;}`			
 - não chamar outros métodos c/ this.method() dentro de um método static
@@ -1043,7 +1047,7 @@ void yingyang(Integer... ints) { //nao compila
 * 1.4
 * 1.5 autoboxing, varargs, import static, StringBuilder, foreach
 * 1.7 underline nos literais, operador diamente <>, try-with-resources
-* 1.8 java.time, lambda
+* 1.8 java.time, lambda interface c/ métodos default e static
 
 ### import
 * java.io 
