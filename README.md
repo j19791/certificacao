@@ -259,6 +259,7 @@ p.getProperty("key1");
 ```		
 #### Use a switch statement 	 
 - expressões c/ literais no case `case 5 + 5 : ` são validas mas  `case > 10`não são validadas. Não pode duplicar valores dos cases, mesmo usando expressões.
+- se o default aperecer no meio de cases, não é condição de sair do switch. Se não tiver break, todos os cases abaixo do default serão testados se tbm não possuirem break;
 ```java
 int option = 4;		
 final int c1 = 5;
@@ -285,6 +286,7 @@ switch (option) { //o argumento deverá ser sempre compatível com int, wrapper 
 
 ### Using Loop Constructs 
 #### Create and use **while** loops
+- variaveis declaradas dentro dos blocos dos loops são válidas apenas dentro do bloco e não ocorre erro de compilação pois não há redeclaração das variaveis em cada iteração
 - a *condição* deve ser *booleano*
 - pode ter uma operação na condição `while (i++<10)`
 - Roda enquanto a condição for *true*. executado repetidamente até a condição se tornar *false*		
@@ -1021,13 +1023,20 @@ void yingyang(Integer... ints) { //nao compila
 #### Describe the **advantages** of Exception handling 
 #### Create and invoke a **method that throws an exception**
 - um método eventualmente  não tem condições de tratar um determinado erro de execução
-- **throws** no caso de *checked exception* pode passar o erro p/ o próximo método da pilha mas é preciso deixar explito/avisado
-	- qdo poder ocorrer erro na inicialização de variaveis membros, avisar c/ throws na assinatura do construtor `class FileAccess {private InputStream is = new FileInputStream("input.txt");FileAccess() throws IOException{}}`
+- **throws** no caso de *checked exception* deverá passar o erro p/ o próximo método da pilha (inclusive o main) mas é preciso deixar explito/avisado
+- qdo poder ocorrer erro na inicialização de variaveis membros, avisar c/ throws na assinatura do construtor `class FileAccess {private InputStream is = new FileInputStream("input.txt");FileAccess() throws IOException{}}`
 - **throw new RuntimeException()** ao indentificar uma situação errada, criar um erro de execução e lançar p/ quem o chamou
-	- cuidado c/ *unreachable code* todo código abaixo de `throw new RuntimeException()` jamais será executado
-	- se é *checked exception* , avisar na assinatura do seu método com o *throws*
-	- apenas instanciar a exception c/ *new* não vai joga-la
-	- criando próprias exceptions `class FundoInsuficienteException extends Exception{}` p/ serem lançadas
+- cuidado c/ *unreachable code* todo código abaixo de `throw new RuntimeException()` jamais será executado
+- se é *checked exception* , avisar na assinatura do seu método com o *throws*
+- apenas instanciar a exception c/ *new* não vai joga-la
+- criando próprias exceptions `class FundoInsuficienteException extends Exception{}` p/ serem lançadas
+- você pode utilizar o throws de uma Exception mesmo que o bloco do código jamais lance essa exception
+	```java
+	public void m() throws java.io.IOException{
+		System.out.println("ok");
+	}
+	
+	``` 
 #### Recognize common exception classes (such as NullPointerException, ArithmeticException, ArrayIndexOutOfBoundsException, ClassCastException)
 - **ArrayIndexOutOfBoundsException** acessar uma posição q não existe no *array*
 - **IndexOutOfBoundsException** acessar uma posição q não existe no *ArrayList*
@@ -1088,3 +1097,4 @@ for (Days d : Days.values()) //Days.values() retorna um array de Days
 		- pode tbm inicializar membros static
 	- 3: construtores
 
+- `System.exit(0)` para de executar o programa
