@@ -18,6 +18,8 @@
 
 [Handling Exceptions](#Handling-Exceptions)
 
+[Dicas](#Dicas)
+
 ### Java Basics
 
 #### Define the scope of variables
@@ -67,12 +69,10 @@ p.getProperty("key1");
 	- `import java.util.Date; import java.sql.Date;` não compila: erro no import. 
 	- Pode importar apenas 1 pacote e usar o *fqn* para declarar o tipo da variável.
 	- `import java.util.*; import java.sql.Date`  vai ser usado do Date do pacote sql (mais específico)
-	- import duplicado compila normalmente
 	- import não importa membros especificos da classe. Importa a classe e todos os seus membros.
 - pacote **java.lang.\*** são implicitamente importadas. *String*
 - **import static** importa todos os membros *static* da classe Utils.  `import static model.Utils.*`
-	- Atenção, o import static não importa a classe	`import static java.util.Collections; \\não compila`
-	- cuidado com o *static import*
+	- Atenção, o import static não importa a classe	`import static java.util.Collections; \\não compila`	
 	- não especificar parametros de um método quando apenas o método é importado;
 #### Compare and contrast the features and components of Java such as: platform independence, object orientation, encapsulation, etc.
 - **bytecode** .class é interpretado pela **JVM** que converte em código de máquina, executado pelo **SO** nativo
@@ -240,7 +240,6 @@ p.getProperty("key1");
 - controlar o *fluxo de execução* dos programas
 - a **condição** de um if deverá ser um valor **booleano** `if (2 - 1) \\erro: inteiro`
 - booleanos podem ser atribuidos dentro de um if `boolean b1 =false, b2 =true; if(b1=b2) \\b1 agora é true`
-- não existe *elseif* usar **else if**
 - **unreachable code** não compila qdo o código não foe executado sob nnehuma hipótese
 ```java 
 	public int method() {
@@ -342,7 +341,6 @@ int a = 1, b = 2;
 	- não existe *contador*. Não é possível percorrer *+1 collection ao mesmo tempo*
 #### Create and use do/while loops
 - a condição é testada após rodar o trecho do código *pelo menos 1x*
-- não esquecer do **;** `do{}while(condicao);` p/ não ocorrer erro de compilação
 - apenas 1 linha s/ chaves é permitido dentro do do/while. Caso tenha +1 sem chaves: erro de compilação		
 #### Compare loop constructs
 - *while X do/while* : condição testada apenas depois de 1 interação do loop
@@ -406,14 +404,15 @@ class Y extends X { public void method2(int x){this.x = x; //erro: nao enexerga 
 		- *método de instancia*  tempo de execução. 
 		- *método static*  tempo de compilação. Ignora o tipo de objeto referenciado. Utiliza o método da ref. Não há polimorfismo com métodos static
 		- *variaveis membro* polimorfismo apenas p/ métodos não static. As variaveis são sempre da ref.
+		- quando o método da referencia (que é classe pai) esta escondido (private, default), o método usado é a da ref e não do obj referenciado 
 - **não existe sobreescrita de atributos**  Vai ter o atributo com o mesmo nome da classe mãe, acessível com **super** ou da própria classe q sobreescreveu, acessível com **this**
 - **toString** sobreescrever de *Object* p/ devolver uma String q represente o objeto ```public String toString()```
 #### Develop code that makes use of polymorphism; develop code that overrides methods;  differentiate between the type of a reference and the type of an object
 - **reescrita, sobrescrita** : subclasse redefine o comportamento do método herdado da superclasse
 	- **polimorfismo** : 
 		- *binding* : (lookup)
-			- 1) em *tempo de compilação*, verificar se o pai e os filhos possuem métodos sobreescritos. Verificação da existência do método
-			- 2) em *tempo de execução*, o método invacado é o do objeto, não o da referencia *virtual method invocation*	
+			- 1) em *tempo de compilação*, verificar se o pai e os filhos possuem métodos sobreescritos. Verificação da existência do método. Podem estar escondidos mas compila e executa.
+			- 2) em *tempo de execução*, o método invocado é o do objeto, não o da referencia *virtual method invocation*. Chama o métood da ref apenas quando este é *hidden* 	
 			![Polimorfismo](/imagens/polimorfismo.jpg)
 			- é o inverso dos métodos *static*					
 			```java
@@ -565,8 +564,7 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 - conversão de *primitivos* p/ String `String name = "Java" + ' ' + "Certification" + ' ' + 1500; //Java Certification 1500`
 - na concatenação, tbm existe a precedencia de operadores `String value = 15 + 00 + " certification"; \\ 15 certification`
 - todos os métodos devolvem uma nova String
-```java
-	"Java".length(); //4 - cuidado c/ a propriedade length dos arrays
+```java	
 	"".isEmpty(); /*true*/ " ".isEmpty(); /*false*/
 	substring(beginIndex, endIndex); /* inclui o caractere da posição inicial mas não o da final */ subString(beginIndex); /*a partir do indice passado até o fim */
 	"Java".substring(0, 4); /*Java*/ "Java".substring(0, 3)); /*Jav*/; //limite do endIndex é 4 nesse caso pois p/ descobrir o endIndex é 4-1 = 3 entao o substring vai de 0 a 3. Se beginIndex e endIndex for igual, nao retorna nada e nao da erro.
@@ -750,7 +748,6 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 	abstract assert boolean break byte case catch char class const continue default do double else enum extends false final finally float for goto if implements import 
 	int interface long native new null package private protected public return short static strictfp super switch synchronized this throw throws transient true try void volatile while
 	```
-	- atenção: *instanceof* throw throws 		
 #### Differentiate between **object reference** variables and **primitive** variables
 - *primitivos* armazenam valores
 	- valores são *copiados* nas atribuições de primitivo p/ outro primitivo
@@ -1052,29 +1049,78 @@ void yingyang(Integer... ints) { //nao compila
 
 [[↑] Back to top](#Anotações-para-certificação-OCA-Programmer-1Z0-808)
 
-### novidades Java
-* 1.4
-* 1.5 autoboxing, varargs, import static, StringBuilder, foreach
-* 1.7 underline nos literais, operador diamente <>, try-with-resources
-* 1.8 java.time, lambda interface c/ métodos default e static
 
-### import
-* java.io 
-* java.util Calendar, Date, ArrayList
-* java.sql Date, SQLException
-* (implicito) java.lang String 
-* java.lang.Math.* 
-	
-## dicas
-* Nenhuma palavra-chave em Java possui caractere maiúsculo
-* array.length : length é uma propriedade do array. length() tá errado
+### Dicas
+- Nenhuma palavra-chave em Java possui caractere maiúsculo
 
-## unreachable code
-** while (false) { x=3; } Não compila. 
-** switch("guilherme") case "guilherme" : ...; case "42": ...; case default ...;  compila e roda s/ problemas
-** if (false) { x=3; } aqui não tem problema. Compila sem problemas
+#### novidades Java
+- 1.4
+- 1.5 
+	- autoboxing
+	- varargs
+	- import static
+	- StringBuilder
+	- foreach
+- 1.7 
+	- underline nos literais
+	- operador diamente <>
+	- try-with-resources
+- 1.8 
+	- java.time.*
+	- lambda 
+	- interface c/ métodos default e static
 
-** não cai mas é útil
+#### import
+- java.lang (implicito, pode importar explicitamente que não da erro) 
+	- String 
+	- Math.*
+- java.io.*
+	-	 
+- java.util.* 
+	- Calendar
+	- Date
+	- ArrayList
+	- Collections
+	- function.* (Predicate)
+- java.sql.* 
+	- Date
+	- SQLException
+- java.time.*
+	- temporal.*
+		- ChronoField
+		- ChronoUnit
+	- LocalDate, etc	
+ 
+#### Pegadinhas
+- não esquecer de importar pacotes que não fazer parte da *lang*
+- `throws new RuntimeException()` errado. O correto é `throw new RuntimeException()`
+- var static e non-static não podem ter o mesmo nome
+- cuidado com o `static import`. O correto é `import static`
+- length ou size:
+	- String : length()
+	- Array: length
+	- ArrayList: size()
+- instanceOf errado. Correto instanceof
+- RunTimeException errado. Correto RuntimeException
+- import duplicado compila e roda normalmente
+- não existe *elseif* usar **else if**
+- métodos implementados de interface deverão ser public
+- não esquecer do **;** `do{}while(condicao); //erro de compilação` 
+- rotulos: apenas c/ for, while, switch
+- switch só aceita break. Não existe continue
+- Binding Poloimorfismo: variaveis membrom métodos static e escondidos são sempre da ref
+- LocalDate.of(2021,12,24) e não LocalDate.of(“2021-12-24”)
+- LocalDate, LocalTime e LocalDateTime não possuem construtor
+
+#### Atenção
+- unreachable code
+	- while (false) { x=3; } Não compila. 
+	- switch("guilherme") case "guilherme" : ...; case "42": ...; case default ...;  compila e roda s/ problemas
+	- if (false) { x=3; } aqui não tem problema. Compila sem problemas
+
+
+
+#### não cai mas é útil
 - BigDecimal: melhorar forma p/ tratar moeda. Trata números c/ ponto flutuante s/ perder sua precisão.
 - enum
 	- nao podem ser locais. Podem ser de var de instancia ou ser um componente independente do arquivo (como interface ou outras classes)
@@ -1098,3 +1144,7 @@ for (Days d : Days.values()) //Days.values() retorna um array de Days
 	- 3: construtores
 
 - `System.exit(0)` para de executar o programa
+
+
+
+[[↑] Back to top](#Dicas)
