@@ -1145,6 +1145,106 @@ for (Days d : Days.values()) //Days.values() retorna um array de Days
 
 - `System.exit(0)` para de executar o programa
 
+- Math
+	- não precisa importar
+	- Math.max(x,y);
+	- Math.sqrt(x)
+	- Math.random();
+		- `int randomNum = (int)(Math.random() * 101);  // 0 to 100`
+		
+- Scanner
+	- importar java.util
+	- ```java
+		Scanner myObj = new Scanner(System.in);  // Create a Scanner object
+    	System.out.println("Enter username");
+    	String userName = myObj.nextLine();  // Read user input (String only)
+		System.out.println("Username is: " + userName);		
+	```
+	- nextBoolean()	Reads a boolean value from the user
+	- nextByte()	Reads a byte value from the user
+	- nextDouble()	Reads a double value from the user
+	- nextFloat()	Reads a float value from the user
+	- nextInt()	Reads a int value from the user
+	- nextLong()	Reads a long value from the user
+	- nextShort()	Reads a short value from the user
+	- InputMismatchException
+	
+- File Handling
+	- importar java.io.*
+	- tratar sempre c/ IOException 
+	- File
+		- File myObj = new File("filename.txt"); // Specify the filename or directory name
+		- File myObj = new File("C:\\Users\\MyName\\filename.txt"); //windows
+		- /Users/name/filename.txt // mac/linux
+	
+		- canRead()	Boolean	Tests whether the file is readable or not
+		- canWrite()	Boolean	Tests whether the file is writable or not
+		- createNewFile()	Boolean	Creates an empty file
+		- delete()	Boolean	Deletes a file or directory
+		- exists()	Boolean	Tests whether the file exists
+		- getName()	String	Returns the name of the file
+		- getAbsolutePath()	String	Returns the absolute pathname of the file
+		- length()	Long	Returns the size of the file in bytes
+		- list()	String[]	Returns an array of the files in the directory
+		- mkdir()	Boolean	Creates a directory	
+	
+	- FileWriter 
+		```java
+		FileWriter myWriter = new FileWriter("filename.txt");
+      	myWriter.write("Files in Java might be tricky, but it is fun enough!");
+      	myWriter.close();
+		```
+	- Scanner
+		```java
+		File myObj = new File("filename.txt");
+      	Scanner myReader = new Scanner(myObj);
+      	while (myReader.hasNextLine()) {
+        	String data = myReader.nextLine();
+        	System.out.println(data);
+      	}
+      	myReader.close();
+		```
+- Threads
+	- problemas de concorrência
+	- ```java
+	//criando Thread extendendo
+	public class Main extends Thread {
+  		public void run() {
+    		System.out.println("This code is running in a thread");
+  		}
+	}
+	
+	//criando implementando Runnable
+	public class Main implements Runnable {
+  		public void run() {
+    		System.out.println("This code is running in a thread");
+  		}
+	}
+	
+	//running classe q extende
+    Main thread = new Main();
+    thread.start();
+    
+    //running classe q implementa Runnable
+    Main obj = new Main();
+    Thread thread = new Thread(obj);
+    thread.start();
+	
+	```
+	
+- HashMap
+	- armazena como chave/valor. Você pode acessar através d eum index que pode ser uma String inclusive
+	- importar 	java.util.HashMap;
+	- ```
+	HashMap<String, String> capitalCities = new HashMap<String, String>();
+	capitalCities.put("England", "London");
+	System.out.println(capitalCities);
+	capitalCities.get("England");
+	capitalCities.remove("England");
+	capitalCities.clear(); //remove all items
+	```
+
+- HashSet
 
 
 [[↑] Back to top](#Dicas)
