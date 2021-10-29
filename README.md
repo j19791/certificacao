@@ -575,46 +575,93 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 - *StringIndexOutOfBoundsException* `"guilherme".charAt(20); "guilherme".charAt(-1);`
 - Variável String não pode ser atribuida com valores númericos, booleano ou char a menos que exista uma concatenação com uma String (literal ou variável). `String $s = 1 + "" +  false + "" + 'a';`
 #### Create and manipulate calendar data using classes from **java.time.LocalDateTime,  java.time.LocalDate, java.time.LocalTime, java.time.format.DateTimeFormatter, java.time.Period**
-- *imutáveis*
-- *LocalDate* yyyy-MM-dd
-- *LocalTime* hh:mm::ss.zzz			
-- *LocalDateTime* yyyy-MM-dd-hh:mm::ss.zzz
-- *MonthDay* MM-dd
-- *YearMonth* yyyy-MM
-- atenção: LocalDate, LocalTime e LocalDateTime não possuem construtor
-- *now()* criando `LocalTime currentTime = LocalTime.now(); LocalDate.now(ZoneId.of("America/Sao_Paulo"));`
-- *of()* `LocalTime meioDia = LocalTime.of(12,0); LocalDate Natal = LocalDate.of(2014, Month.DECEMBER, 25); MonthDay.of(12, 25); LocalDateTime ldt = LocalDateTime.of(natal, meioDia);`
-- *get* `ldt.getDayOfMonth(); ldt.getDayofYear(); /*349*/; ldt.getDayOfWeek(); /*Monday*/ ldt.getMonth() /*DECEMBER*/ ; ldt.getMonthValue(); /*12*/`
-	- *ChronoField* campo que será retornado `ldt.get(ChronoField.HOUR_OF_DAY) /*13*/; `
-	- importar `java.time.temporal.ChronoField;`
-- *is* comparações `natal.isEqual(LocalDate.of(2015, 4, 1));  natal.isSupported(ChronoField.HOUR_OF_DAY)) /*false*/; natal.isSupported(ChronoUnit.DAYS) /*Can I make operations with days?		*/` 
-- *with* obter versões modificadas `LocalDate d = LocalDate.of(2015, 4, 1) /*2015-04-01*/; d = d.withDayOfMonth(15).withMonth(3) /*2015-03-15*/; `
-- *plus minus* `LocalDate d = LocalDate.of(2013, 9, 7);d = d.plusDays(1).plusMonths(3).minusYears(2); /*2011-12-08*/`
-- *ChronoUnit* fazendo operações utilizando unidades de tempo, sem se preocupar c/ dias e meses. calcula intervalo entre duas datas 	
-	- importar `java.time.temporal.ChronoUnit;`
-	- `d = d.plusWeeks(3).minus(3, ChronoUnit.WEEKS);`
-	- `ChronoUnit.YEARS.between(LocalDate.of(1983, 7, 22), LocalDate.of(2014, 12, 25)));`
-	-  *UnsupportedTemporalTypeException*
-- *Instant* representa a qtd de milisegundos desde 1/1/70 `Instant t = Instant.now().plus(Duration.ofSeconds(10)); // now after 10 seconds`
-- *to* ldt para ld ou lt: `LocalDateTime now = LocalDateTime.now(); LocalDate dateNow = now.toLocalDate(); // from datetime to date`
-- *at* ld ou lt p/ ldt  `LocalDateTime ldt = LocalDate.of(2020,08,17).atTime(LocaTime.now());`
-- *converter* 
-	- *java.util.Date* *java.util.Calendar*
-	- Date para ldt `LocalDateTime.ofInstant(new Date().toInstant(), ZoneId.systemDefault());`
-	- Calendar para ldt `;LocalDateTime.ofInstant(Calendar.getInstance().toInstant(),ZoneId.systemDefault());`	
-	- ldt p/ Date `Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC))`;
-- *Duration* 
-	- só *getSeconds*. Não tem data `long secondsSinceEpoch = Duration.between(Instant.EPOCH /*01/01/1970 00:00:00*/, Instant.now()).getSeconds(); //calcula o intervalo em segundos de duas datas` 
-- *Period* calculo de intervalos, quebrando o periodo de tempo, em dia, mes, ano  `Period lifeTime = Period.between(LocalDate.of(1983, 7, 22), LocalDate.of(2014, 12, 25)); lifeTime.getYears()) /*31 years*/; lifeTime.getMonths() /* 5 months*/; lifeTime.getDays() /*3 dias*/;`
-- *DataTimeFormatter* métodos de formatação
-	- pacote *java.time.format*			
-	```java
-	DateTimeFormatter.ofPattern("yyyy MM dd").format(LocalDate.of(1983, 7, 22)) /*1983 07 22*/;
-	LocalDate.of(1983, 7, 22).format(DateTimeFormatter.ofPattern("yyyy MM dd")));
-	DateTimeFormatter.ofPattern("dd/MM/yyyy").format(LocalDate.parse("23/04/1986",formatter)); // tranforma o texto 23/04/1986 em uma data			
-	LocalDateTime.parse("2011-12-03T00:00:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME);//não esquecer do T na separacao do string dataThora
-	```
-	- *DateTimeFormatException*
+- imutáveis
+- LocalDate yyyy-MM-dd
+- LocalTime hh:mm::ss.zzz
+- LocalDateTime yyyy-MM-dd-hh:mm::ss.zzz
+- YearMonth yyyy-MM
+- MonthDay MM-dd
+- não possuem construtor
+- Month (enumerator)
+	- JANUARY, DECEMBER
+- java.time.temporal.*
+	- UnsupportedTemporalTypeException
+	- ChronoField (enumerator)
+		- HOUR_OF_DAY
+	- ChronoUnit (enumerator)
+		- DAYS, WEEKS, MONTHS, YEARS, HOURS
+			- between(ld1,ld2) //nao quebra o período calculado: 35 anos ou 200 meses ou 4567 dias
+- ZoneId
+	- of("America/Sao_Paulo")
+	- SystemDefault
+- ZoneOffset
+	- UTC
+- now()
+	- now(ZoneId.of("America/Sao_Paulo"))
+	- Instant.now()
+- parse(String, formatador)
+	- formatador:
+		- DateTimeFormatter.ISO_LOCAL_DATE_TIME
+		- DateTimeFormatter.ofPattern("yyyy MM dd")	
+- of
+	- of(YYYY,MM,dd) //ld
+	- of(HH,mm) //lt
+	- of(ld,lt) //ldt
+	- conversao de Date ou Calendar (ja convertidos p/ Instant (objeto intermediario usado p/ conversões))
+		- ldt.ofInstant(Instant, ZoneId.SystemDefault)
+	- format(DTF.ofPattern("dd/MM/yyyy"))
+- get_()
+	- DayOfMonth()
+	- DayOfWeek() //SATURDAY
+	- Month() //DECEMBER
+	- MonthValue() //12
+	- get(CF)
+- is_
+	- Equal(ld)
+ 	- Supported(CF) //true, false
+	- Supported(CU) //Can I make operations with DAYS ?? true, false
+- with_
+	- Month(3)
+	- Hour(12)
+	- DayOfMonth(15)
+	- Year(1979)
+- plus_
+	- encadeável
+	- Days(1), Months(2), Years(3)
+	- plus(3, CU)
+	- minus
+- to_ ldt p/ ld ou lt
+	- LocalDate()
+	- LocalTime()
+	- Instant(ZoneOffset.UTC) //conversao p/ Instant p/ converter p/ Date ou Calendar
+- at_ ld ou lt p/ ldt
+	- Time(lt)
+	- Date(ld)
+- Duration //só segundos
+	- between(I1,I2)
+		-get_
+			- Seconds()
+		-get(CU)
+	- of_
+		- Seconds(10)
+- Period
+	- between(ld1, ld2) //quebra o periodo calculado: 31 anos e 5 meses e 3 dias
+		- get_
+			- Days(), Months(), Years()
+- java.util.*
+	- Date //p conversão p/ ldt, precisa converter antes p/ Instant
+		- new Date()
+			- toInstant()
+		- from (Instant) //conversão de LDT p/ Date
+	- Calendar
+		- getInstance()
+			- ToInstant()
+- java.time.format.*
+	- DateTimeFormatter
+		- ofPattern("yyyy MM dd")
+			- format(ld) //formata ld a partir de um padrão
+	- DateTimeFormatException
+			
 	![conversões](/imagens/java.time.jpg)
 #### Declare and use an **ArrayList** of a given type 
 - *java.util.ArrayList*
