@@ -732,7 +732,8 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 	- sem código, o; é opcional
 	- sem {} é opcional ;
 	- pode incluir return 
-- Se houver parametros () é opcional, caso contrário, é preciso incluir () `Runnable r = () -> System.out.println("a runnable object!");`
+	- apenas 1 statement, o {} é opcional
+- Se houver 1 parametro () é opcional, mais de 1 parametro ou s/ parametro, é preciso incluir () `Runnable r = () -> System.out.println("a runnable object!");`
 - seu código interno pode interagir com *variaveis de instancia* desde q não sejam declaradas como *final*
 - dentro de métodos, só pode interagir com variaveis locais *final* ou variaveis q *não são alteradas*
 - variaveis do lambda estão *dentro do mesmo escopo do método*. Cuidado p/ não conflitar c/ as variáveis que ja foram declaradas no método
