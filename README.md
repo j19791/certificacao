@@ -123,7 +123,7 @@ p.getProperty("key1");
 	- valores numéricos não considera seu tipo
 	- não é possível comparar primitivo c/ array
 - **lógicos**
-	- *& | * a segunda parte sempre é avaliada, podendo incrementar variaveis e tbm chamar métodos			
+	- *& |* a segunda parte sempre é avaliada, podendo incrementar variaveis e tbm chamar métodos			
 	- *curto circuito && ||*  Quando já for possível determinar a resposta final olhando apenas para a primeira parte da expressão, a segunda não é avaliada
 	```java
 	System.out.println(1 == 2 & imprimir("hi"));// imprime hi, depois false
@@ -161,7 +161,7 @@ p.getProperty("key1");
 	int a = 15, b= 20, c= 30; a = (b = c + 5) + 5; // c + 5 = 35, b = 35, 35 + 5 = 40, a = 40
 	```
 - **ternário** `variavel = teste booleano ? verdadeiro : falso;`
-- **referencia . ** p/ acessar atributos ou métodos de um obj
+- **referencia** `ref.atributo()` p/ acessar atributos ou métodos de um obj
 - **concatenação de Strings** 
 	- `System.out.println(15 + ( 0 + " != 150")); // 15 + "0 != 150"; "150 != 150"	`
 	- operações com boolean + String não é possível `System.out.println(false & true + "Hello World"); //não compila. Compila apenas se colocar parenteses na operação c/ booleans`
@@ -247,7 +247,7 @@ p.getProperty("key1");
 		System.out.println("Will it run?"); //unreachable code
 	}
 ```
-	- ` if(false){...} ` compila apesar de não executar nada dentro do bloco
+	- `if(false){...}` compila apesar de não executar nada dentro do bloco
 - **missing return** não compila qdo falta um fluxo para execução d euma determinada condição. Todos os caminhos possíveis devem retornar o tipo indicado pelo método ou *lançar uma exception*
 ```java
 	public int method(int x) {
