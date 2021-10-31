@@ -1254,7 +1254,7 @@ for (Days d : Days.values()) //Days.values() retorna um array de Days
 		```
 - Threads
 	- problemas de concorrência
-	- ```java
+```java
 	//criando Thread extendendo
 	public class Main extends Thread {
   		public void run() {
@@ -1277,20 +1277,19 @@ for (Days d : Days.values()) //Days.values() retorna um array de Days
     Main obj = new Main();
     Thread thread = new Thread(obj);
     thread.start();
-	
-	```
+```
 	
 - HashMap
 	- armazena como chave/valor. Você pode acessar através d eum index que pode ser uma String inclusive
 	- importar 	java.util.HashMap;
-	- ```
+```java
 	HashMap<String, String> capitalCities = new HashMap<String, String>();
 	capitalCities.put("England", "London");
 	System.out.println(capitalCities);
 	capitalCities.get("England");
 	capitalCities.remove("England");
 	capitalCities.clear(); //remove all items
-	```
+```
 
 - HashSet
 
