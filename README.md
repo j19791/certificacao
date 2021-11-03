@@ -990,6 +990,15 @@ int getLength() {return lastname.length();} //compila e roda
 - metodo com parametros *varargs* 
 	- Se existe uma sobrecarga do método s/ parametros, invocamos sem argumentos, o método chamado é o s/ argumentos
 	- métodos sobrecarregados c/ varargs são invocados por último. Dado prioridade aos métodos assinados c/ array ou objeto.
+	- método c/ parametros não varargs e com varargs. Varargs sempre deverá ser o último
+```java
+public void go(int x, String... y) {
+ System.out.print(y[y.length - 1] + " ");
+  }
+//referenciando
+new Main().go( 2, "hi", "world");
+```
+ 
 ```java
 void yingyang(Integer[] ints) {
 void yingyang(Integer... ints) { //nao compila
@@ -1147,6 +1156,7 @@ void yingyang(Integer... ints) { //nao compila
 - length ou size:
 	- String : length()
 	- Array: length
+	- varargs: lenght
 	- ArrayList: size()
 - instanceOf errado. Correto instanceof
 - RunTimeException errado. Correto RuntimeException
@@ -1171,7 +1181,17 @@ void yingyang(Integer... ints) { //nao compila
 #### não cai mas é útil
 - BigDecimal: melhorar forma p/ tratar moeda. Trata números c/ ponto flutuante s/ perder sua precisão.
 - enum
-	- nao podem ser locais. Podem ser de var de instancia ou ser um componente independente do arquivo (como interface ou outras classes)
+	- nao podem ser locais. 
+	- Podem ser de var de instancia
+```java
+class Nav{
+	public enum Direction { NORTH, SOUTH, EAST, WEST }
+}
+//referenciando em outra classe
+Nav.Direction d = Nav.Direction.NORTH;
+
+```	 
+	- componente independente do arquivo (como interface ou outras classes)
 ```java
 enum Days {M, T, W, TH, F, SA, SU };
 
