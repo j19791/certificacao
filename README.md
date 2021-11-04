@@ -524,6 +524,23 @@ public class Network {
 - se a classe possui pelo menos 1 método abastrato, a classe precisa ser abstrata
 - método abstrato não tem corpo, somente sua definição
 - classe abstrata e interfaces não poden ser instanciadas diretamente
+	- compila e roda com classes anonimas
+```java
+	interface TestA { String toString(); }
+	
+	public class Main{
+		public static void main(String... args) {
+			System.out.println(
+			    new TestA() {
+	                public String toString(){
+	                    return "test"; 
+	                    
+	                }
+	            }
+		    );
+		}
+	}
+```
 - classe concreta q herda de uma abstrata, precisa reescrever e implementar seus métodos que ainda não foram implementados
 - subclasse abstrata não precisa implementar todos os métodos abstratos da classe pai. Não precisa nem ter a definição dos métodos abstratos
 - *interface* : declara métodos (por padrão: *public abstract*) q deverão ser implementados (todos) pelas classes concretas que queiram ser consideradas como tal
@@ -987,7 +1004,8 @@ int getLength() {return lastname.length();} //compila e roda
 	- pode passar instruções/métodos *static* como argumento `Test() {this(value());} private static String value() {return "value...";} Test(String s) {System.out.println(s);}`
 		- não compila se passar métodos não static. O obj não terminou de ser construido ainda durante a execução do construtor
 - *loops* não compilam
-- metodo com parametros *varargs* 
+- metodo com parametros *varargs*
+	- compila e roda `metodo(String[]... args)` varargs de arrays
 	- Se existe uma sobrecarga do método s/ parametros, invocamos sem argumentos, o método chamado é o s/ argumentos
 	- métodos sobrecarregados c/ varargs são invocados por último. Dado prioridade aos métodos assinados c/ array ou objeto.
 	- método c/ parametros não varargs e com varargs. Varargs sempre deverá ser o último
