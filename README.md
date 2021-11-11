@@ -426,7 +426,15 @@ class Y extends X { public void method2(int x){this.x = x; //erro: nao enexerga 
 			
 	- mesmo *nome*
 	- *parametros* iguais em tipo e ordem
-	- *retorno* do método igual ou mais específico (covariante). Não vale p/ primitivos
+	- *retorno* do método igual ou mais específico (covariante) apenas p/ Objetos
+		- Não vale p/ primitivos
+```java
+class Blip {
+ protected int blipvert(int x) { return 0; } }
+class Vert extends Blip {
+protected long blipvert(int x) { return 0; } } //long é diferente de int. Não compila
+
+```		
 	- *visibilidade* igual ou maior q a mãe
 	- número de *exceptions* checked lançadas *throws* devem ser o mesmo ou menor (ou nnehuma). Elas devem ser do mesmo tipo ou mais específico.
 		- *RuntimeException* e suas filhas que tbm são unchecked podem ser adicionadas s/ a restrição
@@ -1087,7 +1095,7 @@ void yingyang(Integer... ints) { //nao compila
 	- multiplos catchs: invocado somente o + adequado. 
 		- A ordem importa: o JVM procura o 1º catch q pode trabalhar a exception adequada. 
 		- *unreachable code* Quando tem polimorfismo em multiplos catches, priorizar na ordem os mais especificos
-		- se ocorrer um erro dentro do bloco catch, o erro é jogado p/ fora do bloco e o bloco pai que deverá ou não tratar esse erro.
+	- se ocorrer um erro dentro do bloco catch, o erro é jogado p/ fora do bloco, finally (se houver) é executado,  e o bloco pai que deverá ou não tratar esse erro.
 - **finally** seja no sucesso ou no fracasso, temos a obrigação de cumprir certas tarefas. Conexão deveria ser fechada, por exemplo
 	- pode usar finally s/ o catch
 	- finally jamais devera vir antes do catch: a ordem tem q ser try + catch ou try + finally ou try + catch + finally
@@ -1187,6 +1195,7 @@ void yingyang(Integer... ints) { //nao compila
 - Binding Poloimorfismo: variaveis membrom métodos static e escondidos são sempre da ref
 - LocalDate.of(2021,12,24) e não LocalDate.of(“2021-12-24”)
 - LocalDate, LocalTime e LocalDateTime não possuem construtor
+- String : concat; StringBulder: append
 
 #### Atenção
 - unreachable code
