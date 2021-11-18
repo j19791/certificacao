@@ -72,8 +72,9 @@ p.getProperty("key1");
 	- import não importa membros especificos da classe. Importa a classe e todos os seus membros.
 - pacote **java.lang.\*** são implicitamente importadas. *String*
 - **import static** importa todos os membros *static* da classe Utils.  `import static model.Utils.*`
-	- Atenção, o import static não importa a classe	`import static java.util.Collections; \\não compila`	
-	- não especificar parametros de um método quando apenas o método é importado;
+	- Atenção, o import static não importa a classe, usar sempre *	`import static java.util.Collections; \\não compila`	
+- não especificar parametros de um método quando apenas o método é importado;
+
 #### Compare and contrast the features and components of Java such as: platform independence, object orientation, encapsulation, etc.
 - **bytecode** .class é interpretado pela **JVM** que converte em código de máquina, executado pelo **SO** nativo
 - programa **escrito** e **compilado** apenas 1x pode ser usado em diversas plataformas diferentes.
@@ -428,13 +429,15 @@ class Y extends X { public void method2(int x){this.x = x; //erro: nao enexerga 
 	- *parametros* iguais em tipo e ordem
 	- *retorno* do método igual ou mais específico (covariante) apenas p/ Objetos
 		- Não vale p/ primitivos
+		- Não vale quando um método ja foi declarado usando void
+		
 ```java
 class Blip {
  protected int blipvert(int x) { return 0; } }
 class Vert extends Blip {
 protected long blipvert(int x) { return 0; } } //long é diferente de int. Não compila
-
 ```		
+	
 	- *visibilidade* igual ou maior q a mãe
 	- número de *exceptions* checked lançadas *throws* devem ser o mesmo ou menor (ou nnehuma). Elas devem ser do mesmo tipo ou mais específico.
 		- *RuntimeException* e suas filhas que tbm são unchecked podem ser adicionadas s/ a restrição
@@ -1324,6 +1327,23 @@ for (Days d : Days.values()) //Days.values() retorna um array de Days
     Main obj = new Main();
     Thread thread = new Thread(obj);
     thread.start();
+```
+
+- Inner Classes
+```java
+class OuterClass {
+  int x = 10;
+
+  class InnerClass {
+    int y = 5;
+  }
+  
+  public static class Point {}
+}
+
+OuterClass.InnerClass myInner = new OuterClass().new InnerClass();
+OuterClass.Point point = new OuterClass.Point();
+
 ```
 	
 - HashMap
