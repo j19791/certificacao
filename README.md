@@ -1199,6 +1199,9 @@ void yingyang(Integer... ints) { //nao compila
 - LocalDate.of(2021,12,24) e não LocalDate.of(“2021-12-24”)
 - LocalDate, LocalTime e LocalDateTime não possuem construtor
 - String : concat; StringBulder: append
+- não existe subString. É substring
+- substring retorna a String que você deseja mas não altera o valor do seu StringBuilder ou StringBuffer.
+	- nos encadeamentos c/ SB, o substring não altera nada e passa p/ outros métodos a mesma string que recebeu 
 
 #### Atenção
 - unreachable code
