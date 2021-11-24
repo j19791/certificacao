@@ -405,7 +405,8 @@ class Y extends X { public void method2(int x){this.x = x; //erro: nao enexerga 
 		- *método de instancia*  tempo de execução. 
 		- *método static*  tempo de compilação. Ignora o tipo de objeto referenciado. Utiliza o método da ref. Não há polimorfismo com métodos static
 		- *variaveis membro* polimorfismo apenas p/ métodos não static. As variaveis são sempre da ref.
-		- quando o método da referencia (que é classe pai) esta escondido (private, default), o método usado é a da ref e não do obj referenciado 
+		- quando o método da referencia (que é classe pai) esta escondido (private, default), o método usado é a da ref e não do obj referenciado
+		 
 - **não existe sobreescrita de atributos**  Vai ter o atributo com o mesmo nome da classe mãe, acessível com **super** ou da própria classe q sobreescreveu, acessível com **this**
 - **toString** sobreescrever de *Object* p/ devolver uma String q represente o objeto ```public String toString()```
 #### Develop code that makes use of polymorphism; develop code that overrides methods;  differentiate between the type of a reference and the type of an object
@@ -437,16 +438,19 @@ class Blip {
 class Vert extends Blip {
 protected long blipvert(int x) { return 0; } } //long é diferente de int. Não compila
 ```		
-	
 	- *visibilidade* igual ou maior q a mãe
 	- número de *exceptions* checked lançadas *throws* devem ser o mesmo ou menor (ou nnehuma). Elas devem ser do mesmo tipo ou mais específico.
 		- *RuntimeException* e suas filhas que tbm são unchecked podem ser adicionadas s/ a restrição
+	- as exceptions lançadas pelo throws tbm são herdadas pelos métodos das classes filhas. Se elas são checked, qdo ocorrer polimorfismo, as invocações deverão estar tratadas c/ try/catch ou lançar com throws
 	- método da mãe não pode ser *final*
 	- *interface* : os métodos são implicitamente *public*
-	```java
+	
+	
+```java
 	interface A {void a();//public}
 	class B implements A {void a() {}} //compile error: default é menos visivel q public
-	```
+```
+	
 - *abstract* : quem herdar dessa classe deverá sobreescrever obrigatoriamente o método do pai
 - **this** deixa explicito que o método sobreescrito da própria classe filha q deverá ser chamado
 - **super** deixa explicito que o método invocado deverá ser do pai sobreescrito 
@@ -893,6 +897,8 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 			- ou vc passa o tamanho ou passa os valores. `int y[] = new int[3] {0,3,5}; //não compila`
 			- pode inicializar c/ vlr nulos `Car[] cars = new Car[]{new Car(), null, new Car()};` 
 			- declarar e inicializar *somente na mesma linha* `int[] numbers = {1,2,5,7,5};`
+			- é possível atribuir o array a uma ref do tipo Object mas é necessário um cast p/ aproveitar essa atribuição 
+				- `Object obj = new int[] { 1, 2, 3 }; int[] someArray = (int[])obj;`
 	- *acesso*
 		- `numbers[0] = 10;` 
 		- *ArrayIndexOutOfBoundsException* acessar posição q não existe
@@ -1362,6 +1368,9 @@ OuterClass.Point point = new OuterClass.Point();
 ```
 
 - HashSet
+	- collection of items where every item is unique
+	- import java.util.HashSet; 
+	- `HashSet<String> cars = new HashSet<String>();    cars.add("Volvo");`
 
 
 [[↑] Back to top](#Dicas)
