@@ -248,7 +248,7 @@ p.getProperty("key1");
 		System.out.println("Will it run?"); //unreachable code
 	}
 ```
-	- `if(false){...}` compila apesar de não executar nada dentro do bloco
+`if(false){...}` compila apesar de não executar nada dentro do bloco
 - **missing return** não compila qdo falta um fluxo para execução d euma determinada condição. Todos os caminhos possíveis devem retornar o tipo indicado pelo método ou *lançar uma exception*
 ```java
 	public int method(int x) {
@@ -327,6 +327,7 @@ int a = 1, b = 2;
 	- `for(;;){}` compila e roda infinitamente      
 	- executada apenas 1x no começo do for. 
 	- Permitido declarar variaveis de um mesmo tipo `for(int i = 1, j= 2;;){//code}` ou inicializar diversas variáveis de tipos diferentes. `for(a=1, b=2.0, c = true;;){//code}`
+	- variaveis declaradas dentro do for possuem escopo apenas dentro do bloco do for
 - *condição* verificada no começo de cada iteração. default: *true*
 	- cuidado c/ unreachable code `for(;false;) {System.out.println("a");break;} System.out.println("b"); //código dentro e depois do bloco do for nunca será executado pois false é literal` 
 - *comandos*
@@ -355,6 +356,7 @@ int a = 1, b = 2;
 - qdo tem laços encaixados, o break ou continue vale p/ o + próximo (interno)
 - **labeled loops** 
 	- rótulo deve referenciar apenas for, loop, switch
+	- ocorrerá erro de compilação se o rótulo for aplicado em outro tipo de comando
 	- nomes dos rótulos podem ser repetidos desde q não haja conflito de escopo
 	- um mesmo statement pode ter 2 labels `first: second: for (int i = 0; i < 10; i++) {`
 ```java
