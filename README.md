@@ -46,8 +46,12 @@
 - compilando e rodando c/ *package certification*  `javac certification/Test.java; java certification.Test`
 - Passando **propriedades** na execução: java *-Dkey1=abc -Dkey2=def* Foo xpto bar 
 ```java
+//método 1
 java.util.Properties p = System.getProperties();
-p.getProperty("key1");		
+p.getProperty("key1");
+
+//método 2	
+System.getProperty("key1");		
 ```
 - **classpath**: diretorios, jar que contem as classes e pacotes da aplicação. Padrão é o *diretório corrente (.)* 
 - compilar a classe A.java, definida dentro do pacote b e adicionar o jar program.jar na busca de classes durante a compilação (.) diretório atual `javac -cp program.jar:. b/A.java`
@@ -875,6 +879,13 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 		
 	- *comparando* 
 		- `Integer i1 = 1234;Integer i2 = 1234; i1 == i2 /*false (duas ref apontando p/ obj dif)*/; i1.equals(i2) /*true*/; `
+		- qdo uma ref x p/ um wrappper recebe um novo valor e outra referencia y ja tinha apontado p/ essa referencia x anteriormente, significa que as duas referencias agora apontam p/ objetos diferentes 
+		```java
+			Integer x = 400;
+			Integer y = x;
+			x++; //x e y agora apontam p/ objetos diferentes e y não é incrementado			
+		```
+		
 		- qdo o vlr é muito baixo, devido ao *cache*, a comparação pode ser *true* `Integer i1 = 123; Integer i2 = 123; i1 == i2 /*true*/;  i1.equals(i2)) /*true*/ ;`
 			- Boolean, Byte, Short, Integer de -128 a 127, caracteres ASCII como letras e números
 - *NullPointerException*  operações c/ obj null `Integer a = null; int b = 44; a + b; //throws NPE	`
@@ -1069,6 +1080,7 @@ void yingyang(Integer... ints) { //nao compila
 - *passagem de parametros* por copia de valores. Mudanças nos valores das variaveis definidas na lista de parametros de um método não afetam variaveis de outros métodos
 	- *primitivos* variaveis c/ mesmo nome em métodos diferentes. Alterações em uma das variaveis não altera o valor da outra
 	- *de referência* 	variaveis não primitivas guardam referencias que apontam p/ o mesmo objeto. Modificações no obj podem ser feitas por n referencias. 
+		- a referência continua apontando p/ o mesmo objeto quando essa referência é passada numa invocação de método e dentro desse método a referência apontar para um novo objeto
 - *pilha de execução* lugar onde são empilhados os métodos invocados na mesma ordem q foram chamados
 - *heap de objetos* lugar onde são guardados os objetos criados durante sua execução
 
