@@ -143,6 +143,10 @@ System.getProperty("key1");
 	```java
 		int i = 10; System.out.println(++i); //imprime 11
 		int j =10;	System.out.println(j++); //imprime 10
+		
+		int k = 0;
+		return k++; //vai retornar 0
+		return ++k; vai retornar 1		
 	```
 	- só pode incrementar variáveis. Não usar incremento/ decremento com métodos
 - **operações/atribuições de uma só vez**
@@ -1034,10 +1038,10 @@ int getLength() {return lastname.length();} //compila e roda
 	- pode passar instruções/métodos *static* como argumento `Test() {this(value());} private static String value() {return "value...";} Test(String s) {System.out.println(s);}`
 		- não compila se passar métodos não static. O obj não terminou de ser construido ainda durante a execução do construtor
 - *loops* não compilam
-- metodo com parametros *varargs*
+- método com parâmetros *varargs*
 	- compila e roda `metodo(String[]... args)` varargs de arrays
-	- Se existe uma sobrecarga do método s/ parametros, invocamos sem argumentos, o método chamado é o s/ argumentos
-	- métodos sobrecarregados c/ varargs são invocados por último. Dado prioridade aos métodos assinados c/ array ou objeto.
+	- Se existe uma sobrecarga do método s/ parametros, invocamos sem argumentos, o método chamado é o s/ argumentos	
+	- métodos sobrecarregados c/ varargs são invocados por último. Dado prioridade aos métodos assinados c/ primitivo ou objeto.
 	- método c/ parametros não varargs e com varargs. Varargs sempre deverá ser o último
 ```java
 public void go(int x, String... y) {
