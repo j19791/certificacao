@@ -367,8 +367,10 @@ int a = 1, b = 2;
 	- ocorrerá erro de compilação se o rótulo for aplicado em outro tipo de comando
 	- nomes dos rótulos podem ser repetidos desde q não haja conflito de escopo
 	- um mesmo statement pode ter 2 labels `first: second: for (int i = 0; i < 10; i++) {`
+	- um label pode estar numa linha vazia (como em external abaixo) antes que tbm vai funcionar
 ```java
-external: for (int i = 1; i < 10; i++) {
+external: 
+for (int i = 1; i < 10; i++) {
 	internal: for (int j = 1; j < 10; j++) {
 					if (i * j == 25) {
 						break external; // quebrando o for externo
@@ -1165,6 +1167,7 @@ void yingyang(Integer... ints) { //nao compila
 
 #### novidades Java
 - 1.4
+	- assert
 - 1.5 
 	- autoboxing
 	- varargs
@@ -1219,6 +1222,7 @@ void yingyang(Integer... ints) { //nao compila
 - não esquecer do **;** `do{}while(condicao); //erro de compilação` 
 - rotulos: apenas c/ for, while, switch
 - switch só aceita break. Não existe continue
+- no switch não existe `case default:` .  É `default:` apenas 
 - Binding Poloimorfismo: variaveis membrom métodos static e escondidos são sempre da ref
 - LocalDate.of(2021,12,24) e não LocalDate.of(“2021-12-24”)
 - LocalDate, LocalTime e LocalDateTime não possuem construtor
