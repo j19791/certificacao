@@ -55,6 +55,9 @@ System.getProperty("key1");
 ```
 - **classpath**: diretorios, jar que contem as classes e pacotes da aplicação. Padrão é o *diretório corrente (.)* 
 - compilar a classe A.java, definida dentro do pacote b e adicionar o jar program.jar na busca de classes durante a compilação (.) diretório atual `javac -cp program.jar:. b/A.java`
+- somente p/ usar c/ javac. Não é usado com java para rodar classes dependentes do jar
+`javac -cp ../proj/lib/supercharge.jar top/sub/A.java`
+- usar c/ -cp apenas arquivos jar. Não funciona com coringas ou com diretórios
 - rodar um .class de dentro de um jar `java cp /path/to/lib.jar pacote.Test`
 - Criar um jar da pasta certification: *jar **-cf library.jar** certification*
 - **printf** %[index$][flags][width][.precision]type
@@ -1087,6 +1090,7 @@ void yingyang(Integer... ints) { //nao compila
 	- *primitivos* variaveis c/ mesmo nome em métodos diferentes. Alterações em uma das variaveis não altera o valor da outra
 	- *de referência* 	variaveis não primitivas guardam referencias que apontam p/ o mesmo objeto. Modificações no obj podem ser feitas por n referencias. 
 		- a referência continua apontando p/ o mesmo objeto quando essa referência é passada numa invocação de método e dentro desse método a referência apontar para um novo objeto
+		- array não é primitivo
 - *pilha de execução* lugar onde são empilhados os métodos invocados na mesma ordem q foram chamados
 - *heap de objetos* lugar onde são guardados os objetos criados durante sua execução
 
@@ -1376,6 +1380,12 @@ OuterClass.InnerClass myInner = new OuterClass().new InnerClass();
 OuterClass.Point point = new OuterClass.Point();
 
 ```
+
+- Collection
+	- List : implementa métodos adicionais
+	- Set: implementa apenas métodos de Collection
+	- não é Collection: map
+
 	
 - HashMap
 	- armazena como chave/valor. Você pode acessar através d eum index que pode ser uma String inclusive
