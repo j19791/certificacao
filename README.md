@@ -79,8 +79,18 @@ System.getProperty("key1");
 	- import não importa membros especificos da classe. Importa a classe e todos os seus membros.
 - pacote **java.lang.\*** são implicitamente importadas. *String*
 - **import static** importa todos os membros *static* da classe Utils.  `import static model.Utils.*`
-	- Atenção, o import static não importa a classe, usar sempre *	`import static java.util.Collections; \\não compila`	
+	- Atenção, o import static não importa a classe, usar sempre *ou descrever um membro específico
+		- `import static java.util.Collections; \\não compila`	
+		- `import static pacote.A.a //compila, importa apenas o membro static a` ;
 - não especificar parametros de um método quando apenas o método é importado;
+- import comum importa inclusive todos os membros static
+- nâo especificar o nome da classe quando invocar um membro static importado
+```java
+import static pacote.A.a ;
+int _a = a;
+
+```
+ 
 
 #### Compare and contrast the features and components of Java such as: platform independence, object orientation, encapsulation, etc.
 - **bytecode** .class é interpretado pela **JVM** que converte em código de máquina, executado pelo **SO** nativo
@@ -1380,6 +1390,13 @@ OuterClass.InnerClass myInner = new OuterClass().new InnerClass();
 OuterClass.Point point = new OuterClass.Point();
 
 ```
+
+- Arrays
+	- java.util.Arrays
+	- Arrays.sort(a) 
+		- a = array q deseja ordenar
+		- retorna void. Não colocar dentro de foEeach
+		- não é Collection
 
 - Collection
 	- List : implementa métodos adicionais
