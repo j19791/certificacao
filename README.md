@@ -359,7 +359,7 @@ int a = 1, b = 2;
 	- pode executar trecho de código como se fosse um bloco, mesmo as instruções sendo separadas por , `for(int i = 0, j= 0;i< 10; i+= 3, System.out.println(i++)){//code} `
 - argumentos são opcionais e são preenchidos com os valores default `for(;;) {} //`
 - **enhanced for**: 
-	- percorre todos os elementos de uma *Collection*: `int i[] = {1,2,3,4,5}; for (int numbers : i){System.out.println(num);}`
+	- percorre todos os elementos de uma *Collection* e de um array: `int i[] = {1,2,3,4,5}; for (int numbers : i){System.out.println(num);}`
 	- *Não podemos modificar* o contéudo da collection q estamos percorrendo
 	- não existe *contador*. Não é possível percorrer *+1 collection ao mesmo tempo*
 #### Create and use do/while loops
@@ -463,10 +463,11 @@ class Blip {
 class Vert extends Blip {
 protected long blipvert(int x) { return 0; } } //long é diferente de int. Não compila
 ```		
+	
 	- *visibilidade* igual ou maior q a mãe
 	- número de *exceptions* checked lançadas *throws* devem ser o mesmo ou menor (ou nnehuma). Elas devem ser do mesmo tipo ou mais específico.
 		- *RuntimeException* e suas filhas que tbm são unchecked podem ser adicionadas s/ a restrição
-	- as exceptions lançadas pelo throws tbm são herdadas pelos métodos das classes filhas. Se elas são checked, qdo ocorrer polimorfismo, as invocações deverão estar tratadas c/ try/catch ou lançar com throws
+	- as exceptions lançadas pelo throws tbm são herdadas pelos métodos das classes filhas quando há polimorfismo apenas. Se elas são checked, qdo ocorrer polimorfismo, as invocações deverão estar tratadas c/ try/catch ou lançar com throws
 	- método da mãe não pode ser *final*
 	- *interface* : os métodos são implicitamente *public*
 	
@@ -1095,6 +1096,7 @@ void yingyang(Integer... ints) { //nao compila
 	- método público p/ acessar a leitura do atributo *getter* 
 	- escrita *setter* (c/ validação)		
 	- *is* getter boolean
+		- também pode ser usado get c/ boolean
 #### Determine the effect upon **object references** and **primitive** values when they are **passed  into methods** that change the values
 - *passagem de parametros* por copia de valores. Mudanças nos valores das variaveis definidas na lista de parametros de um método não afetam variaveis de outros métodos
 	- *primitivos* variaveis c/ mesmo nome em métodos diferentes. Alterações em uma das variaveis não altera o valor da outra
@@ -1399,10 +1401,17 @@ OuterClass.Point point = new OuterClass.Point();
 		- não é Collection
 
 - Collection
-	- List : implementa métodos adicionais
-	- Set: implementa apenas métodos de Collection
-	- não é Collection: map
-
+	- interfaces e implementações
+		- Collection
+			- List : implementa métodos adicionais
+				- implementações: ArrayList, LinkedList
+			- Set e SortedSet: implementa apenas métodos de Collection
+				- implementações: HashSet, TreeSet, LinkedHashSet
+			- Queue
+			- Deque
+				- implementações: ArrayDeque, LinkedList
+		- não é Collection: Map e SortedMap
+			implementações: HashMap, TreeMap, LinkedHashMap
 	
 - HashMap
 	- armazena como chave/valor. Você pode acessar através d eum index que pode ser uma String inclusive
