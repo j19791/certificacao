@@ -431,6 +431,7 @@ class Y extends X { public void method2(int x){this.x = x; //erro: nao enexerga 
 		- *método static*  tempo de compilação. Ignora o tipo de objeto referenciado. Utiliza o método da ref. Não há polimorfismo com métodos static
 		- *variaveis membro* polimorfismo apenas p/ métodos não static. As variaveis são sempre da ref.
 		- quando o método da referencia (que é classe pai) esta escondido (private, default), o método usado é a da ref e não do obj referenciado
+		- mesmo c/ cast, o método chamado é do objeto
 		 
 - **não existe sobreescrita de atributos**  Vai ter o atributo com o mesmo nome da classe mãe, acessível com **super** ou da própria classe q sobreescreveu, acessível com **this**
 - **toString** sobreescrever de *Object* p/ devolver uma String q represente o objeto ```public String toString()```
@@ -703,9 +704,14 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 	- of_
 		- Seconds(10)
 - Period
+	- não encadeia os seus métodos. Quando ocorre, apenas o último método da cadeia é chamado `Period p = Period.ofDays(1).ofYears(2); // apenas ofYears(2) é usado`		
 	- between(ld1, ld2) //quebra o periodo calculado: 31 anos e 5 meses e 3 dias
 		- get_
 			- Days(), Months(), Years()
+	- of(years, month, days);
+	- of_
+		- Days(n), Years(n);
+			
 - java.util.*
 	- Date //p conversão p/ ldt, precisa converter antes p/ Instant
 		- new Date()
@@ -786,8 +792,8 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 ```
 - pode colocar o tipo do parametro quando envoltos em parenteses
 - blocos {} 
-	- com código precisam ter ;  
-	- sem código, o; é opcional
+	- precisa ter ; com mais de uma linha de código   
+	- sem código, o ; é opcional
 	- sem {} é opcional ;
 	- pode incluir return 
 	- apenas 1 statement, o {} é opcional
