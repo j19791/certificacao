@@ -662,6 +662,7 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 	- formatador:
 		- DateTimeFormatter.ISO_LOCAL_DATE_TIME
 		- DateTimeFormatter.ofPattern("yyyy MM dd")	
+		- String aceitável p/ parse "2011-12-03T00:00:00"
 - of
 	- of(YYYY,MM,dd) //ld
 	- of(HH,mm) //lt
@@ -711,7 +712,9 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 	- of(years, month, days);
 	- of_
 		- Days(n), Years(n);
-			
+	- parse("P1Y12M30D"); //1 ANO, 12 MESES E 30 DIAS. Qdo não especificado, o valor default de Y, M ou D é 0
+		- get_
+			- Days(), Months(), Years()	
 - java.util.*
 	- Date //p conversão p/ ldt, precisa converter antes p/ Instant
 		- new Date()
