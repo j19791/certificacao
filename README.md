@@ -635,6 +635,7 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 - Variável String não pode ser atribuida com valores númericos, booleano ou char a menos que exista uma concatenação com uma String (literal ou variável). `String $s = 1 + "" +  false + "" + 'a';`
 #### Create and manipulate calendar data using classes from **java.time.LocalDateTime,  java.time.LocalDate, java.time.LocalTime, java.time.format.DateTimeFormatter, java.time.Period**
 - imutáveis
+	- conseguimos obter versões modificados c/ o retorno dos métodos
 - LocalDate yyyy-MM-dd
 - LocalTime hh:mm::ss.zzz
 - LocalDateTime yyyy-MM-dd-hh:mm::ss.zzz
@@ -645,9 +646,9 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 	- JANUARY, DECEMBER
 - java.time.temporal.*
 	- UnsupportedTemporalTypeException
-	- ChronoField (enumerator)
-		- HOUR_OF_DAY
-	- ChronoUnit (enumerator)
+	- ChronoField (get) (enumerator) 
+		- DAY_OF_WEEK, DAY_OF_MONTH, DAY_OF_YEAR, MONTH_OF_YEAR, YEAR, MINUTE_OF_HOUR, HOUR_OF_DAY
+	- ChronoUnit (operações c/ datas) (enumerator)
 		- DAYS, WEEKS, MONTHS, YEARS, HOURS
 			- between(ld1,ld2) //nao quebra o período calculado: 35 anos ou 200 meses ou 4567 dias
 - ZoneId
@@ -670,16 +671,19 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 	- conversao de Date ou Calendar (ja convertidos p/ Instant (objeto intermediario usado p/ conversões))
 		- ldt.ofInstant(Instant, ZoneId.SystemDefault)
 	- format(DTF.ofPattern("dd/MM/yyyy"))
+	- of(MM,dd) //md
 - get_()
 	- DayOfMonth()
 	- DayOfWeek() //SATURDAY
 	- Month() //DECEMBER
 	- MonthValue() //12
 	- get(CF)
+		- não compila qdo o obj não tem a parte (horas c/ ld ou data c/ lt)
 - is_
 	- Equal(ld)
  	- Supported(CF) //true, false
 	- Supported(CU) //Can I make operations with DAYS ?? true, false
+	não funciona com MonthDay
 - with_
 	- Month(3)
 	- Hour(12)
@@ -690,18 +694,22 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 	- Days(1), Months(2), Years(3)
 	- plus(3, CU)
 	- minus
-- to_ ldt p/ ld ou lt
+	- não funciona com MonthDay
+- to_ 
+	- ldt p/ ld ou lt
 	- LocalDate()
 	- LocalTime()
 	- Instant(ZoneOffset.UTC) //conversao p/ Instant p/ converter p/ Date ou Calendar
-- at_ ld ou lt p/ ldt
+- at_ 
+	- ld ou lt p/ ldt
 	- Time(lt)
 	- Date(ld)
-- Duration //só segundos
+- Duration 
+	- só segundos
 	- between(I1,I2)
-		-get_
+		- get_
 			- Seconds()
-		-get(CU)
+		- get(CU)
 	- of_
 		- Seconds(10)
 - Period
