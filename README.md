@@ -605,7 +605,7 @@ public class Network {
 ```java
 StringBuffer sb = new StringBuffer();
 sb.append("Caelum - Inovação");
-sb.insert(9, "Ensino e "); // inserir coisas no meio com indice Caelum - Ensino e Inovação 
+sb.insert(9, "Ensino e "); // inserir coisas no meio com indice:  Caelum - Ensino e Inovação. Insere no fim quando é passado pro indice o tamanho do StringBuilder  
 sb.delete(6, 15); //indice inicial e final - Caelum e Inovação
 new StringBuffer("guilherme").reverse(); //emrehliug		
 ```
@@ -855,6 +855,8 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 - **literais** valores das variáveis diretamente no código fonte
 	- *underlines* só podem ser colocados c/ valores numéricos (se hexa A a F) em ambos os lados do _ `int a = 123_456_789;` A mesma regra vale p/ pontos flutuantes
 		- `int b1 = 0b_1; \\não compila`
+		- não pode colocar nos pontos das casas decimais
+		- serve apenas p/ melhorar leitura
 	- *null, false, true* são literais e tbm palavras chaves
 	- `int a = -0;` é permitido
 - **identificadores** palavras p/ nomear variaveis, métodos, construtores, classes, interfaces
@@ -1076,6 +1078,7 @@ int getLength() {return lastname.length();} //compila e roda
 	- Se existe uma sobrecarga do método s/ parametros, invocamos sem argumentos, o método chamado é o s/ argumentos	
 	- métodos sobrecarregados c/ varargs são invocados por último. Dado prioridade aos métodos assinados c/ primitivo ou objeto.
 	- método c/ parametros não varargs e com varargs. Varargs sempre deverá ser o último
+	- um parametro array pode receber um varargs
 ```java
 public void go(int x, String... y) {
  System.out.print(y[y.length - 1] + " ");
@@ -1117,6 +1120,7 @@ void yingyang(Integer... ints) { //nao compila
 #### Determine the effect upon **object references** and **primitive** values when they are **passed  into methods** that change the values
 - *passagem de parametros* por copia de valores. Mudanças nos valores das variaveis definidas na lista de parametros de um método não afetam variaveis de outros métodos
 	- *primitivos* variaveis c/ mesmo nome em métodos diferentes. Alterações em uma das variaveis não altera o valor da outra
+		- String tbm é considerado primitivo nesse caso
 	- *de referência* 	variaveis não primitivas guardam referencias que apontam p/ o mesmo objeto. Modificações no obj podem ser feitas por n referencias. 
 		- a referência continua apontando p/ o mesmo objeto quando essa referência é passada numa invocação de método e dentro desse método a referência apontar para um novo objeto
 		- array não é primitivo
@@ -1260,9 +1264,11 @@ void yingyang(Integer... ints) { //nao compila
 - LocalDate.of(2021,12,24) e não LocalDate.of(“2021-12-24”)
 - LocalDate, LocalTime e LocalDateTime não possuem construtor
 - String : concat; StringBulder: append
+	- nao existe insert em String (apenas SB)
 - não existe subString. É substring
 - substring retorna a String que você deseja mas não altera o valor do seu StringBuilder ou StringBuffer.
 	- nos encadeamentos c/ SB, o substring não altera nada e passa p/ outros métodos a mesma string que recebeu 
+- try/catch/finally: variaveis declaradas dentro do bloco try estão fora do escopo dos blocos catch e finally 	
 
 #### Atenção
 - unreachable code
