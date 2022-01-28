@@ -949,8 +949,9 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 			- ou vc passa o tamanho ou passa os valores. `int y[] = new int[3] {0,3,5}; //não compila`
 			- pode inicializar c/ vlr nulos `Car[] cars = new Car[]{new Car(), null, new Car()};` 
 			- declarar e inicializar *somente na mesma linha* `int[] numbers = {1,2,5,7,5};`
-			- é possível atribuir o array a uma ref do tipo Object mas é necessário um cast p/ aproveitar essa atribuição 
+			- é possível atribuir o array de primitivos ou de objetos a uma ref do tipo Object mas é necessário um cast p/ aproveitar essa atribuição 
 				- `Object obj = new int[] { 1, 2, 3 }; int[] someArray = (int[])obj;`
+			- não é possível atribuir a uma ref array de Object um array de primitivos
 	- *acesso*
 		- `numbers[0] = 10;` 
 		- *ArrayIndexOutOfBoundsException* acessar posição q não existe
@@ -990,6 +991,12 @@ int[] [][]hipercube[];  // Um array de quatro dimensões.
 	int[][][] weird = new int[2][][]; weird[0] = new int[20][];	weird[0][0] = new int[2];
 	```	
 	- inicializar c/ valores `int[][] test = new int[][]{{1,2,3},{3,2,1},{1,1,1}};`
+	- um elemento de um array multi pode receber a ref de outro array multi se ambos possuem a mesma dimensão
+	```java
+	short b[][] = new short[4][4];
+	short b2 [][][][] = new short[2][3][2][2]
+	b2[1][1] = b; //b2[1][1] possui 2 dimensoes e b tbm
+	``` 
 - *acesso* `table[0][1];`
 	
 [[↑] Back to top](#Anotações-para-certificação-OCA-Programmer-1Z0-808)
