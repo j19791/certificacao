@@ -884,8 +884,10 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 #### Explain an **Object's Lifecycle** (creation, "dereference by reassignment" and garbage collection)
 - *new* criação do objeto. nova instância `Person p; /*nao criado*/ p = new Person(); //criado`
 - *acessível* criado e atribuido a uma variável `new Person() /*apenas criado, inacessível*/; Person p = new Person(); //acessível`
-- *inacessível* não tem caminho p/ acessar o objeto `p =null;`. Quando o *escopo* da ref termina 
+- *inacessível* não tem caminho p/ acessar o objeto `p =null;`. 
+	- Quando o *escopo* da ref termina 
 	- *elegível, passível* p/ o **Garbage Collector**
+	- ilhas de isolamento : variáveis de instancia do tipo objeto referenciando outros objetos dentro da ilha de isolamento 
 - *qtd* de objetos criados: Veja os *literais String* q contam como objeto		
 #### Develop code that uses **wrapper** classes such as Boolean, Double, and Integer  
 - classes que representam primitivos
@@ -1270,6 +1272,7 @@ void yingyang(Integer... ints) { //nao compila
 - Binding Poloimorfismo: variaveis membrom métodos static e escondidos são sempre da ref
 - LocalDate.of(2021,12,24) e não LocalDate.of(“2021-12-24”)
 - LocalDate, LocalTime e LocalDateTime não possuem construtor
+- StringBuilder: não existe firstIndexOf. Apenas IndexOf
 - String : concat; StringBulder: append
 	- nao existe insert em String (apenas SB)
 - não existe subString. É substring
