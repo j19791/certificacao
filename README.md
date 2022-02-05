@@ -285,7 +285,7 @@ int _a = a;
 int option = 4;		
 final int c1 = 5;
 switch (option) { //o argumento deverá ser sempre compatível com int, wrapper menor ou igual q Integer, String, Enum
-	case c1: //o valor de cada case deverá ser compatível com o argumento do switch. Usar literal, variavel final inicializada durante sua declaração com literal ou expressões com literal/ variavel final. null não é válido. Não pode duplicar cases
+	case c1: //o valor de cada case deverá ser compatível com o argumento do switch. Usar literal, variavel final (wrapper c/ final não é cte e não pode ser usado ) inicializada durante sua declaração com literal ou expressões com literal/ variavel final. null não é válido. Não pode duplicar cases
 		System.out.println("number 1");
 		break; //para não executar os casos q vem abaixo			
 	default: //qdo nenhum caso bater. Pode aparecer no meio dos cases			
@@ -744,6 +744,7 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 - primitivos não poder ser usados em ArrayList. Wrappers respectivos sim.
 - ArrayList sobreescreve metodo equals :  mesmos elementos na mesma ordem.
 ```java
+List<String> _lista = new ArrayList<>(2); //pode especificar tamanho mas o valor size() corresponde ao número de elementos ja inseridos. Pode inserir mais de 2 elementos nesse caso
 ArrayList<String> names = new ArrayList<String>();
 ArrayList<Client> clients = new ArrayList<Client>();
 
