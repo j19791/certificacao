@@ -357,6 +357,7 @@ int a = 1, b = 2;
 	- p/ não ocorrer o *loop infinito*. 
 	- Pode fazer varias atualizações `for(int i = 0, j= 0;i< 10; i++, j++){//code}`
 	- pode executar trecho de código como se fosse um bloco, mesmo as instruções sendo separadas por , `for(int i = 0, j= 0;i< 10; i+= 3, System.out.println(i++)){//code} `
+	- atualização c/ ++i ou i++ da no mesmo
 - argumentos são opcionais e são preenchidos com os valores default `for(;;) {} //`
 - **enhanced for**: 
 	- percorre todos os elementos de uma *Collection* e de um array: `int i[] = {1,2,3,4,5}; for (int numbers : i){System.out.println(num);}`
@@ -542,6 +543,8 @@ public class Network {
 - **super()** não chamamos o construtor da classe mãe explicitamente. o compilador coloca automaticamente o *super()*
 - **this()** chama outro construtor mas da própria classe
 	- não podemos referenciar um método de instância ao invocar um construtor this `this(x()); //não compila`
+	- se o filho chama o construtor do pai e o construtor do pai chama this() (c/ ou s/ argumentos), o construtor chamado é do próprio pai e não do filho
+		- o método chamado sempre será o do objeto filho, mesmo dentro do construtor do pai. Dentro do construtor do filho, pode chamar o método do pai com super.metodo()
 - *super() e this()* só podem aparecer como primeira instrução do contrutores e apenas uma chamada, mesmo se a classe possuir construtores sobrecarregados 
 - **this e variaveis membro** variaveis membro com o mesmo nome da variável local: o acesso é da variável local. this: acessar variavel membro da pr´pria classe ou da classe pai		
 	- classe mae e filha com variaveis membro de mesmo nome. Diferenciar usando *this* para a variavel da propria classe e *super* para acessar a variavel da mãe
@@ -1279,7 +1282,8 @@ void yingyang(Integer... ints) { //nao compila
 - não existe subString. É substring
 - substring retorna a String que você deseja mas não altera o valor do seu StringBuilder ou StringBuffer.
 	- nos encadeamentos c/ SB, o substring não altera nada e passa p/ outros métodos a mesma string que recebeu 
-- try/catch/finally: variaveis declaradas dentro do bloco try estão fora do escopo dos blocos catch e finally 	
+- try/catch/finally: variaveis declaradas dentro do bloco try estão fora do escopo dos blocos catch e finally 
+- long deverá ser declarado seu literal com **l** ou declarar a variavel c/ tipo long sem o **l** 	
 
 #### Atenção
 - unreachable code
