@@ -499,6 +499,7 @@ protected long blipvert(int x) { return 0; } } //long é diferente de int. Não 
 - `((Y)x2).do2();` antes de invocar o método, é feito casting da variavel de referencia por causa do ()
 - o compilador não conhece os valores das variáveis, apenas seu tipo `String recovered = objetos[0];` nem todo object é uma String
 - *moldar* a referencia p/ q compile `String recovered = (String) objetos[0];`
+- o **compilador** verifica apenas se as referências são possíveis de fazer casting
 - na **execução**, o casting vai ver se aquele objeto é compatível com o tipo do casting
 - alguns Vehicle são Moto `Moto m = (Moto) v`
 - Não é compatível : **classCastException**
