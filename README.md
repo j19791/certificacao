@@ -40,7 +40,9 @@
 - **public class** ou **public interface** : o nome do arquivo *.java* deve ter o nome dessa *class/interface*
 - só pode exitir *uma* **public class** ou **public interface** por arquivo *.java*		
 #### Create executable Java applications with a **main** method; **run** a Java program from the command line; produce **console output**
-- *classe executavel* é aquela que possui o método **public static void main (String[] argumentos)** . Pode ter *static public* ou usar *varargs ...*
+- *classe executavel* é aquela que possui o método **public static void main (String[] args)** 
+	- Pode ter *static public* ou usar *varargs ...*
+	- se nenhum argumento é passado p/ o main, o parametro args não é null mas non-null array de Strings de tamanho zero
 - **java** HelloWorld *Mario* : passando 1 parametro para a execução do programa
 - **.class** é o *bytecode* gerado pelo *javac*
 - compilando e rodando c/ *package certification*  `javac certification/Test.java; java certification.Test`
@@ -204,12 +206,13 @@ int _a = a;
 	- atribuição somente se *compatível* um tipo cabe no outro: 			
 	**byte -> short -> int -> long -> float -> double**  *autopromoção: qdo o tipo vai da direita p/ esquerda*			
 	**char -> int** *autopromoção*			
-	- **casting** direita p/ esquerda. Moldar o valor de um tipo em outro. Queremos e avisamos o compilador q sabemos da possibilidade de perca de precisão/ truncamneto
+	- **casting** direita p/ esquerda. Moldar o valor de um tipo em outro. Queremos e avisamos o compilador q sabemos da possibilidade de perca de precisão/ truncamento
+		- casting apenas com variáveis de um tipo maior p/ um tipo menor. Contantes ou literais podem ser atribuidos desde que o valor esteja dentro do range
 	```java
 	double d = 0, d2 = 3.1415;
 	float f = d; //não compila: double não cabe em float
-	float f = (float) d;
-	int i = (int) d2;//i= 3 (valor truncado)
+	float f = (float) d; //compila com cast
+	int i = (int) d2;//compila: i= 3 (valor truncado)
 	```
 	- short e char tem o mesmo tamanho mas **char é apenas positivo**
 	- `static short method(short s){}; method(7); //erro` passagem de um valor de um tipo mais abrangente num metodo para um parametro de tipo menos abrangente não compila devido a perda de informação. Utilizar cast qdo possível
@@ -962,6 +965,7 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 	- *acesso*
 		- `numbers[0] = 10;` 
 		- *ArrayIndexOutOfBoundsException* acessar posição q não existe
+			- `numbers[-1];`
 	- *percorrendo*
 		- atributo *length* recupera capacidade
 		- usar o *enhanced for*				
