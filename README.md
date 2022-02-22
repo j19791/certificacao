@@ -109,6 +109,10 @@ int _a = a;
 	-  float é menos abrangente que double `double d = 20.0f;`
 	- double não cabe em float `float f = 40.0;`
 	- inteiros (long) cabe em decimal `float h = 10l;`
+	- negativação de variaveis
+	```java
+	int a = 1, b = -a, c = -b; //b = -1 e c= 1
+	```
 	- tipos menos abrangentes que int: **byte, short, char** compilador verifica se esta no range do tipo
 		- estoura byte:  -128 a 127 (único itervalo cobrado) `byte b = 200;` 
 		- erro: só positivo `char c2 = -1;` 
@@ -221,7 +225,8 @@ int _a = a;
 ```java
 	String name1 = new String("Mario");	String name2 = new String("Mario");
 	System.out.println(name1 == name2); // false: 2 objetos criados com new		
-```		
+```
+- equals de Wrappers de tipo diferente são sempre **false**		
 - **Pool de Strings** 
 	- antes de criar uma nova String, verifica-se se já existe no pool uma String com mesmo conteúdo. Se já existe, não cria nova, reutiliza. 
 		`String name1 = "Mario"; String name2 = "Mario"; System.out.println(name1 == name2);	//true`
@@ -438,6 +443,17 @@ class Y extends X { public void method2(int x){this.x = x; //erro: nao enexerga 
 		- mesmo c/ cast, o método chamado é do objeto
 		 
 - **não existe sobreescrita de atributos**  Vai ter o atributo com o mesmo nome da classe mãe, acessível com **super** ou da própria classe q sobreescreveu, acessível com **this**
+```java
+class Base{    int i=10; } 
+class Sub extends Base{   int i=20;    } //This i hides Base's i.  
+...
+ Sub s = new Sub(); int k = s.i; //assigns 20 to k.  
+ 
+ k = ((Base)s).i;//assigns 10 to k. The cast is used to show the Base's i.  
+ 
+ Base b = new Sub(); k = b.i;//assigns 10 to k
+
+```
 - **toString** sobreescrever de *Object* p/ devolver uma String q represente o objeto ```public String toString()```
 #### Develop code that makes use of polymorphism; develop code that overrides methods;  differentiate between the type of a reference and the type of an object
 - **reescrita, sobrescrita** : subclasse redefine o comportamento do método herdado da superclasse
@@ -503,6 +519,7 @@ protected long blipvert(int x) { return 0; } } //long é diferente de int. Não 
 - o compilador não conhece os valores das variáveis, apenas seu tipo `String recovered = objetos[0];` nem todo object é uma String
 - *moldar* a referencia p/ q compile `String recovered = (String) objetos[0];`
 - o **compilador** verifica apenas se as referências são possíveis de fazer casting
+- 
 - na **execução**, o casting vai ver se aquele objeto é compatível com o tipo do casting
 - alguns Vehicle são Moto `Moto m = (Moto) v`
 - Não é compatível : **classCastException**
@@ -605,6 +622,7 @@ public class Network {
 #### Manipulate data using the **StringBuilder** class and its methods
 - StringBuffer (thread-safe) e StringBuilder têm exatamente a mesma interface. Use sempre que possível a StringBuilder qdo não há compartilhamento entre threads (+ rápida por não tratar locks).
 - StringBuilder são *mutáveis*
+- é *final*
 - concatenar *append* `StringBuffer sb = new StringBuffer();sb.append("Caelum");sb.append(" - ");sb.append("Alura - Casa do Código"); //// Caelum - Alura - Casa do Código`
 - criar objeto do tipo StringBUilder `new StringBuilder(); StringBuilder sb2 = new StringBuilder("java");StringBuilder sb3 = new StringBuilder(50) /* tamamnho inicial do array (length = 0)*/;StringBuilder sb4 = new StringBuilder(sb2);`
 - não compila se tentar criar atribuindo diretamente uma String `StringBuilder b = "rumble";//nao compila` 
@@ -621,6 +639,7 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 - não compila quando tenta comparar String e StringBuilder usando == ou equals
 #### Create and manipulate **Strings**
 - *imutáveis* : o valor da String não muda quando usada um método seu. Só muda quando é feita uma re-atribuição p/ a mesma variavel.
+- é *final* (não pode ter subclasses)
 - criar `String implicit = "Java";String explicit = new String("Java"); char[] name = new char[]{'J', 'a', 'v', 'a'}; String fromArray = new String(name); String nameBuilder = new String(new StringBuilder("Java"));`
 - não é um tipo primitivo, pode ter valor *null* `String name = null; // explicit null`
 - não compila. Não existe construtor q recebe null `new String(null);`
@@ -782,7 +801,7 @@ while (iterator.hasNext()) { //retorna booleano indicando se ainda há elementos
 ```	
 #### Write a simple **Lambda** expression that consumes a **Lambda Predicate** expression
 - trecho de código que pode ser passado como *parametro* para um método ou armazenado numa *variável*
-- *interface funcional* apenas com 1 método
+- *interface funcional* apenas com 1 método abstract mas pode ter métodos static ou default
 - *Predicate* interface q recebe um *objeto* e retorna um *boolean*
 - `import java.util.function.*;` 
 ```java
@@ -900,6 +919,7 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 #### Develop code that uses **wrapper** classes such as Boolean, Double, and Integer  
 - classes que representam primitivos
 - são filhos de *Number*
+- são *final*
 - char : Character. Apenas 1 construtor  `new Character(´d´);`
 - int: Integer
 - criando (wrappers numéricos) `Double d1 = new Double(22.5); Double d2 = new Double("22.5"); Integer.valueOf(1); Integer i = 1234;` 
@@ -1420,6 +1440,7 @@ for (Days d : Days.values()) //Days.values() retorna um array de Days
 ```
 
 - Inner Classes
+- podem ser public, private e protected
 ```java
 class OuterClass {
   int x = 10;
