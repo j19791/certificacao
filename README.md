@@ -624,9 +624,11 @@ public class Network {
 - StringBuilder são *mutáveis*
 - é *final*
 - concatenar *append* `StringBuffer sb = new StringBuffer();sb.append("Caelum");sb.append(" - ");sb.append("Alura - Casa do Código"); //// Caelum - Alura - Casa do Código`
+	- `sb.append(false)` funciona: Caelum - Alura - Casa do Códigofalse 
 - criar objeto do tipo StringBUilder `new StringBuilder(); StringBuilder sb2 = new StringBuilder("java");StringBuilder sb3 = new StringBuilder(50) /* tamamnho inicial do array (length = 0)*/;StringBuilder sb4 = new StringBuilder(sb2);`
 - não compila se tentar criar atribuindo diretamente uma String `StringBuilder b = "rumble";//nao compila` 
 - permite chamadas encadeadas : `new StringBuffer().append("Caelum").append(" - ").append("Ensino e Inovação") // Caelum - Ensino e Inovação`
+	- substring só pode ser chamado no final de chamadas encadeadas
 ```java
 StringBuffer sb = new StringBuffer();
 sb.append("Caelum - Inovação");
@@ -1089,7 +1091,7 @@ new Xpto().method("string", "string"); // compile error
 - construtor **default** dado pelo compilador, não recebe argumentos, tem a visibilidade da classe e tem a chamada a **super()** `class A { /* implicito*/ A() {super();} /*default*/}` 
 - caso vc adicione um construtor qq, o construtor padrão *deixa de existir* e as invocações a ele passam a dar erros de compilação. 
 - construtor não padrão tem a visibilidade definida pelo programador (pode ser private e protected também). Se não definir, a visibilidade é default.
-- dentro do construtor vc pode acessar as variaveis membros
+- dentro do construtor vc pode acessar as variaveis membros *static* ou *non-static*
 - não esqueça que a inicialização das variavies membros são com os valores default e logo em seguida, os valores atribuidos dentro do construtor
 ```java
 int length = getLength();
@@ -1137,7 +1139,25 @@ void yingyang(Integer... ints) { //nao compila
 - membros da classe recebem modificadores
 - parametros não recebem modificadores de visibilidade. Apenas o *final*
 	- **public** acessado de qq componente em qq pacote
-	- **protected** acessado por classes e interfaces no *mesmo pacote* e por *quem estenda, independente do pacote*
+	- **protected** acessado por classes e interfaces no *mesmo pacote* e somente pela classe *que estenda, independente do pacote*
+		```java
+package a;
+public class AccessTest {
+	protected void c(){ }
+}
+
+package b;
+import a.AccessTest;
+
+public class AccessTester extends AccessTest{
+    public static void main(String[] args) {
+        AccessTest ref = new AccessTest();
+		// ref.c(); não compila pois c() só é visível por quem estenda AccessTest
+		AccessTester ref2 = new AccessTester();
+		ref2.c(); //compila e roda pois ref2 é referencia p/ um objeto q estende AccessTest
+    }
+}
+		```
 	- **default** *package private* visivel apenas dentro do mesmo pacote. 
 		- Mesmo com *import*, as classes default não são visíveis. 
 		- Se existem outras classes publicas no import, não ocorre erro na linha do import. Se importar especificamente uma classe default, o erro tbm é na instrução do import
