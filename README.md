@@ -219,6 +219,7 @@ int _a = a;
 	int i = (int) d2;//compila: i= 3 (valor truncado)
 	```
 	- short e char tem o mesmo tamanho mas **char é apenas positivo**
+		- é necessário casting para conversão de short p/ char e vice-versa
 	- `static short method(short s){}; method(7); //erro` passagem de um valor de um tipo mais abrangente num metodo para um parametro de tipo menos abrangente não compila devido a perda de informação. Utilizar cast qdo possível
 #### Test equality between Strings and other objects using **==** and **equals()**
 - comparar dois objetos para ver se **apontam para o mesmo lugar**		
@@ -292,7 +293,7 @@ int _a = a;
 ```java
 int option = 4;		
 final int c1 = 5;
-switch (option) { //o argumento deverá ser sempre compatível com int, wrapper menor ou igual q Integer, String, Enum
+switch (option) { //o argumento deverá ser sempre compatível com int (igual ou menor que int), wrapper menor ou igual q Integer, String, Enum
 	case c1: //o valor de cada case deverá ser compatível com o argumento do switch. Usar literal, variavel final (wrapper c/ final não é cte e não pode ser usado ) inicializada durante sua declaração com literal ou expressões com literal/ variavel final. null não é válido. Não pode duplicar cases
 		System.out.println("number 1");
 		break; //para não executar os casos q vem abaixo			
@@ -1223,7 +1224,8 @@ public class AccessTester extends AccessTest{
 - **finally** seja no sucesso ou no fracasso, temos a obrigação de cumprir certas tarefas. Conexão deveria ser fechada, por exemplo
 	- pode usar finally s/ o catch
 	- finally jamais devera vir antes do catch: a ordem tem q ser try + catch ou try + finally ou try + catch + finally
-	- erros ou exceptions dentro de blocos catch ou finally podem ocorrer e se não forem tratados, a JVM vão trata-los como erros/ exceptions normalmente e parar a execução do programa. 
+	- erros ou exceptions dentro de blocos catch ou finally podem ocorrer e se não forem tratados, a JVM vão trata-los como erros/ exceptions normalmente e parar a execução do programa.
+	- o bloco finally não é executado se existe `System.exit(0);` dentro de um bloco try com finally
 #### Describe the **advantages** of Exception handling 
 #### Create and invoke a **method that throws an exception**
 - um método eventualmente  não tem condições de tratar um determinado erro de execução
@@ -1273,6 +1275,7 @@ public class AccessTester extends AccessTest{
 	- underline nos literais
 	- operador diamente <>
 	- try-with-resources
+	- tipo String como variável do switch 
 - 1.8 
 	- java.time.*
 	- lambda 
@@ -1300,6 +1303,7 @@ public class AccessTester extends AccessTest{
 	- LocalDate, etc	
  
 #### Pegadinhas
+- String usa "" e char ''
 - não esquecer de importar pacotes que não fazer parte da *lang*
 - `throws new RuntimeException()` errado. O correto é `throw new RuntimeException()`
 - var static e non-static não podem ter o mesmo nome
@@ -1323,7 +1327,7 @@ public class AccessTester extends AccessTest{
 - LocalDate, LocalTime e LocalDateTime não possuem construtor
 - StringBuilder: não existe firstIndexOf. Apenas IndexOf
 - String : concat; StringBulder: append
-	- nao existe insert em String (apenas SB)
+	- não existe insert e reverse em String (apenas SB)
 - não existe subString. É substring
 - substring retorna a String que você deseja mas não altera o valor do seu StringBuilder ou StringBuffer.
 	- nos encadeamentos c/ SB, o substring não altera nada e passa p/ outros métodos a mesma string que recebeu 
