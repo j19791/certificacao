@@ -190,6 +190,7 @@ int _a = a;
 	```
 - **ternário** `variavel = teste booleano ? verdadeiro : falso;`
 - **referencia** `ref.atributo()` p/ acessar atributos ou métodos de um obj
+- **bitwise** & | ^ ~ << >>
 - **concatenação de Strings** 
 	- `System.out.println(15 + ( 0 + " != 150")); // 15 + "0 != 150"; "150 != 150"	`
 	- operações com boolean + String não é possível `System.out.println(false & true + "Hello World"); //não compila. Compila apenas se colocar parenteses na operação c/ booleans`
@@ -1059,6 +1060,7 @@ int[] [][]hipercube[];  // Um array de quatro dimensões.
 	- modificadores opcionais
 		- *final* o método não pode ser sobreescrito nas classes filhas
 		- *abstract* obriga as classes filhas a implmentarem o método. Não pode ter corpo
+			- não existe método *abstract* e *private*
 		- *static* o método deixa de ser de instancia e passa ser acessado diretamente pela classe
 		- *throws* indica as exceptions q podem ser jogadas pelo método			
 - métodos *não abstratos* devem possuir *corpo*		
@@ -1343,6 +1345,10 @@ public class AccessTester extends AccessTest{
 
 
 #### não cai mas é útil
+- operadores bitwise
+	- **&**
+
+
 - BigDecimal: melhorar forma p/ tratar moeda. Trata números c/ ponto flutuante s/ perder sua precisão.
 - enum
 	- nao podem ser locais. 
@@ -1375,7 +1381,9 @@ for (Days d : Days.values()) //Days.values() retorna um array de Days
 		- pode tbm inicializar membros static
 	- 3: construtores
 
-- `System.exit(0)` para de executar o programa
+- `System.exit()` para de executar o programa
+
+- native: chama métodos escritos em outras linguagens. 
 
 - Math
 	- não precisa importar
