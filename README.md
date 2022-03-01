@@ -127,7 +127,8 @@ int _a = a;
 		- `List<String> names = new ArrayList<>();` <> operador diamante
 		- copiamos o valor da referência (o objeto é o mesmo)
 - **aritméticos**
-	- **%** resto de divisão. O tipo resultado segue a regre das outras operações 
+	- **%** resto de divisão. O tipo resultado segue a regre das outras operações
+		- pode ser usado com números decimais:  5.5 % 3 = 2.5
 	- o tipo do resultado da operação com variaveis é no minimo **int** ou o **tipo mais abrangente** . Não importa se a operação é feita c/o variáveis ou literais
 	- o resultado é no minimo int, não importa se o tipo da variavel que for atribuida for double `double d =  5 / 2; //2` a parte decimal vai ser perdida
 		```java					
@@ -437,6 +438,8 @@ class Y extends X { public void method2(int x){this.x = x; //erro: nao enexerga 
 	```
 	- **abstract** não compila em métodos *static* pois não há herança
 	- podemos escrever um método *static* na classe filha c/ o mesmo nome da classe pai mas não é *sobreescrita*
+	- métodos *private* não são sobreescritos
+	- construtores e blocos static não são herdados 
 	- **binding do polimorfismo**  o método chamado é do pai ou da filha ?
 		- *método de instancia*  tempo de execução. 
 		- *método static*  tempo de compilação. Ignora o tipo de objeto referenciado. Utiliza o método da ref. Não há polimorfismo com métodos static
@@ -879,6 +882,7 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 				- *binary* 0b ou 0B e pode usar apenas 0 e 1
 		- **ponto flutuante** Pode assumir +/- infinity , +/- 0, NaN . Literal com casa decimal é double
 			- *float* F f 
+				- armazena de 6-7 digitos de precisão. Acima disso, existe perda de precisão
 			- *double* *d* *D* para explicitar na inicialização 
 			- *notação cientifica* o literal default é double `double d = 3.1E2 /*310.0*/; float f = 1E4F /* 10000.0f*/;`				
 	- **não numerico**
@@ -1319,6 +1323,9 @@ public class AccessTester extends AccessTest{
 - RunTimeException errado. Correto RuntimeException
 - import duplicado compila e roda normalmente
 - não existe *elseif* usar **else if**
+- `if (false) ; else ; //compila` 
+- `if (true) else; //não compila : uma instrução não pode começar c/ else` 
+- `if(true) 	if(false); //compila`
 - métodos implementados de interface deverão ser public
 - não esquecer do **;** `do{}while(condicao); //erro de compilação` 
 - rotulos: apenas c/ for, while, switch
