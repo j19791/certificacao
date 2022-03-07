@@ -130,7 +130,6 @@ int _a = a;
 	- **%** resto de divisão. O tipo resultado segue a regre das outras operações
 		- pode ser usado com números decimais:  5.5 % 3 = 2.5
 	- o tipo do resultado da operação com variaveis é no minimo **int** ou o **tipo mais abrangente** . Não importa se a operação é feita c/o variáveis ou literais
-	- o resultado é no minimo int, não importa se o tipo da variavel que for atribuida for double `double d =  5 / 2; //2` a parte decimal vai ser perdida
 		```java					
 			int age = 15; long years = 5;
 			int afterThoseYears2 = age + years;// não compila, o maior tipo era long, devolve long
@@ -146,7 +145,7 @@ int _a = a;
 	- referencias e boolean somente com *== ou !=*
 	- pode comparar *char* com *numérico* `System.out.println('a' > 1);//true`
 	- valores numéricos não considera seu tipo
-	- não é possível comparar primitivo c/ array
+	- não é possível comparar primitivo c/ array	
 - **lógicos**
 	- *& |* a segunda parte sempre é avaliada, podendo incrementar variaveis e tbm chamar métodos			
 	- *curto circuito && ||*  Quando já for possível determinar a resposta final olhando apenas para a primeira parte da expressão, a segunda não é avaliada
@@ -437,13 +436,14 @@ class Y extends X { public void method2(int x){this.x = x; //erro: nao enexerga 
 	}
 	```
 	- **abstract** não compila em métodos *static* pois não há herança
-	- podemos escrever um método *static* na classe filha c/ o mesmo nome da classe pai mas não é *sobreescrita*
+	- não pode sobreescrer um método *static* c/ um método *non-static* e vice-versa
 	- métodos *private* não são sobreescritos
 	- construtores e blocos static não são herdados 
 	- **binding do polimorfismo**  o método chamado é do pai ou da filha ?
 		- *método de instancia*  tempo de execução. 
 		- *método static*  tempo de compilação. Ignora o tipo de objeto referenciado. Utiliza o método da ref. Não há polimorfismo com métodos static
 		- *variaveis membro* polimorfismo apenas p/ métodos não static. As variaveis são sempre da ref.
+			- é chamada a variável do objeto (com o mesmo nome da variável do pai) dentro dos métodos com polimorfismo pois eles são chamados implicitamente c/ this.  
 		- quando o método da referencia (que é classe pai) esta escondido (private, default), o método usado é a da ref e não do obj referenciado
 		- mesmo c/ cast, o método chamado é do objeto
 		 
@@ -457,8 +457,17 @@ class Sub extends Base{   int i=20;    } //This i hides Base's i. 
  k = ((Base)s).i;//assigns 10 to k. The cast is used to show the Base's i.  
  
  Base b = new Sub(); k = b.i;//assigns 10 to k
+```
+- um membro de uma classe intermediária de uma hierárquia de classes esconde o membro com o mesmo nome de uma classe pai (mesmo public)   
+```java
+class A{  public int i = 10;}
+class B extends A{  private int i = 30; }
+class C extends B{}
+...
+System.out.println(new C().i); //nao compila: i é private em B e o i de B esconde o i public de A
 
 ```
+
 - **toString** sobreescrever de *Object* p/ devolver uma String q represente o objeto ```public String toString()```
 #### Develop code that makes use of polymorphism; develop code that overrides methods;  differentiate between the type of a reference and the type of an object
 - **reescrita, sobrescrita** : subclasse redefine o comportamento do método herdado da superclasse
@@ -589,7 +598,9 @@ public class Network {
 	```			
 #### Use **abstract classes** and **interfaces**
 - *interfaces* não podem ter métodos *static*
-	- a partir do java 8 pode ter métodos static mas é necessário implementar o método;
+	- a partir do java 8 pode ter métodos static com bloco com implementação;
+- interface pode ter método default c/ implementação
+	- não pode ter métodos default static pois um método default sempre é da instância
 - interfaces não herda de Object
 - uma classe abstrata pode não ter nenhum método abstrato
 - se a classe possui pelo menos 1 método abastrato, a classe precisa ser abstrata
@@ -618,6 +629,8 @@ public class Network {
 - manter a visibilidade dos modificadores 
 - uma classe pode implementar diversar interfaces `abstract class MyType implements Serializable, Runnable`
 - uma interface pode herdar de diversas interfaces `interface C extends Runnable, Serializable {}`
+	- pode redeclarar um método default herdado e torna-lo abstract
+	- pode redeclarar um método default herdado com uma nova implementação
 - declarar *variaveis* membro em uma interface: todas elas serão *constantes* `interface X {/* public static final */ int i = 5;}`
 
 [[↑] Back to top](#Anotações-para-certificação-OCA-Programmer-1Z0-808)
@@ -955,14 +968,15 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 		```
 		
 	- *comparando* 
+		- Wrapper == primitivo : a ref wrapper será *unboxed* e apenas os valores serão comparados e não os objetos em memória
+		- *equals* c/ wrappers de diferentes tipos sera sempre *false*, não importa o valor  
 		- `Integer i1 = 1234;Integer i2 = 1234; i1 == i2 /*false (duas ref apontando p/ obj dif)*/; i1.equals(i2) /*true*/; `
 		- qdo uma ref x p/ um wrappper recebe um novo valor e outra referencia y ja tinha apontado p/ essa referencia x anteriormente, significa que as duas referencias agora apontam p/ objetos diferentes 
 		```java
 			Integer x = 400;
 			Integer y = x;
-			x++; //x e y agora apontam p/ objetos diferentes e y não é incrementado			
-		```
-		
+			x++; //x e y agora apontam p/ objetos diferentes e y não é incrementado
+		```		
 		- qdo o vlr é muito baixo, devido ao *cache*, a comparação pode ser *true* `Integer i1 = 123; Integer i2 = 123; i1 == i2 /*true*/;  i1.equals(i2)) /*true*/ ;`
 			- Boolean, Byte, Short, Integer de -128 a 127, caracteres ASCII como letras e números
 - *NullPointerException*  operações c/ obj null `Integer a = null; int b = 44; a + b; //throws NPE	`
@@ -1240,6 +1254,7 @@ public class AccessTester extends AccessTest{
 - **throw new RuntimeException()** ao indentificar uma situação errada, criar um erro de execução e lançar p/ quem o chamou
 - cuidado c/ *unreachable code* todo código abaixo de `throw new RuntimeException()` jamais será executado
 - se é *checked exception* , avisar na assinatura do seu método com o *throws*
+	- se outros métodos chamam esse método, esses métodos tbm deverão ter *throws*, incluse o main ou usar try-catch
 - apenas instanciar a exception c/ *new* não vai joga-la
 - criando próprias exceptions `class FundoInsuficienteException extends Exception{}` p/ serem lançadas
 - você pode utilizar o throws de uma Exception mesmo que o bloco do código jamais lance essa exception
