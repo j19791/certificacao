@@ -81,9 +81,13 @@ System.getProperty("key1");
 	- import não importa membros especificos da classe. Importa a classe e todos os seus membros.
 - pacote **java.lang.\*** são implicitamente importadas. *String*
 - **import static** importa todos os membros *static* da classe Utils.  `import static model.Utils.*`
-	- Atenção, o import static não importa a classe, usar sempre *ou descrever um membro específico
-		- `import static java.util.Collections; \\não compila`	
-		- `import static pacote.A.a //compila, importa apenas o membro static a` ;
+	- Atenção, o import static não importa a classe e sim seus membros. Usar * p/ todos ou especificar um membro
+		```java
+		import static <package>.<classname>.*; //importa todos os membros static da classe 
+		import static <package>.<classname>.<fieldname>; //importa algum membro static especifico da classe
+		import static java.util.Collections; \\não compila
+		import static pacote.A.a //compila, importa apenas o membro static a 
+		```
 - não especificar parametros de um método quando apenas o método é importado;
 - import comum importa inclusive todos os membros static
 - nâo especificar o nome da classe quando invocar um membro static importado
@@ -129,6 +133,7 @@ int _a = a;
 - **aritméticos**
 	- **%** resto de divisão. O tipo resultado segue a regre das outras operações
 		- pode ser usado com números decimais:  5.5 % 3 = 2.5
+	- variável int que recebe o valor de uma divisão|: o valor é **truncado** e **não arredondado** 
 	- o tipo do resultado da operação com variaveis é no minimo **int** ou o **tipo mais abrangente** . Não importa se a operação é feita c/o variáveis ou literais
 		```java					
 			int age = 15; long years = 5;
@@ -446,6 +451,7 @@ class Y extends X { public void method2(int x){this.x = x; //erro: nao enexerga 
 			- é chamada a variável do objeto (com o mesmo nome da variável do pai) dentro dos métodos com polimorfismo pois eles são chamados implicitamente c/ this.  
 		- quando o método da referencia (que é classe pai) esta escondido (private, default), o método usado é a da ref e não do obj referenciado
 		- mesmo c/ cast, o método chamado é do objeto
+		- **ref.getClass()** retorna o nome da classe do objeto que a ref aponta
 		 
 - **não existe sobreescrita de atributos**  Vai ter o atributo com o mesmo nome da classe mãe, acessível com **super** ou da própria classe q sobreescreveu, acessível com **this**
 ```java
@@ -474,7 +480,7 @@ System.out.println(new C().i); //nao compila: i é private em B e o i de B escon
 	- **polimorfismo** : 
 		- *binding* : (lookup)
 			- 1) em *tempo de compilação*, verificar se o pai e os filhos possuem métodos sobreescritos. Verificação da existência do método. Podem estar escondidos mas compila e executa.
-			- 2) em *tempo de execução*, o método invocado é o do objeto, não o da referencia *virtual method invocation*. Chama o métood da ref apenas quando este é *hidden* 	
+			- 2) em *tempo de execução*, o método invocado é o do objeto, não o da referencia *virtual method invocation*. Chama o métood da ref apenas quando este é *hidden*			 	
 			![Polimorfismo](/imagens/polimorfismo.jpg)
 			- é o inverso dos métodos *static*					
 			```java
@@ -632,6 +638,17 @@ public class Network {
 	- pode redeclarar um método default herdado e torna-lo abstract
 	- pode redeclarar um método default herdado com uma nova implementação
 - declarar *variaveis* membro em uma interface: todas elas serão *constantes* `interface X {/* public static final */ int i = 5;}`
+	- classe que implementa interface c/ variaveis (são static) pode chama-las diretamente como membros static
+	 ```java
+	 public interface IInt{ int thevalue = 0; }
+	 public class Sample implements IInt{    
+	 	...
+		Sample s = new Sample();  
+		int j = s.thevalue; 
+		int k = IInt.thevalue;
+		int l = thevalue; 
+		int m = Sample.thevalue;	 
+	 ```
 
 [[↑] Back to top](#Anotações-para-certificação-OCA-Programmer-1Z0-808)
 
@@ -794,8 +811,10 @@ List<String> _lista = new ArrayList<>(2); //pode especificar tamanho mas o valor
 ArrayList<String> names = new ArrayList<String>();
 ArrayList<Client> clients = new ArrayList<Client>();
 
+List s2 = new ArrayList(  s1.subList(1, 2) ); //criando uma lista a partir de uma sublista
+
 Client cliente = new Client(); cliente.setName("John");
-clients.add(cliente);
+clients.add(cliente); //retorna boolean: true se a lista foi alterada
 
 names.add("Certification");names.add(0, "java"); //padrão adiciona no fim. Com indice, adiciona na posição. cuidado c/ a ordem dos parametros
 names.contains("java"); //true
@@ -1276,6 +1295,7 @@ public class AccessTester extends AccessTest{
 - **StackOverflowError** métodos invocados são empilhados na *Pilha de Execução*. A pilha tem um limite e pode estourar
 - **NoClassDefFoundError** todas as classes referenciadas devem estar no *classpath*
 - **OutOfMemoryError** qdo o *Garbage Collector* não consegue liberar da memória os objetos que não são mais utilizados ou loop infinito dentro do main
+- **NoSuchMethodError** qdo a JVM procura uma assinatura de um método específico e não acha. Exemplo: rodar um código java sem o método main especificado corretamente
 
 [[↑] Back to top](#Anotações-para-certificação-OCA-Programmer-1Z0-808)
 
