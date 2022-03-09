@@ -30,6 +30,7 @@
 - variavel local primitiva precisa ser sempre atribuida c/ um valor se esta for usada no código. Se não for usada (apenas declarada), compila e roda.
 - **shadowing** : declarar em métodos variaveis locais ou de parametros com o mesmo nome da variavel de instancia. Usar **this** para referenciar variaveis de instancia. Se nã usar this, o compilador vai usar a variável de menor escopo.
 - **final** : garante que a referencia de objeto não pode referenciar outro objeto mas pode mudar o estado do objeto que é referenciado `final Fizz z = x; z.x = 6;`
+	- não compila quando uma constante final é atribuida com novos valores
 #### Define the **structure** of a Java **class**
 - **default package** : qdo não declara explitamente um pacote. Não podem ser importadas para uso em outros pacotes.
 - **membros de classe**: variaveis de instancia, construtores e métodos. Podemos ter membros de tipos diferentes com o mesmo nome.
@@ -212,6 +213,7 @@ int _a = a;
 	- soma/ sub
 	- && || (lógicos)
 	- pós incremento/decremento
+	- = 
 - **casting de primitivos**
 	- atribuição somente se *compatível* um tipo cabe no outro: 			
 	**byte -> short -> int -> long -> float -> double**  *autopromoção: qdo o tipo vai da direita p/ esquerda*			
@@ -447,7 +449,7 @@ class Y extends X { public void method2(int x){this.x = x; //erro: nao enexerga 
 	- **binding do polimorfismo**  o método chamado é do pai ou da filha ?
 		- *método de instancia*  tempo de execução. 
 		- *método static*  tempo de compilação. Ignora o tipo de objeto referenciado. Utiliza o método da ref. Não há polimorfismo com métodos static
-		- *variaveis membro* polimorfismo apenas p/ métodos não static. As variaveis são sempre da ref.
+		- *variaveis membro non-static ou static* polimorfismo apenas p/ métodos não static. As variaveis são sempre da ref.
 			- é chamada a variável do objeto (com o mesmo nome da variável do pai) dentro dos métodos com polimorfismo pois eles são chamados implicitamente c/ this.  
 		- quando o método da referencia (que é classe pai) esta escondido (private, default), o método usado é a da ref e não do obj referenciado
 		- mesmo c/ cast, o método chamado é do objeto
@@ -475,6 +477,7 @@ System.out.println(new C().i); //nao compila: i é private em B e o i de B escon
 ```
 
 - **toString** sobreescrever de *Object* p/ devolver uma String q represente o objeto ```public String toString()```
+	- o toString() de Object retorna <classname>@<hashcode>
 #### Develop code that makes use of polymorphism; develop code that overrides methods;  differentiate between the type of a reference and the type of an object
 - **reescrita, sobrescrita** : subclasse redefine o comportamento do método herdado da superclasse
 	- **polimorfismo** : 
@@ -586,7 +589,8 @@ public class Network {
 	- não podemos referenciar um método de instância ao invocar um construtor this `this(x()); //não compila`
 	- se o filho chama o construtor do pai e o construtor do pai chama this() (c/ ou s/ argumentos), o construtor chamado é do próprio pai e não do filho
 		- o método chamado sempre será o do objeto filho, mesmo dentro do construtor do pai. Dentro do construtor do filho, pode chamar o método do pai com super.metodo()
-- *super() e this()* só podem aparecer como primeira instrução do contrutores e apenas uma chamada, mesmo se a classe possuir construtores sobrecarregados 
+- *super() e this()* só podem aparecer como primeira instrução do contrutores e apenas uma chamada, mesmo se a classe possuir construtores sobrecarregados
+- *super() e this()* não podem ser chamados fora dos construtores 
 - **this e variaveis membro** variaveis membro com o mesmo nome da variável local: o acesso é da variável local. this: acessar variavel membro da pr´pria classe ou da classe pai		
 	- classe mae e filha com variaveis membro de mesmo nome. Diferenciar usando *this* para a variavel da propria classe e *super* para acessar a variavel da mãe
 	- se não incluir *this* ou *super* será acessado a variavel membro da filha
@@ -1113,7 +1117,7 @@ int[] [][]hipercube[];  // Um array de quatro dimensões.
 - não chamar outros métodos c/ this.method() dentro de um método static
 #### Create and **overload constructors**; differentiate between **default** and **user defined constructors**
 - argumentos recebidos tem que ser diferentes no tipo ou quantidade
-- tipo de retorno e visibilidade não são suficientes p/ distinguir
+- tipo de retorno e visibilidade não são considerados p/ determinar sobrecarga de métodos
 - em tempo de compilação é decidido o método q vai ser chamado
 - sobrecarga com polimorfismo (tipos parentes), o compilador invoca o mais especifico
 - forçar a invocação do mais genérico, *casting* `new Test().method((Object) "random");`
@@ -1128,11 +1132,11 @@ void method(Object o, String s) {System.out.println("object");}
 void method(String s, Object o) {System.out.println("string");}
 new Xpto().method("string", "string"); // compile error
 ```
-- construtor **default** dado pelo compilador, não recebe argumentos, tem a visibilidade da classe e tem a chamada a **super()** `class A { /* implicito*/ A() {super();} /*default*/}` 
+- construtor implicito dado pelo compilador, não recebe argumentos, tem a *visibilidade da classe* e tem a chamada a **super()** `class A { /* implicito*/ A() {super();} /*default*/}` 
 - caso vc adicione um construtor qq, o construtor padrão *deixa de existir* e as invocações a ele passam a dar erros de compilação. 
-- construtor não padrão tem a visibilidade definida pelo programador (pode ser private e protected também). Se não definir, a visibilidade é default.
+- construtor não implicito tem a visibilidade definida pelo programador (pode ser private e protected também). Se não definir, a visibilidade é default (package private).
 - dentro do construtor vc pode acessar as variaveis membros *static* ou *non-static*
-- não esqueça que a inicialização das variavies membros são com os valores default e logo em seguida, os valores atribuidos dentro do construtor
+- não esqueça que a inicialização das variaveis membros são com os valores default e logo em seguida, os valores atribuidos dentro do construtor
 ```java
 int length = getLength();
 String lastname = "Silveira";
@@ -1143,7 +1147,6 @@ int length = getLength();
 int getLength() {return lastname.length();} //compila e roda		
 ```
 - cuidado c/ o loop infinito `Test() {new Test(); // StackOverflow}` 
-- podem ter todos os modificadores de acesso
 - é comum criar um construtor privado e um método static p/ criar seu obj
 - métodos c/ o mesmo nome da classe e c/ tipo de retorno (mesmo void) são apenas métodos, não construtores	
 - construtores tbm podem ser sobrecarregados `class Test {public Test() {} public Test(int i) {}}`
@@ -1180,7 +1183,7 @@ void yingyang(Integer... ints) { //nao compila
 - parametros não recebem modificadores de visibilidade. Apenas o *final*
 	- **public** acessado de qq componente em qq pacote
 	- **protected** acessado por classes e interfaces no *mesmo pacote* e somente pela classe *que estenda, independente do pacote*
-		```java
+```java
 package a;
 public class AccessTest {
 	protected void c(){ }
@@ -1197,7 +1200,8 @@ public class AccessTester extends AccessTest{
 		ref2.c(); //compila e roda pois ref2 é referencia p/ um objeto q estende AccessTest
     }
 }
-		```
+```
+
 	- **default** *package private* visivel apenas dentro do mesmo pacote. 
 		- Mesmo com *import*, as classes default não são visíveis. 
 		- Se existem outras classes publicas no import, não ocorre erro na linha do import. Se importar especificamente uma classe default, o erro tbm é na instrução do import
@@ -1220,7 +1224,7 @@ public class AccessTester extends AccessTest{
 	- *primitivos* variaveis c/ mesmo nome em métodos diferentes. Alterações em uma das variaveis não altera o valor da outra
 		- String tbm é considerado primitivo nesse caso
 	- *de referência* 	variaveis não primitivas guardam referencias que apontam p/ o mesmo objeto. Modificações no obj podem ser feitas por n referencias. 
-		- a referência continua apontando p/ o mesmo objeto quando essa referência é passada numa invocação de método e dentro desse método a referência apontar para um novo objeto
+		- a referência continua apontando p/ o objeto anterior quando essa referência é passada numa invocação de método e um novo objeto é atribuido a essa referência dentro desse método
 		- array não é primitivo
 - *pilha de execução* lugar onde são empilhados os métodos invocados na mesma ordem q foram chamados
 - *heap de objetos* lugar onde são guardados os objetos criados durante sua execução
@@ -1240,7 +1244,7 @@ public class AccessTester extends AccessTest{
 			- alternativa p/ controle de fluxo
 			- permitem que *isolemos o tratamento* de um comportamento por blocos, separando a lógica do negócio do tratamento de erros
 			- **unchecked** podem ser evitadas se programar mais cuidadosamente
-				- **RuntimeException**
+				- **RuntimeException** : SecurityException, ClassCastException, NullPointerException, IndexOutOfBoundsException, IllegalArgumentException, IllegalStateException
 				- é opcional trata-las 
 			- **checked** não são faceis de evitar. O compilador verifica se o programa pode lançar um checked exception e obriga-lo a tratar c/ *try-catch* ou *throws*
 				- SQLException
@@ -1312,6 +1316,7 @@ public class AccessTester extends AccessTest{
 	- import static
 	- StringBuilder
 	- foreach
+	- retorno covariante na sobreescrita
 - 1.7 
 	- underline nos literais
 	- operador diamente <>
@@ -1433,7 +1438,8 @@ for (Days d : Days.values()) //Days.values() retorna um array de Days
 	- Math.sqrt(x)
 	- Math.random();
 		- `int randomNum = (int)(Math.random() * 101);  // 0 to 100`
-		
+	- Math.round(0.5); //1
+		- igual ou acima de 5, arredonda p/ cima. Abaixo de 4, trunca	
 - Scanner
 	- importar java.util
 	- ```java
