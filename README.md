@@ -1264,6 +1264,8 @@ public class AccessTester extends AccessTest{
 		- A ordem importa: o JVM procura o 1º catch q pode trabalhar a exception adequada. 
 		- *unreachable code* Quando tem polimorfismo em multiplos catches, priorizar na ordem os mais especificos
 	- se ocorrer um erro dentro do bloco catch, o erro é jogado p/ fora do bloco, finally (se houver) é executado,  e o bloco pai que deverá ou não tratar esse erro.
+	- `catch(MyException me){System.out.println(me); }` imprime apenas o nome da exception e a mensagem (se houver)
+		- `catch(MyException me){me.printStackTrace(); }` ira retornar o nome da exception e a mensagem (se houver) e também todos os métodos chamados e as linhas de código respectivas 
 - **finally** seja no sucesso ou no fracasso, temos a obrigação de cumprir certas tarefas. Conexão deveria ser fechada, por exemplo
 	- pode usar finally s/ o catch
 	- finally jamais devera vir antes do catch: a ordem tem q ser try + catch ou try + finally ou try + catch + finally
@@ -1418,14 +1420,13 @@ for (Days d : Days.values()) //Days.values() retorna um array de Days
 		System.out.printf("%n %1$b %n %2$b", Days.M == Days.M, Days.M.equals(Days.M)); //permitido usar == e equals sem problemas
 
 ```
-- blocos *static*
-	- 1º : inicialização de atributos
-	- 2º : execução de blocos de inicialização static
+- inicialização das variaveis membros
+	- 1º : inicialização de atributos e blocos static na ordem que aparecem no código
 		- inicializa apenas membros static
 		- executado apenas uma vez
-	- 2º : execução de blocos de inicialização instancia
-		- somente executados c/ new
-		- pode tbm inicializar membros static
+	- 2º : inicialização de atributos e blocos non-static na ordem que aparecem no código
+		- métodos chamados c/ new
+		- pode tbm inicializar membros static mas não tem preferência de ordem
 	- 3: construtores
 
 - `System.exit()` para de executar o programa
