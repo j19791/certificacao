@@ -30,7 +30,9 @@
 - variavel local primitiva precisa ser sempre atribuida c/ um valor se esta for usada no código. Se não for usada (apenas declarada), compila e roda.
 - **shadowing** : declarar em métodos variaveis locais ou de parametros com o mesmo nome da variavel de instancia. Usar **this** para referenciar variaveis de instancia. Se nã usar this, o compilador vai usar a variável de menor escopo.
 - **final** : garante que a referencia de objeto não pode referenciar outro objeto mas pode mudar o estado do objeto que é referenciado `final Fizz z = x; z.x = 6;`
-	- não compila quando uma constante final é atribuida com novos valores
+	- não compila quando uma variável final (constante) é atribuida com novos valores
+	- quando uma subclasse faz o shadow da variavel final da classe pai/interface, essa variavel pode ter novos valores atribuidos.
+		- não pode ter novos valores atribuidos qdo a subclasse recebe implicitamente do pai a constante. Recebe também como final 
 #### Define the **structure** of a Java **class**
 - **default package** : qdo não declara explitamente um pacote. Não podem ser importadas para uso em outros pacotes.
 - **membros de classe**: variaveis de instancia, construtores e métodos. Podemos ter membros de tipos diferentes com o mesmo nome.
@@ -1014,8 +1016,7 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 - *primitivos*
 	- *declarar* `int[] age;` e suas variações		
 	- *inicialização* 
-		- **new** criação do novo obj e inicializadas implicitamente c/ vlr default. 
-		- S/ o **new** Variaveis membro assumem vlr default. Variaveis locais ficam sem valor mesmo, podendo ocorrer erro de compilação
+		- **new** criação do novo obj e seus elementos são inicializados implicitamente c/ vlr default.		
 		- definir a capacidade `int[] ages = new int[10];`					
 			- capacidade zero compila e roda
 			- capacidade negativa compila mas joga *NegativeArraySizeException*
@@ -1212,8 +1213,15 @@ public class AccessTester extends AccessTest{
 - *assinatura* do método é o que importa p/ o usuário da classe
 - é *o q ela faz* e não como q ela faz
 - *interface de uso* conjunto de assinaturas de métodos visiveis dentro de uma classe
-- encapasular é esconder seus atributos c/ private
-- o getter deverá retornar uma copia do objeto mutável (lista, StringBuilder) e não diretamente a referencia p/ a referencia da classe
+- encapsular é esconder seus atributos c/ private
+- o getter deverá retornar uma copia do atributo encapsulado mutável (lista, StringBuilder)
+```java
+public class Student{
+        ArrayList<Integer> scores;
+       	public ArrayList<Integer> getScores(){      
+       		return new ArrayList(scores);   
+}  
+```
 - especificação *javabeans* 
 	- método público p/ acessar a leitura do atributo *getter* 
 	- escrita *setter* (c/ validação)		
@@ -1265,7 +1273,8 @@ public class AccessTester extends AccessTest{
 		- *unreachable code* Quando tem polimorfismo em multiplos catches, priorizar na ordem os mais especificos
 	- se ocorrer um erro dentro do bloco catch, o erro é jogado p/ fora do bloco, finally (se houver) é executado,  e o bloco pai que deverá ou não tratar esse erro.
 	- `catch(MyException me){System.out.println(me); }` imprime apenas o nome da exception e a mensagem (se houver)
-		- `catch(MyException me){me.printStackTrace(); }` ira retornar o nome da exception e a mensagem (se houver) e também todos os métodos chamados e as linhas de código respectivas 
+		- `catch(MyException me){me.printStackTrace(); }` ira retornar o nome da exception, uma mensagem (se houver) e também todos os métodos chamados com as linhas de código respectivas
+		- o stack trace é impresso se não foi possível capturar e tratar o erro c/ o catch ou não teve nenhum tratamento de erro 
 - **finally** seja no sucesso ou no fracasso, temos a obrigação de cumprir certas tarefas. Conexão deveria ser fechada, por exemplo
 	- pode usar finally s/ o catch
 	- finally jamais devera vir antes do catch: a ordem tem q ser try + catch ou try + finally ou try + catch + finally
@@ -1387,10 +1396,15 @@ public class AccessTester extends AccessTest{
 
 #### Atenção
 - unreachable code
-	- while (false) { x=3; } Não compila. 
+	- `while (false) { x=3; }` Não compila
+	- `for( int i = 0; false; i++) x = 3` não compila 
+	
 	- switch("guilherme") case "guilherme" : ...; case "42": ...; case default ...;  compila e roda s/ problemas
-	- if (false) { x=3; } aqui não tem problema. Compila sem problemas
+	- `if (false) { x=3; }` Compila sem problemas
+	- `for( int i = 0; i< 0; i++) x = 3;` compila e roda
+	- `do{ x = 3; } while(false);` compila e roda
 
+	
 
 
 #### não cai mas é útil
