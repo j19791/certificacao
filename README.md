@@ -74,8 +74,18 @@ System.getProperty("key1");
 		
 #### Import other Java packages to make them accessible in your code
 - Classes *se enxergam* se estão no **mesmo pacote**
-- usar o **Full Qualified name** para acessar a *public class*  de outro pacote
+- usar o **Full Qualified name** para acessar a *public class*  de outro pacote	
 - **import Full Qualified name** para evitar o uso do *Full Qualified name* em vários pontos do código
+	- usar o package.classe com full qualified name
+	```java
+	package util.log4j; 
+	public class Logger{
+	...
+	package util;
+	...
+	util.log4j.Logger logger = new util.log4j.Logger();	
+	```
+	- dentro do mesmo pacote, não precisa import ou usar o fqn
 - **import com \*** para importar todas as classes do pacote. *Não importa subpacotes*. Cada subpacote deverá ser importado.
 - **classes com mesmo nome**: 
 	- `import java.util.Date; import java.sql.Date;` não compila: erro no import. 
@@ -382,6 +392,8 @@ int a = 1, b = 2;
 	- percorre todos os elementos de uma *Collection* e de um array: `int i[] = {1,2,3,4,5}; for (int numbers : i){System.out.println(num);}`
 	- *Não podemos modificar* o contéudo da collection q estamos percorrendo
 	- não existe *contador*. Não é possível percorrer *+1 collection ao mesmo tempo*
+	- não usar variaveis declaradas anteriomente do for. Declarar uma nova variável exclusiva para o for
+	 - pode usar *final* na declaração da variável e mesmo assim vai compilar e rodar sem problemas
 #### Create and use do/while loops
 - a condição é testada após rodar o trecho do código *pelo menos 1x*
 - apenas 1 linha s/ chaves é permitido dentro do do/while. Caso tenha +1 sem chaves: erro de compilação		
@@ -968,9 +980,23 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 - são *final*
 - char : Character. Apenas 1 construtor  `new Character(´d´);`
 - int: Integer
-- criando (wrappers numéricos) `Double d1 = new Double(22.5); Double d2 = new Double("22.5"); Integer.valueOf(1); Integer i = 1234;` 
+- criando 
+	- *numéricos*
+ 	````java
+ 	Double d1 = new Double(22.5); 
+ 	Double d2 = new Double("22.5"); 
+ 	Integer.valueOf(1); 
+ 	Integer i = 1234;
+ 	new Double(null);//NPexception
+ 	new Double(); //não compila. Não existe construtor de wrappers s/ argumentos
+ 	``` 
 	- *NumberFormatException*
-- boolean : Boolean `new Boolean(true); new Boolean("TRue") /*true*/; new Boolean("T"); //false`
+	- *Boolean*  
+	```java 
+	new Boolean(true); new Boolean("true"); new Boolean("TRue") ; //true 
+	new Boolean("T"); new Boolean(null); //false
+	new Boolean(); //não compila. Não existe construtor de wrappers s/ argumentos
+	```
 - convertendo
 	![Wrapper](/imagens/wrapper.jpg)
 	- Wrappper p/ primitivo *xxxValue()* `new Long("123").doubleValue(); //convertendo Long para double`
@@ -1382,6 +1408,7 @@ public class Student{
 - rotulos: apenas c/ for, while, switch
 - switch só aceita break. Não existe continue
 - no switch não existe `case default:` .  É `default:` apenas 
+- não pode usar boolean no switch e case
 - Binding Poloimorfismo: variaveis membrom métodos static e escondidos são sempre da ref
 - LocalDate.of(2021,12,24) e não LocalDate.of(“2021-12-24”)
 - LocalDate, LocalTime e LocalDateTime não possuem construtor
