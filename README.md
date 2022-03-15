@@ -376,6 +376,7 @@ int a = 1, b = 2;
 - *inicialização*
 	- `for(;;){}` compila e roda infinitamente      
 	- executada apenas 1x no começo do for. 
+	- obrigatório inicializar variáveis declaradas
 	- Permitido declarar variaveis de um mesmo tipo `for(int i = 1, j= 2;;){//code}` ou inicializar diversas variáveis de tipos diferentes. `for(a=1, b=2.0, c = true;;){//code}`
 	- variaveis declaradas dentro do for possuem escopo apenas dentro do bloco do for
 - *condição* verificada no começo de cada iteração. default: *true*
@@ -408,8 +409,18 @@ int a = 1, b = 2;
 - compila while infinito c/ break 
 - qdo tem laços encaixados, o break ou continue vale p/ o + próximo (interno)
 - **labeled loops** 
-	- rótulo deve referenciar apenas for, loop, switch
-	- ocorrerá erro de compilação se o rótulo for aplicado em outro tipo de comando
+	- rótulo deve referenciar apenas for, loop, switch para uso de break ou continue
+	- um rótulo pode ser aplicado para um bloco {} de comandos e um break ou continue pode apontar p/ esse tipo de bloco
+	```java
+	l1:{
+          System.out.println("A");
+          l2:
+          {
+            for(;;) break l1;
+          }
+      	}	
+	```
+	- um rótulo pode ser criado sem nenhum bloco mas ficara isolado, sem erro de compilação
 	- nomes dos rótulos podem ser repetidos desde q não haja conflito de escopo
 	- um mesmo statement pode ter 2 labels `first: second: for (int i = 0; i < 10; i++) {`
 	- um label pode estar numa linha vazia (como em external abaixo) antes que tbm vai funcionar
@@ -1175,6 +1186,18 @@ int getLength() {return lastname.length();} //compila mas NullPointerException
 String lastname = "Silveira"; //mudando a ordem das variaveis membro
 int length = getLength();		
 int getLength() {return lastname.length();} //compila e roda		
+```
+- as variaveis membro do filho ainda possuem os valores default na criação da instancia Pai durante a criação do filho
+```java
+class A{
+   A() {  print();   }	
+...
+class B extends A{
+   int i =   4;
+   void print() { 
+       System.out.println(i); }
+...
+A a = new B(); //new B() chama super() que é a criação do pai. Durante a criação do pai é chamado o print do objeto que imprime o this.i (do objeto) que nesse momento esta com valor default (0), não foi inicializado com 4 que é somente qdo termina de construir B	
 ```
 - cuidado c/ o loop infinito `Test() {new Test(); // StackOverflow}` 
 - é comum criar um construtor privado e um método static p/ criar seu obj
