@@ -1131,7 +1131,9 @@ int[] [][]hipercube[];  // Um array de quatro dimensões.
 			- não existe método *abstract* e *private*
 		- *static* o método deixa de ser de instancia e passa ser acessado diretamente pela classe
 		- *throws* indica as exceptions q podem ser jogadas pelo método			
-- métodos *não abstratos* devem possuir *corpo*		
+- métodos *não abstratos* devem possuir *corpo*	
+- métodos *non-static* são chamados dentro de um método non-static apenas c/ o nome (o this. é implicito) ou com uma referência. 
+	- Nunca chamar diretamente c/ o nome da classe `StaticTest.m1();`
 #### Apply the **static** keyword to methods and fields  
 - pertence a classe e não a cada objeto
 - não precisa ter um objeto instanciado da classe. Apenas seu nome
@@ -1142,6 +1144,7 @@ int[] [][]hipercube[];  // Um array de quatro dimensões.
 - *binding* do método é feito em tempo de compilação
 - a inicialização de variaveis mebro static pode chamar metodos static `static int idade = grabAge(); static int grabAge() { return 18;}`			
 - não chamar outros métodos c/ this.method() dentro de um método static
+- os métodos podem ser chamados sem o nome da classe ou com o nome da classe dentro de outro método
 #### Create and **overload constructors**; differentiate between **default** and **user defined constructors**
 - argumentos recebidos tem que ser diferentes no tipo ou quantidade
 - tipo de retorno e visibilidade não são considerados p/ determinar sobrecarga de métodos
