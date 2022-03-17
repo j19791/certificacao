@@ -140,9 +140,14 @@ int _a = a;
 		char c = 10; short s = c; //apesar de terem 2 bytes, nao compila pois o range + do char > short (pois compensa o lado negativo q nao tem no char). Com casting funciona
 	```
 	- o lado esquerdo de uma atribuição deve ser sempre uma variável, e não uma chamada a um método ou outro literal `"guilherme".substring(0,2) = "gua";` 
-	- **referência: polimorfismo**
+	- **referência**
 		- `List<String> names = new ArrayList<>();` <> operador diamante
 		- copiamos o valor da referência (o objeto é o mesmo)
+		- referencias de objetos podem ter o mesmo nome do tipo mas primitivos não
+		```java
+		String String = "string isa string"; //compila e roda
+		int int = 1; //não compila
+		```
 - **aritméticos**
 	- **%** resto de divisão. O tipo resultado segue a regre das outras operações
 		- pode ser usado com números decimais:  5.5 % 3 = 2.5
@@ -247,7 +252,8 @@ int _a = a;
 	String name1 = new String("Mario");	String name2 = new String("Mario");
 	System.out.println(name1 == name2); // false: 2 objetos criados com new		
 ```
-- equals de Wrappers de tipo diferente são sempre **false**		
+- equals de Wrappers de tipo diferente são sempre **false**	
+- equals de Object é o mesmo que ==	
 - **Pool de Strings** 
 	- antes de criar uma nova String, verifica-se se já existe no pool uma String com mesmo conteúdo. Se já existe, não cria nova, reutiliza. 
 		`String name1 = "Mario"; String name2 = "Mario"; System.out.println(name1 == name2);	//true`
@@ -467,18 +473,26 @@ class Y extends X { public void method2(int x){this.x = x; //erro: nao enexerga 
 		}
 	}
 	```
-	- **abstract** não compila em métodos *static* pois não há herança
 	- não pode sobreescrer um método *static* c/ um método *non-static* e vice-versa
-	- métodos *private* não são sobreescritos
+	- **abstract** não compila em métodos *static* pois não há herança
 	- construtores e blocos static não são herdados 
-	- **binding do polimorfismo**  o método chamado é do pai ou da filha ?
-		- *método de instancia*  tempo de execução. 
-		- *método static*  tempo de compilação. Ignora o tipo de objeto referenciado. Utiliza o método da ref. Não há polimorfismo com métodos static
-		- *variaveis membro non-static ou static* polimorfismo apenas p/ métodos não static. As variaveis são sempre da ref.
-			- é chamada a variável do objeto (com o mesmo nome da variável do pai) dentro dos métodos com polimorfismo pois eles são chamados implicitamente c/ this.  
-		- quando o método da referencia (que é classe pai) esta escondido (private, default), o método usado é a da ref e não do obj referenciado
-		- mesmo c/ cast, o método chamado é do objeto
-		- **ref.getClass()** retorna o nome da classe do objeto que a ref aponta
+- métodos *private* não são sobreescritos
+- **binding do polimorfismo**  o método chamado é do pai ou da filha ?
+	- *método de instancia*  tempo de execução. 
+	- *método static*  tempo de compilação. Ignora o tipo de objeto referenciado. Utiliza o método da ref. Não há polimorfismo com métodos static
+	- *variaveis membro non-static ou static* polimorfismo apenas p/ métodos não static. As variaveis são sempre da ref.
+		- é chamada a variável do objeto (com o mesmo nome da variável do pai) dentro dos métodos com polimorfismo pois eles são chamados implicitamente c/ this.  
+	- quando o método da referencia (que é classe pai) esta escondido (private, default), o método usado é a da ref e não do obj referenciado
+	- mesmo c/ cast, o método chamado é do objeto
+	- **ref.getClass()** retorna o nome da classe do objeto que a ref aponta
+	- qdo uma classe filha tem mais métodos q o pai,a ref do tipo pai não pode chamar esses métodos se não ocorre erro de compilação
+	```java
+	class Game {  public void play() throws Exception   { }}
+	class Soccer extends Game {  public void play(String ball) {}}
+	...
+	Game g = new Soccer();
+	g.play("bola");//não compila
+	```
 		 
 - **não existe sobreescrita de atributos**  Vai ter o atributo com o mesmo nome da classe mãe, acessível com **super** ou da própria classe q sobreescreveu, acessível com **this**
 ```java
@@ -993,21 +1007,26 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 - int: Integer
 - criando 
 	- *numéricos*
- 	````java
+ 	```java
  	Double d1 = new Double(22.5); 
  	Double d2 = new Double("22.5"); 
+	Double d3 = 1; //não compila. boxed de int somente p/ Integer
+	Double d4 = 1.0; 
  	Integer.valueOf(1); 
  	Integer i = 1234;
  	new Double(null);//NPexception
  	new Double(); //não compila. Não existe construtor de wrappers s/ argumentos
- 	``` 
+ 	```
+	
 	- *NumberFormatException*
-	- *Boolean*  
+	- *Boolean*
+	
 	```java 
 	new Boolean(true); new Boolean("true"); new Boolean("TRue") ; //true 
 	new Boolean("T"); new Boolean(null); //false
 	new Boolean(); //não compila. Não existe construtor de wrappers s/ argumentos
 	```
+	
 - convertendo
 	![Wrapper](/imagens/wrapper.jpg)
 	- Wrappper p/ primitivo *xxxValue()* `new Long("123").doubleValue(); //convertendo Long para double`
@@ -1057,6 +1076,11 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 		- definir a capacidade `int[] ages = new int[10];`					
 			- capacidade zero compila e roda
 			- capacidade negativa compila mas joga *NegativeArraySizeException*
+			- a dimensão é avaliada da esquerda p/ direita
+			```java
+			int i = 4;
+      			int ia[][][] = new int[i][i = 3][i]; //dimensão = 4,3,3
+			```
 		- c/ valores conhecidos 
 			- `int[] numbers = new int[]{1,2,5,7,5};`
 			- ou vc passa o tamanho ou passa os valores. `int y[] = new int[3] {0,3,5}; //não compila`
@@ -1135,6 +1159,12 @@ int[] [][]hipercube[];  // Um array de quatro dimensões.
 		- modificador *final* o parametro não pode ter seu valor modificado depois da chamada do método
 		- *promoção*
 			- *primitivos* o método espera double mas se passar qq outro tipo mais restritivo, este será promovido automaticamente p/ double
+				- promoção tem mais prioridade do que boxing/unboxing
+			```java
+			void m(double a, double b){}
+			void m(Integer a, Integer b){}
+			m(1,2); // chama o método c/ double
+			```
 			- *polimorfismo* passar qq objeto que *seja um* objeto do tipo do parametro					
 	- modificadores opcionais
 		- *final* o método não pode ser sobreescrito nas classes filhas
@@ -1148,7 +1178,14 @@ int[] [][]hipercube[];  // Um array de quatro dimensões.
 #### Apply the **static** keyword to methods and fields  
 - pertence a classe e não a cada objeto
 - não precisa ter um objeto instanciado da classe. Apenas seu nome
-- não usar um método/atributo de instancia dentro de um método *static* `public class Car{private int weight;public static int getWeight() {return weight; /*compile error*/}}`
+- não usar um método/atributo de instancia dentro de um método *static* 
+```java
+public class Car{
+	private int weight;
+	public static int getWeight() {
+		return weight; /*compile error*/}}
+```
+- não deverão existir membros static e non-static c/mesmo nome 
 - `static int b = getMethod() /*0*/; public static int getMethod() {return a /*0, a ainda nao inicializada*/; } static int a = 15;`
 - membros estáticos podem ser acessados através de *instâncias da classe*
 - classe fiha não pode possuir um *método não static* que *sobreescreve* um método static. Ambos ou nenhum deve ser static.
@@ -1175,6 +1212,7 @@ new Xpto().method("string", "string"); // compile error
 ```
 - construtor implicito dado pelo compilador, não recebe argumentos, tem a *visibilidade da classe* e tem a chamada a **super()** `class A { /* implicito*/ A() {super();} /*default*/}` 
 - caso vc adicione um construtor qq, o construtor padrão *deixa de existir* e as invocações a ele passam a dar erros de compilação. 
+	- construtor padrão é o construtor implicito dado pela JVM
 - construtor não implicito tem a visibilidade definida pelo programador (pode ser private e protected também). Se não definir, a visibilidade é default (package private).
 - dentro do construtor vc pode acessar as variaveis membros *static* ou *non-static*
 - não esqueça que a inicialização das variaveis membros são com os valores default e logo em seguida, os valores atribuidos dentro do construtor
