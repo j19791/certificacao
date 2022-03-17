@@ -73,6 +73,7 @@ System.getProperty("key1");
 		```
 		
 #### Import other Java packages to make them accessible in your code
+- package deverá ser sempre a primeira declaração dentro do código
 - Classes *se enxergam* se estão no **mesmo pacote**
 - usar o **Full Qualified name** para acessar a *public class*  de outro pacote	
 - **import Full Qualified name** para evitar o uso do *Full Qualified name* em vários pontos do código
@@ -223,7 +224,9 @@ int _a = a;
 			"" + (2 + 7); //=9 
 			2 + 7 + ""; //=9
 		```
-	- uma concatenção de String sempre cria um novo objeto em memória			  		
+	- uma concatenção de String sempre cria um novo objeto em memória
+	- String + char e ou numérico : tudo se transforma em String: "a"+'b'+63 = "ab63"			  		
+	- char e ou numérico + String : primeiro a soma dos números (inclusive char) e depois concatena c/ String: 'b'+63+"a" =  "161a"
 - **precedencia**
 	- pre incremento/decremento
 	- mult/ div/ % 
@@ -465,6 +468,7 @@ class X{ private int x; public void method(){}};
 class Y extends X { public void method2(int x){this.x = x; //erro: nao enexerga private de outra classe, mesmo herdando  x  }  } 
 ```
 - não existe **herança de métodos de estáticos**  qdo herdamos uma classe c/ métodos *static*, podemos usa-los com o nome da classe filha
+	- pode  criar um método static na classe filha com o mesmo nome do método static da classe pai (shadow) mas não ocorre polimorfismo
 	- não colocar **super** dentro do contexto *static*. Não existe objeto
 	```java
 	class Z extends W {
@@ -581,7 +585,11 @@ protected long blipvert(int x) { return 0; } } //long é diferente de int. Não 
 - o compilador não conhece os valores das variáveis, apenas seu tipo `String recovered = objetos[0];` nem todo object é uma String
 - *moldar* a referencia p/ q compile `String recovered = (String) objetos[0];`
 - o **compilador** verifica apenas se as referências são possíveis de fazer casting
-- 
+- não é possível fazer casting direto com referências
+```
+Object o = new String(); //necessário ocorrer o polimorfismo
+String s = (String) o;
+```
 - na **execução**, o casting vai ver se aquele objeto é compatível com o tipo do casting
 - alguns Vehicle são Moto `Moto m = (Moto) v`
 - Não é compatível : **classCastException**
@@ -602,6 +610,13 @@ String s = "a"; boolean b = s instanceof java.util.List; // obviamente incompat�
 
 #### Use **super** and **this** to access **objects** and **constructors**
 - construtor pode ser *sobrecarregado* e ter qualquer *visibilidade*
+- **this** isolado representa o objeto instanciado
+```java
+class TestClass{    static int si = 10;    
+public TestClass(){ System.out.println(this);    } //this = TestClass@3b22cdd0 (toString() de Object)   
+...
+new TestClass();   	
+```
 - p/ construir um obj da classe filha, obrigatoriamente precisamos chamar o construtor da classe mãe antes
 - **this** dentro do construtor contem o objeto com suas variaveis preenchidas c/ valores passados ou não dentro do construtor
 ```java
@@ -737,7 +752,9 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 	trim() /*limpa os caracteres brancos das duas pontas do String*/
 	"Certification".compareTo("certification"); /* -32 lexicográfico: dictionary order, except that all the uppercase letters preceed all the lowercase letters. Retorna negativo caso a  String na qual o método for invocado vier antes;zero se for igual; positivo se vier depois do parâmetro passado */
 ```
-- *StringIndexOutOfBoundsException* `"guilherme".charAt(20); "guilherme".charAt(-1);`
+- **charAt()**
+	- retorna um char e pode receber char que é promovido p/ int como argumento.
+	- *StringIndexOutOfBoundsException* `"guilherme".charAt(20); "guilherme".charAt(-1);`
 - Variável String não pode ser atribuida com valores númericos, booleano ou char a menos que exista uma concatenação com uma String (literal ou variável). `String $s = 1 + "" +  false + "" + 'a';`
 #### Create and manipulate calendar data using classes from **java.time.LocalDateTime,  java.time.LocalDate, java.time.LocalTime, java.time.format.DateTimeFormatter, java.time.Period**
 - imutáveis
@@ -926,7 +943,7 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 
 ### Working With Java Data Types
 
-#### **Declare** and **initialize variables** (including casting of primitive data types)
+#### Declare and initialize variables (including casting of primitive data types)
 
 - explicitamente tipada
 - inicialização é obrigatória antes de serem usadas (inclusive c/ primitivos)
@@ -939,6 +956,7 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 	- char = vazio = equivale a 0
 	- String e Referencias = null
 - criação de *array* a inicialização é *implicita* `int numbers[] = new int[10]; numbers[0]; //0`
+- variável membro **final** deverá ser implicitamente inicializada na sua declaração, dentro dos blocos de instancia ou no construtor
 - **tipos primitivos**
 	- **numéricos** todo número simples (sem casa decimal) é int
 		- **inteiro** podem ser +/-
@@ -1070,7 +1088,11 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 - armazenamento sequencial de variveis em memória de um tipo
 - são objetos
 - *primitivos*
-	- *declarar* `int[] age;` e suas variações		
+	- *declarar* `int[] age;` e suas variações
+	```java
+	int[] i, j; //i e j são arrays de int 
+	int i[], j; //somente i é um array de int. j é int
+	```
 	- *inicialização* 
 		- **new** criação do novo obj e seus elementos são inicializados implicitamente c/ vlr default.		
 		- definir a capacidade `int[] ages = new int[10];`					
@@ -1303,7 +1325,7 @@ public class AccessTester extends AccessTest{
 - *assinatura* do método é o que importa p/ o usuário da classe
 - é *o q ela faz* e não como q ela faz
 - *interface de uso* conjunto de assinaturas de métodos visiveis dentro de uma classe
-- encapsular é esconder seus atributos c/ private
+- encapsular é esconder suas variáveis membro c/ private ou protected. Default quebra o encapsulamento
 - o getter deverá retornar uma copia do atributo encapsulado mutável (lista, StringBuilder)
 ```java
 public class Student{
@@ -1313,8 +1335,8 @@ public class Student{
 }  
 ```
 - especificação *javabeans* 
-	- método público p/ acessar a leitura do atributo *getter* 
-	- escrita *setter* (c/ validação)		
+	- método public ou protected p/ acessar a leitura do atributo *getter* 
+	- escrita com método publico ou protected *setter* (c/ validação)		
 	- *is* getter boolean
 		- também pode ser usado get c/ boolean
 #### Determine the effect upon **object references** and **primitive** values when they are **passed  into methods** that change the values
@@ -1389,8 +1411,9 @@ public class Student{
 	
 	``` 
 #### Recognize common exception classes (such as NullPointerException, ArithmeticException, ArrayIndexOutOfBoundsException, ClassCastException)
-- **ArrayIndexOutOfBoundsException** acessar uma posição q não existe no *array*
 - **IndexOutOfBoundsException** acessar uma posição q não existe no *ArrayList*
+	- **ArrayIndexOutOfBoundsException** acessar uma posição q não existe no *array*
+	- **StringIndexOutOfBoundsException** acessar uma posição q não existe na *String*
 - **NullPointerException** qdo é usado o **.** com uma referencia *null*
 - **ClassCastException** casting p/ uma ref p/ um tipo incompatível
 - **NumberFormatException** não é possível *parsear* texto em números
