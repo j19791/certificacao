@@ -141,6 +141,11 @@ int _a = a;
 		char c = 10; short s = c; //apesar de terem 2 bytes, nao compila pois o range + do char > short (pois compensa o lado negativo q nao tem no char). Com casting funciona
 	```
 	- o lado esquerdo de uma atribuição deve ser sempre uma variável, e não uma chamada a um método ou outro literal `"guilherme".substring(0,2) = "gua";` 
+	- se ocorrer uma atribuição durante o calculo da expressão, as variáveis a direita dessa atribuição serão atualizados c/ esse novo valor
+	```java
+	int k = 1;
+	k += (k = 4) * (k + 2);// k = 1 + (4) * (4 + 2);	
+	```
 	- **referência**
 		- `List<String> names = new ArrayList<>();` <> operador diamante
 		- copiamos o valor da referência (o objeto é o mesmo)
@@ -396,6 +401,7 @@ int a = 1, b = 2;
 	- p/ não ocorrer o *loop infinito*. 
 	- Pode fazer varias atualizações `for(int i = 0, j= 0;i< 10; i++, j++){//code}`
 	- pode executar trecho de código como se fosse um bloco, mesmo as instruções sendo separadas por , `for(int i = 0, j= 0;i< 10; i+= 3, System.out.println(i++)){//code} `
+		- comandos válidos: atribuição, invocação de métodos, instanciaçã, pre/pós incremento/decremento
 	- atualização c/ ++i ou i++ da no mesmo
 - argumentos são opcionais e são preenchidos com os valores default `for(;;) {} //`
 - **enhanced for**: 
@@ -575,11 +581,12 @@ protected long blipvert(int x) { return 0; } } //long é diferente de int. Não 
 			method(); //(this), b,a
 			super.method(); }}	//a		
 	```
-	- Car extends Vehicle : Car **é um** veículo - **polimorfismo**
-	- método q recebe Vehicle pode receber qq *é um* : reaproveitamento do código
-	- mudamos o tipo da referência mas nunca o *tipo do objeto*. Chamamos (referencimos) o obj de várias formas diferentes
-	- referenciar pelo seu próprio tipo, classes pai, qualquer interface
-	- método default ou private do pai em pacotes diferentes : não há sobreescrita. o binding só consegue acesso ao método que esta no mesmo pacote (da própria referencia)			
+- não compila `super.super.m1()`
+- Car extends Vehicle : Car **é um** veículo - **polimorfismo**
+- método q recebe Vehicle pode receber qq *é um* : reaproveitamento do código
+- mudamos o tipo da referência mas nunca o *tipo do objeto*. Chamamos (referencimos) o obj de várias formas diferentes
+- referenciar pelo seu próprio tipo, classes pai, qualquer interface
+- método default ou private do pai em pacotes diferentes : não há sobreescrita. o binding só consegue acesso ao método que esta no mesmo pacote (da própria referencia)			
 #### Determine when casting is necessary
 - `((Y)x2).do2();` antes de invocar o método, é feito casting da variavel de referencia por causa do ()
 - o compilador não conhece os valores das variáveis, apenas seu tipo `String recovered = objetos[0];` nem todo object é uma String
@@ -1391,6 +1398,7 @@ public class Student{
 	- pode usar finally s/ o catch
 	- finally jamais devera vir antes do catch: a ordem tem q ser try + catch ou try + finally ou try + catch + finally
 	- erros ou exceptions dentro de blocos catch ou finally podem ocorrer e se não forem tratados, a JVM vão trata-los como erros/ exceptions normalmente e parar a execução do programa.
+	- mesmo c/ return antecipado, o bloco finally é executado
 	- o bloco finally não é executado se existe `System.exit(0);` dentro de um bloco try com finally
 #### Describe the **advantages** of Exception handling 
 #### Create and invoke a **method that throws an exception**
