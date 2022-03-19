@@ -41,10 +41,12 @@
 - **interface**: possui métodos somente com assintura, sem implementação. Possível declarar *constantes* **final**
 	- a partir do Java 8, intefaces podem ter métodos default ou static e ambos c/ implementação  
 - **public class** ou **public interface** : o nome do arquivo *.java* deve ter o nome dessa *class/interface*
-- só pode exitir *uma* **public class** ou **public interface** por arquivo *.java*		
+	- só pode exitir *uma* **public class** ou **public interface** por arquivo *.java*
+	- não é obrigatório ter classes public no arquivo. O comando `java nomeDaClasse` chama a classe adequada dentro desse arquivo
 #### Create executable Java applications with a **main** method; **run** a Java program from the command line; produce **console output**
 - *classe executavel* é aquela que possui o método **public static void main (String[] args)** 
 	- Pode ter *static public* ou usar *varargs ...*
+	- pode ter modificador **final**
 	- se nenhum argumento é passado p/ o main, o parametro args não é null mas non-null array de Strings de tamanho zero
 - **java** HelloWorld *Mario* : passando 1 parametro para a execução do programa
 - **.class** é o *bytecode* gerado pelo *javac*
@@ -425,6 +427,7 @@ int a = 1, b = 2;
 - qdo tem laços encaixados, o break ou continue vale p/ o + próximo (interno)
 - **labeled loops** 
 	- rótulo deve referenciar apenas for, loop, switch para uso de break ou continue
+	- não pode usar palavra chave mas pode usar nome de classes como String, por exemplo.
 	- um rótulo pode ser aplicado para um bloco {} de comandos e um break ou continue pode apontar p/ esse tipo de bloco
 	```java
 	l1:{
@@ -525,6 +528,7 @@ System.out.println(new C().i); //nao compila: i é private em B e o i de B escon
 
 ```
 
+- uma variável membro do pai final pode ser redeclarada na filha (shadow)
 - **toString** sobreescrever de *Object* p/ devolver uma String q represente o objeto ```public String toString()```
 	- o toString() de Object retorna <classname>@<hashcode>
 #### Develop code that makes use of polymorphism; develop code that overrides methods;  differentiate between the type of a reference and the type of an object
@@ -672,6 +676,8 @@ public class Network {
 	- a partir do java 8 pode ter métodos static com bloco com implementação;
 - interface pode ter método default c/ implementação
 	- não pode ter métodos default static pois um método default sempre é da instância
+	- uma interface  pode redeclarar o método como abstract qdo extende outra interface c/ método default
+		- a classe que implementa essa interface com método abstract deverá re-implementar esse método abstract. O método default não é mais chamado nesse caso.
 - interfaces não herda de Object
 - uma classe abstrata pode não ter nenhum método abstrato
 - se a classe possui pelo menos 1 método abastrato, a classe precisa ser abstrata
@@ -757,7 +763,7 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 	"Java".substring(0, 4); /*Java*/ "Java".substring(0, 3)); /*Jav*/; //limite do endIndex é 4 nesse caso pois p/ descobrir o endIndex é 4-1 = 3 entao o substring vai de 0 a 3. Se beginIndex e endIndex for igual, nao retorna nada e nao da erro.
 	replace(oldChar, newChar); /*substitui as ocorrências de um char por outro*/ replace(CharSequence target,CharSequence replacement); //atenção: não existe replace sobrecarregado c/ (String, char) ou (char, String). É case sensitive
 	trim() /*limpa os caracteres brancos das duas pontas do String*/
-	"Certification".compareTo("certification"); /* -32 lexicográfico: dictionary order, except that all the uppercase letters preceed all the lowercase letters. Retorna negativo caso a  String na qual o método for invocado vier antes;zero se for igual; positivo se vier depois do parâmetro passado */
+	"Certification".compareTo("certification"); /* -32 lexicográfico: minusculas são maiores que maiusculas. C < c retorna valor -. Contrário retornaria + */
 ```
 - **charAt()**
 	- retorna um char e pode receber char que é promovido p/ int como argumento.
@@ -953,6 +959,11 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 #### Declare and initialize variables (including casting of primitive data types)
 
 - explicitamente tipada
+- declaração e inicialização em cadeia não é permitido
+```java
+int a = b = c = 100; //não compila
+int  b, c; int a = b = c = 100; //compila e roda pois as variaveis foram declaradas inicialmente e depois inicializadas em cadeia em outra instrução
+```
 - inicialização é obrigatória antes de serem usadas (inclusive c/ primitivos)
 - variáveis locais : inicialização deverá ser *explicita*
 - no *if*, a inicialização deverá ser feita em todos os caminhos possíves
@@ -1094,6 +1105,8 @@ List<Person> adults = pf.filter(persons, p -> p.getAge() >= 18);
 #### Declare, instantiate, initialize and use a **one-dimensional** array
 - armazenamento sequencial de variveis em memória de um tipo
 - são objetos
+	- int[] é uma classe com o nome de [I e o nome da classe para int[][] is [[I
+	- new int[10].getClass().isArray() retorna true 
 - *primitivos*
 	- *declarar* `int[] age;` e suas variações
 	```java
@@ -1170,17 +1183,17 @@ int[] [][]hipercube[];  // Um array de quatro dimensões.
 
 ### Working with Methods and Encapsulation
 
-#### Create methods with **arguments** and **return** values; including **overloaded** methods
-- *assinatura*
-	- *modificador de visibilidade*, inclusive o implicito *default / package private*
-		- não usar `default` qdo modificar métodos default - apenas usar nenhum modificador já é suficiente.
-	- tipo de *retorno*
-		- opcional *return* qdo o tipo é *void*				
-			- pode ser usado como um *retorno antecipado* `void nothing(int i) {if(i >= 0) return; System.out.println("negative");}`
-			- não pode ser *atribuido* a uma variável qdo o tipo é *void*
-		- não pode ter nenhum código depois do *return*
-		- com tipo de retorno definido, deverá retornar algo ou jogar exception em cada um dos caminhos possíveis do método `throw new RuntimeException()` Cobrir tudo
+#### Create methods with arguments and return values; including overloaded methods
+- *modificador de visibilidade*, inclusive o implicito *default / package private*
+	- não usar `default` qdo modificar métodos default - apenas usar nenhum modificador já é suficiente.
+- tipo de *retorno*
+	- opcional *return* qdo o tipo é *void*				
+		- pode ser usado como um *retorno antecipado* `void nothing(int i) {if(i >= 0) return; System.out.println("negative");}`
+		- não pode ser *atribuido* a uma variável qdo o tipo é *void*
+	- não pode ter nenhum código depois do *return*
+	- com tipo de retorno definido, deverá retornar algo ou jogar exception em cada um dos caminhos possíveis do método `throw new RuntimeException()` Cobrir tudo
 		- `return null` apenas quando o tipo de retorno é um objeto. Não compila como retorno com tipos primitivos
+- **assinatura** identificação única dos métodos: não pode ter mais de um método c/ mesmo nome e lista de parametros
 	- *nome* seguindo a regra dos *identificadores*
 	- *parametros* (pode ser vazio) com tipo e nome
 		- inicialização dos parametros é feito por quem invoca o método
@@ -1195,12 +1208,12 @@ int[] [][]hipercube[];  // Um array de quatro dimensões.
 			m(1,2); // chama o método c/ double
 			```
 			- *polimorfismo* passar qq objeto que *seja um* objeto do tipo do parametro					
-	- modificadores opcionais
-		- *final* o método não pode ser sobreescrito nas classes filhas
-		- *abstract* obriga as classes filhas a implmentarem o método. Não pode ter corpo
-			- não existe método *abstract* e *private*
-		- *static* o método deixa de ser de instancia e passa ser acessado diretamente pela classe
-		- *throws* indica as exceptions q podem ser jogadas pelo método			
+- modificadores opcionais
+	- *final* o método não pode ser sobreescrito nas classes filhas
+	- *abstract* obriga as classes filhas a implmentarem o método. Não pode ter corpo
+		- não existe método *abstract* e *private*
+	- *static* o método deixa de ser de instancia e passa ser acessado diretamente pela classe
+	- *throws* indica as exceptions q podem ser jogadas pelo método			
 - métodos *não abstratos* devem possuir *corpo*	
 - métodos *non-static* são chamados dentro de um método non-static apenas c/ o nome (o this. é implicito) ou com uma referência. 
 	- Nunca chamar diretamente c/ o nome da classe `StaticTest.m1();`
@@ -1559,7 +1572,7 @@ for (Days d : Days.values()) //Days.values() retorna um array de Days
 - inicialização das variaveis membros
 	- 1º : inicialização de atributos e blocos static na ordem que aparecem no código
 		- inicializa apenas membros static
-		- executado apenas uma vez
+		- executado apenas uma vez mesmo quando não há criação de instancia
 	- 2º : inicialização de atributos e blocos non-static na ordem que aparecem no código
 		- métodos chamados c/ new
 		- pode tbm inicializar membros static mas não tem preferência de ordem
