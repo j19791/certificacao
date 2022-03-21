@@ -36,7 +36,7 @@
 #### Define the **structure** of a Java **class**
 - **default package** : qdo não declara explitamente um pacote. Não podem ser importadas para uso em outros pacotes.
 - **membros de classe**: variaveis de instancia, construtores e métodos. Podemos ter membros de tipos diferentes com o mesmo nome.
-- **assinatura de um método**: nome do método e os tipos de parametros. Deve ter retorno. Pode ter o mesmo nome de um construtor.
+- **assinatura de um método**: nome do método e os tipos de parametros. Deve ter retorno ou void. Pode ter o mesmo nome de um construtor.
 - **construtor**: a classe pode ter 0 a n construtores. Não devem ter retorno. Pode ter um *return* mas vazio
 - **interface**: possui métodos somente com assintura, sem implementação. Possível declarar *constantes* **final**
 	- a partir do Java 8, intefaces podem ter métodos default ou static e ambos c/ implementação  
@@ -329,7 +329,7 @@ int _a = a;
 ```java
 int option = 4;		
 final int c1 = 5;
-switch (option) { //o argumento deverá ser sempre compatível com int (igual ou menor que int), wrapper menor ou igual q Integer, String, Enum
+switch (option) { //Pode ser constante. o argumento deverá ser sempre compatível com int (igual ou menor que int), wrapper menor ou igual q Integer, String, Enum
 	case c1: //o valor de cada case deverá ser compatível com o argumento do switch. Usar literal, variavel final (wrapper c/ final não é cte e não pode ser usado ) inicializada durante sua declaração com literal ou expressões com literal/ variavel final. null não é válido. Não pode duplicar cases
 		System.out.println("number 1");
 		break; //para não executar os casos q vem abaixo			
@@ -354,6 +354,7 @@ switch (option) { //o argumento deverá ser sempre compatível com int (igual ou
 #### Create and use **while** loops
 - variaveis declaradas dentro dos blocos dos loops são válidas apenas dentro do bloco e não ocorre erro de compilação pois não há redeclaração das variaveis em cada iteração
 - a *condição* deve ser *booleano*
+- `while() //vazio` não compila
 - pode ter uma operação na condição `while (i++<10)`
 - Roda enquanto a condição for *true*. executado repetidamente até a condição se tornar *false*		
 - qdo o loop é explicitamente *infinito* e tem código depois do loop, não compila (unreachable statement). 
@@ -769,6 +770,7 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 	- retorna um char e pode receber char que é promovido p/ int como argumento.
 	- *StringIndexOutOfBoundsException* `"guilherme".charAt(20); "guilherme".charAt(-1);`
 - Variável String não pode ser atribuida com valores númericos, booleano ou char a menos que exista uma concatenação com uma String (literal ou variável). `String $s = 1 + "" +  false + "" + 'a';`
+- resulta numa String a soma `new String("b") + new StringBuilder("a");` ou `new StringBuilder("a") + new String("b");` 					
 #### Create and manipulate calendar data using classes from **java.time.LocalDateTime,  java.time.LocalDate, java.time.LocalTime, java.time.format.DateTimeFormatter, java.time.Period**
 - imutáveis
 	- conseguimos obter versões modificados c/ o retorno dos métodos
@@ -1034,6 +1036,7 @@ int  b, c; int a = b = c = 100; //compila e roda pois as variaveis foram declara
 	- Quando o *escopo* da ref termina 
 	- *elegível, passível* p/ o **Garbage Collector**
 	- ilhas de isolamento : variáveis de instancia do tipo objeto referenciando outros objetos dentro da ilha de isolamento 
+	- `System.gc();` sugere a JVM o GC
 - *qtd* de objetos criados: Veja os *literais String* q contam como objeto		
 #### Develop code that uses **wrapper** classes such as Boolean, Double, and Integer  
 - classes que representam primitivos
@@ -1128,6 +1131,7 @@ int  b, c; int a = b = c = 100; //compila e roda pois as variaveis foram declara
 			- ou vc passa o tamanho ou passa os valores. `int y[] = new int[3] {0,3,5}; //não compila`
 			- pode inicializar c/ vlr nulos `Car[] cars = new Car[]{new Car(), null, new Car()};` 
 			- declarar e inicializar *somente na mesma linha* `int[] numbers = {1,2,5,7,5};`
+			- `String[] sa = { };` array de tamanho 0
 			- é possível atribuir o array de primitivos ou de objetos a uma ref do tipo Object mas é necessário um cast p/ aproveitar essa atribuição 
 				- `Object obj = new int[] { 1, 2, 3 }; int[] someArray = (int[])obj;`
 			- não é possível atribuir a uma ref array de Object um array de primitivos
@@ -1207,7 +1211,8 @@ int[] [][]hipercube[];  // Um array de quatro dimensões.
 			void m(Integer a, Integer b){}
 			m(1,2); // chama o método c/ double
 			```
-			- *polimorfismo* passar qq objeto que *seja um* objeto do tipo do parametro					
+			- *polimorfismo* passar qq objeto que *seja um* objeto do tipo do parametro
+	- tipo do retorno no caso de primitvo
 - modificadores opcionais
 	- *final* o método não pode ser sobreescrito nas classes filhas
 	- *abstract* obriga as classes filhas a implmentarem o método. Não pode ter corpo
@@ -1217,6 +1222,22 @@ int[] [][]hipercube[];  // Um array de quatro dimensões.
 - métodos *não abstratos* devem possuir *corpo*	
 - métodos *non-static* são chamados dentro de um método non-static apenas c/ o nome (o this. é implicito) ou com uma referência. 
 	- Nunca chamar diretamente c/ o nome da classe `StaticTest.m1();`
+- argumentos recebidos tem que ser diferentes no tipo ou quantidade
+- tipo de retorno e visibilidade não são considerados p/ determinar sobrecarga de métodos
+- em tempo de compilação é decidido o método q vai ser chamado
+- sobrecarga com polimorfismo (tipos parentes), o compilador invoca o mais especifico
+- forçar a invocação do mais genérico, *casting* `new Test().method((Object) "random");`
+- troca de ordem dos tipos dos parametros é sobrecarga mas pode não compilar qdo um tipo é mais especifico q o outro e na invocação é passado valores ambiguos
+```java
+void method(int i, double x) {} // ok
+void method(double x, int i) {} // ok
+new Test().method(2.0, 3); // double, int
+new Test().method(2, 3.0); // int, double
+new Test().method(2, 3); // compile error
+void method(Object o, String s) {System.out.println("object");}
+void method(String s, Object o) {System.out.println("string");}
+new Xpto().method("string", "string"); // compile error
+```
 #### Apply the **static** keyword to methods and fields  
 - pertence a classe e não a cada objeto
 - não precisa ter um objeto instanciado da classe. Apenas seu nome
@@ -1236,22 +1257,7 @@ public class Car{
 - não chamar outros métodos c/ this.method() dentro de um método static
 - os métodos podem ser chamados sem o nome da classe ou com o nome da classe dentro de outro método
 #### Create and **overload constructors**; differentiate between **default** and **user defined constructors**
-- argumentos recebidos tem que ser diferentes no tipo ou quantidade
-- tipo de retorno e visibilidade não são considerados p/ determinar sobrecarga de métodos
-- em tempo de compilação é decidido o método q vai ser chamado
-- sobrecarga com polimorfismo (tipos parentes), o compilador invoca o mais especifico
-- forçar a invocação do mais genérico, *casting* `new Test().method((Object) "random");`
-- troca de ordem dos tipos dos parametros é sobrecarga mas pode não compilar qdo um tipo é mais especifico q o outro e na invocação é passado valores ambiguos
-```java
-void method(int i, double x) {} // ok
-void method(double x, int i) {} // ok
-new Test().method(2.0, 3); // double, int
-new Test().method(2, 3.0); // int, double
-new Test().method(2, 3); // compile error
-void method(Object o, String s) {System.out.println("object");}
-void method(String s, Object o) {System.out.println("string");}
-new Xpto().method("string", "string"); // compile error
-```
+- construtor não pode ser final, static ou abstract
 - construtor implicito dado pelo compilador, não recebe argumentos, tem a *visibilidade da classe* e tem a chamada a **super()** `class A { /* implicito*/ A() {super();} /*default*/}` 
 - caso vc adicione um construtor qq, o construtor padrão *deixa de existir* e as invocações a ele passam a dar erros de compilação. 
 	- construtor padrão é o construtor implicito dado pela JVM
@@ -1412,6 +1418,7 @@ public class Student{
 	- finally jamais devera vir antes do catch: a ordem tem q ser try + catch ou try + finally ou try + catch + finally
 	- erros ou exceptions dentro de blocos catch ou finally podem ocorrer e se não forem tratados, a JVM vão trata-los como erros/ exceptions normalmente e parar a execução do programa.
 	- mesmo c/ return antecipado, o bloco finally é executado
+		- o return do finally sobrepõe return de try ou catch. Não há porblema de unreached statement
 	- o bloco finally não é executado se existe `System.exit(0);` dentro de um bloco try com finally
 #### Describe the **advantages** of Exception handling 
 #### Create and invoke a **method that throws an exception**
