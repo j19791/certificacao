@@ -738,7 +738,7 @@ public class Network {
 	- substring só pode ser chamado no final de chamadas encadeadas
 ```java
 StringBuffer sb = new StringBuffer();
-sb.append("Caelum - Inovação");
+sb.append("Caelum - Inovação"); //sempre insere no fim - não tem parametro além da string
 sb.insert(9, "Ensino e "); // inserir coisas no meio com indice:  Caelum - Ensino e Inovação. Insere no fim quando é passado pro indice o tamanho do StringBuilder  
 sb.delete(6, 15); //indice inicial e final - Caelum e Inovação
 new StringBuffer("guilherme").reverse(); //emrehliug		
@@ -1055,9 +1055,12 @@ int  b, c; int a = b = c = 100; //compila e roda pois as variaveis foram declara
  	Integer i = 1234;
  	new Double(null);//NPexception
  	new Double(); //não compila. Não existe construtor de wrappers s/ argumentos
+	
+	Short _s = new Short(1); //não compila. 1 é int. O argumento deverá ser short ou um casting ´p/ short
  	```
 	
 	- *NumberFormatException*
+		`int i = Integer.parseInt("12.3");` 12.3 não trunca p/ 12
 	- *Boolean*
 	
 	```java 
