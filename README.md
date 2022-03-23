@@ -778,7 +778,7 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 	substring(beginIndex, endIndex); /* inclui o caractere da posição inicial mas não o da final */ subString(beginIndex); /*a partir do indice passado até o fim */
 	"Java".substring(0, 4); /*Java*/ "Java".substring(0, 3)); /*Jav*/; //limite do endIndex é 4 nesse caso pois p/ descobrir o endIndex é 4-1 = 3 entao o substring vai de 0 a 3. Se beginIndex e endIndex for igual, nao retorna nada e nao da erro.
 	replace(oldChar, newChar); /*substitui as ocorrências de um char por outro*/ replace(CharSequence target,CharSequence replacement); //atenção: não existe replace sobrecarregado c/ (String, char) ou (char, String). É case sensitive
-	trim() /*limpa os caracteres brancos das duas pontas do String*/
+	trim() /*limpa os caracteres brancos das duas pontas do String. SB não tem trim() */
 	"Certification".compareTo("certification"); /* -32 lexicográfico: minusculas são maiores que maiusculas. C < c retorna valor -. Contrário retornaria + */
 ```
 - **charAt()**
