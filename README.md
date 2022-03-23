@@ -201,7 +201,7 @@ int _a = a;
 	- só pode incrementar variáveis. Não usar incremento/ decremento com métodos
 - **operações/atribuições de uma só vez**
 	```java
-	short b2 = 3; b2 += 4; // compila, dá um desconto
+	short b2 = 3; b2 += 4; // compila, dá um desconto pois internamente existe um cast: b2 = (short) (b2 + 4)
 	b2 += 4003245; // -76: compila também, mas estoura o byte
 	```
 - **atribuição c/ o próprio incremento** a execução é do primeiro para o último elemento das somas, temos as reduções:
@@ -536,7 +536,10 @@ System.out.println(new C().i); //nao compila: i é private em B e o i de B escon
 - **reescrita, sobrescrita** : subclasse redefine o comportamento do método herdado da superclasse
 	- **polimorfismo** : 
 		- *binding* : (lookup)
-			- 1) em *tempo de compilação*, verificar se o pai e os filhos possuem métodos sobreescritos. Verificação da existência do método. Podem estar escondidos mas compila e executa.
+			- 1) em *tempo de compilação*, verificar se o pai e o filho possuem métodos polimorficos. Verificação da existência do método. 
+				- Podem estar escondidos mas compila e executa.
+				- se o método sobreescrito possui throws de checked exception, a chamada deverá tratar esse método com try/catch ou um novo throws
+					- com casting, avisa p/ o compilador especificamente o método do obj referenciado, que sobreescreve, e se não tem throws de checked exceptions, a chamada não precisa de tratamento
 			- 2) em *tempo de execução*, o método invocado é o do objeto, não o da referencia *virtual method invocation*. Chama o métood da ref apenas quando este é *hidden*			 	
 			![Polimorfismo](/imagens/polimorfismo.jpg)
 			- é o inverso dos métodos *static*					
@@ -613,14 +616,26 @@ String s = (String) o;
 - classe Car não implementa Runnable mas existe a possibilidade de algum tipo Car implementar a interface Runnable ?? Compila mas em tempo de execução pode dar erro se não tem o RunnableCar
 - se Car fosse *final*, e não implemente Runnable. Nenhuma filha de Car poderá implementar Runnable e o código não compila
 - **instanceof** um obj pode ser uma instância dos seus pais não importa se são classes ou interfaces
+	- não usar com primitivos
+	- ref instanceof nomedaClasse
 ```java
 Object c = new Car();
 boolean b1 = c instanceof Car; // true
 boolean b2 = c instanceof Motorcycle; // false
 String s = "a"; boolean b = s instanceof java.util.List; // obviamente incompatível : compile error
 ```
+- resolve *ambiguidade*
+```java
+interface T1{    int VALUE = 1;     }
+interface T2{    int VALUE = 2;     }
+class TestClass implements T1, T2{}  	
+...
+TestClass tc = new TestClass(); 
+System.out.println(tc.VALUE); //erro de compilação
+System.out.println(( ( T1) tc).VALUE); //1
+```
 
-#### Use **super** and **this** to access **objects** and **constructors**
+#### Use super and this to access objects and constructors
 - construtor pode ser *sobrecarregado* e ter qualquer *visibilidade*
 - **this** isolado representa o objeto instanciado
 ```java
@@ -916,8 +931,10 @@ while (iterator.hasNext()) { //retorna booleano indicando se ainda há elementos
 #### Write a simple **Lambda** expression that consumes a **Lambda Predicate** expression
 - trecho de código que pode ser passado como *parametro* para um método ou armazenado numa *variável*
 - *interface funcional* apenas com 1 método abstract mas pode ter métodos static ou default
+	- ums classe que implementa interface funcional continua sendo classe e não pode ser usada com lambda
 - *Predicate* interface q recebe um *objeto* e retorna um *boolean*
-- `import java.util.function.*;` 
+	- é generificada. É necessário sempre passar o <Tipo>
+	- `import java.util.function.*;` 
 ```java
 Predicate<Person> matcher = new Predicate<Person>() { //classe anonima
 	@Override
@@ -1206,6 +1223,7 @@ int[] [][]hipercube[];  // Um array de quatro dimensões.
 		- inicialização dos parametros é feito por quem invoca o método
 		- não tem valores default, todos são obrigatórios
 		- modificador *final* o parametro não pode ter seu valor modificado depois da chamada do método
+		- nenhum método pode receber parametro void ou método com retorno void
 		- *promoção*
 			- *primitivos* o método espera double mas se passar qq outro tipo mais restritivo, este será promovido automaticamente p/ double
 				- promoção tem mais prioridade do que boxing/unboxing
@@ -1214,8 +1232,7 @@ int[] [][]hipercube[];  // Um array de quatro dimensões.
 			void m(Integer a, Integer b){}
 			m(1,2); // chama o método c/ double
 			```
-			- *polimorfismo* passar qq objeto que *seja um* objeto do tipo do parametro
-	- tipo do retorno no caso de primitvo
+			- *polimorfismo* passar qq objeto que *seja um* objeto do tipo do parametro	
 - modificadores opcionais
 	- *final* o método não pode ser sobreescrito nas classes filhas
 	- *abstract* obriga as classes filhas a implmentarem o método. Não pode ter corpo
@@ -1415,7 +1432,8 @@ public class Student{
 	- se ocorrer um erro dentro do bloco catch, o erro é jogado p/ fora do bloco, finally (se houver) é executado,  e o bloco pai que deverá ou não tratar esse erro.
 	- `catch(MyException me){System.out.println(me); }` imprime apenas o nome da exception e a mensagem (se houver)
 		- `catch(MyException me){me.printStackTrace(); }` ira retornar o nome da exception, uma mensagem (se houver) e também todos os métodos chamados com as linhas de código respectivas
-		- o stack trace é impresso se não foi possível capturar e tratar o erro c/ o catch ou não teve nenhum tratamento de erro 
+		- o stack trace é impresso se não foi possível capturar e tratar o erro c/ o catch ou não teve nenhum tratamento de erro
+	- mesmo dentro do catch ou finally, também deverá ser tratado dentro de sub-blocos try/catch métodos que lançam exception checked. Ou lançar na assinatura do método
 - **finally** seja no sucesso ou no fracasso, temos a obrigação de cumprir certas tarefas. Conexão deveria ser fechada, por exemplo
 	- pode usar finally s/ o catch
 	- finally jamais devera vir antes do catch: a ordem tem q ser try + catch ou try + finally ou try + catch + finally
