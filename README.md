@@ -127,7 +127,8 @@ int _a = a;
 #### Use Java **operators**; use **parentheses** to override operator **precedence**
 - **atribuição** tipos compatíves ou o valor deverá ser = ou menos abrangente. tipos primitivos: copiamos o valor
 	-  float é menos abrangente que double `double d = 20.0f;`
-	- double não cabe em float `float f = 40.0;`
+	- double não cabe em float `float f = 40.0; //não compila`
+	- `float f = 5.5f;` deverá ser atribuido dessa forma
 	- inteiros (long) cabe em decimal `float h = 10l;`
 	- negativação de variaveis
 	```java
@@ -176,6 +177,10 @@ int _a = a;
 	- referencias e boolean somente com *== ou !=*
 	- pode comparar *char* com *numérico* `System.out.println('a' > 1);//true`
 	- valores numéricos não considera seu tipo
+		- tipos primitivos diferentes são promovidos na comparação
+		```
+		int i = 5; float f = 5.5f;  if (i == f) c++ //i é promovido p/ float
+		```
 	- não é possível comparar primitivo c/ array	
 - **lógicos**
 	- *& |* a segunda parte sempre é avaliada, podendo incrementar variaveis e tbm chamar métodos			
