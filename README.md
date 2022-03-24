@@ -758,7 +758,8 @@ public class Network {
 	- substring só pode ser chamado no final de chamadas encadeadas
 ```java
 StringBuffer sb = new StringBuffer();
-sb.append("Caelum - Inovação"); //sempre insere no fim - não tem parametro além da string
+sb.append("Caelum - Inovação"); //sempre insere no fim
+sb.append(" no mercado de trabalho ", 0, 11); //sempre insere no fim. Vai inserir apenas "Caelum - Inovação no mercado"
 sb.insert(9, "Ensino e "); // inserir coisas no meio com indice:  Caelum - Ensino e Inovação. Insere no fim quando é passado pro indice o tamanho do StringBuilder  
 sb.delete(6, 15); //indice inicial e final - Caelum e Inovação
 new StringBuffer("guilherme").reverse(); //emrehliug		
@@ -1023,10 +1024,11 @@ int  b, c; int a = b = c = 100; //compila e roda pois as variaveis foram declara
 	- **não numerico**
 		- *boolean*
 - **literais** valores das variáveis diretamente no código fonte
-	- *underlines* só podem ser colocados c/ valores numéricos (se hexa A a F) em ambos os lados do _ `int a = 123_456_789;` A mesma regra vale p/ pontos flutuantes
+	- *underlines* ou *underscores* só podem ser colocados c/ valores numéricos (se hexa A a F) em ambos os lados do _ `int a = 123_456_789;` A mesma regra vale p/ pontos flutuantes
 		- `int b1 = 0b_1; \\não compila`
 		- não pode colocar nos pontos das casas decimais
-		- serve apenas p/ melhorar leitura
+		- serve apenas p/ melhorar leitura. São ignorados pelo compilador. Cuidado com cases q podem estar visualmente diferentes mas são iguais pro JVM
+		- `int x = 1____3;` compila: podemos colocar multiplos underscores
 	- *null, false, true* são literais e tbm palavras chaves
 	- `int a = -0;` é permitido
 - **identificadores** palavras p/ nomear variaveis, métodos, construtores, classes, interfaces
@@ -1059,7 +1061,8 @@ int  b, c; int a = b = c = 100; //compila e roda pois as variaveis foram declara
 	- *elegível, passível* p/ o **Garbage Collector**
 	- ilhas de isolamento : variáveis de instancia do tipo objeto referenciando outros objetos dentro da ilha de isolamento 
 	- `System.gc();` sugere a JVM o GC
-- *qtd* de objetos criados: Veja os *literais String* q contam como objeto		
+- *qtd* de objetos criados: Veja os *literais String* q contam como objeto
+- Objetos retornados de métodos não são elegiveis p/ GC depois do fim de execução desses métodos. O objeto retornado é referenciado agora por que chamou esse método	
 #### Develop code that uses **wrapper** classes such as Boolean, Double, and Integer  
 - classes que representam primitivos
 - são filhos de *Number*
@@ -1226,6 +1229,14 @@ int[] [][]hipercube[];  // Um array de quatro dimensões.
 	- *nome* seguindo a regra dos *identificadores*
 	- *parametros* (pode ser vazio) com tipo e nome
 		- inicialização dos parametros é feito por quem invoca o método
+		- métodos sobrecarregados que recebem parametro do tipo Object: qdo é passado null na chamada, sempre chama o método c/ o tipo mais especifico
+		```java
+		public static void method(Object o){System.out.println("Object Version");   }
+   		public static void method(java.io.FileNotFoundException s){System.out.println("java.io.FileNotFoundException Version");}
+   		public static void method(java.io.IOException s){System.out.println("IOException Version");}
+   		...      		
+      		method(null); //vai ser chamado o FileNotFoundException que é o mais específico
+		```
 		- não tem valores default, todos são obrigatórios
 		- modificador *final* o parametro não pode ter seu valor modificado depois da chamada do método
 		- nenhum método pode receber parametro void ou método com retorno void
