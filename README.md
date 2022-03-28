@@ -559,8 +559,7 @@ System.out.println(new C().i); //nao compila: i é private em B e o i de B escon
 			
 	- mesmo *nome*
 	- *parametros* iguais em tipo e ordem
-	- *retorno* do método igual ou mais específico (covariante) apenas p/ Objetos
-		- Não vale p/ primitivos
+	- *retorno* do método igual para primitivos e Objetos ou mais específico (covariante) apenas p/ Objetos		
 		- Não vale quando um método ja foi declarado usando void
 		
 ```java
@@ -767,6 +766,12 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 - *substring* não altera o valor do seu StringBuilder ou StringBuffer , mas retorna a String que você deseja.
 - *indexOf* e *lastIndexOf* retornam -1 qdo não encontra
 - não compila quando tenta comparar String e StringBuilder usando == ou equals
+- setLength() altera o tamanho
+```java
+StringBuilder sb = new StringBuilder("12345678");       
+sb.setLength(5); //tamanho = 5 (12345)
+sb.setLength(10); //tamanho 10 (12345     ) c/ mais 5 espaços em branco
+```
 #### Create and manipulate **Strings**
 - *imutáveis* : o valor da String não muda quando usada um método seu. Só muda quando é feita uma re-atribuição p/ a mesma variavel.
 - é *final* (não pode ter subclasses)
@@ -1225,6 +1230,7 @@ int[] [][]hipercube[];  // Um array de quatro dimensões.
 	- não pode ter nenhum código depois do *return*
 	- com tipo de retorno definido, deverá retornar algo ou jogar exception em cada um dos caminhos possíveis do método `throw new RuntimeException()` Cobrir tudo
 		- `return null` apenas quando o tipo de retorno é um objeto. Não compila como retorno com tipos primitivos
+	- o retorno do método sempre deverá estar ao lado do nome
 - **assinatura** identificação única dos métodos: não pode ter mais de um método c/ mesmo nome e lista de parametros
 	- *nome* seguindo a regra dos *identificadores*
 	- *parametros* (pode ser vazio) com tipo e nome
@@ -1455,7 +1461,7 @@ public class Student{
 	- finally jamais devera vir antes do catch: a ordem tem q ser try + catch ou try + finally ou try + catch + finally
 	- erros ou exceptions dentro de blocos catch ou finally podem ocorrer e se não forem tratados, a JVM vão trata-los como erros/ exceptions normalmente e parar a execução do programa.
 	- mesmo c/ return antecipado, o bloco finally é executado
-		- o return do finally sobrepõe return de try ou catch. Não há porblema de unreached statement
+		- o return do finally sobrepõe return de try ou catch. Não há problema de unreachable statement
 	- o bloco finally não é executado se existe `System.exit(0);` dentro de um bloco try com finally
 #### Describe the **advantages** of Exception handling 
 #### Create and invoke a **method that throws an exception**
@@ -1484,7 +1490,7 @@ public class Student{
 - **NumberFormatException** não é possível *parsear* texto em números
 - **IllegalArgumentException** o método deve informar a quem o invocou que os valores passados nos seus parametros não são validos
 - **IllegalStateException** estado atual do obj não permite q ele seja executado
-- **ExceptionInInitializerError** não consegue carregar na memória todas as classes referenciadas pela aplicação qdo a JVM é disparada
+- **ExceptionInInitializerError** quando uma exception non-checked é lançada dentro de um bloco de inicialização. Sobrepõe todas as outras exceptions
 - **StackOverflowError** métodos invocados são empilhados na *Pilha de Execução*. A pilha tem um limite e pode estourar
 - **NoClassDefFoundError** todas as classes referenciadas devem estar no *classpath*
 - **OutOfMemoryError** qdo o *Garbage Collector* não consegue liberar da memória os objetos que não são mais utilizados ou loop infinito dentro do main
