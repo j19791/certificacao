@@ -241,8 +241,9 @@ int _a = a;
 	- char e ou numérico + String : primeiro a soma dos números (inclusive char) e depois concatena c/ String: 'b'+63+"a" =  "161a"
 - **precedencia**
 	- pre incremento/decremento
-	- mult/ div/ % 
-	- soma/ sub
+	- potência e raiz quadrada
+	- mult/ div/ % (na ordem que aparecem, da esquerda p/ direita)
+	- soma/ sub (na ordem que aparecem, da esquerda p/ direita)
 	- && || (lógicos)
 	- pós incremento/decremento
 	- = 
