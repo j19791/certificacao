@@ -496,7 +496,7 @@ class Y extends X { public void method2(int x){this.x = x; //erro: nao enexerga 
 	- não pode sobreescrer um método *static* c/ um método *non-static* e vice-versa
 	- **abstract** não compila em métodos *static* pois não há herança
 	- construtores e blocos static não são herdados 
-- métodos *private* não são sobreescritos
+- métodos *private* não são sobreescritos mas são verificados em tempo de compilação
 - **binding do polimorfismo**  o método chamado é do pai ou da filha ?
 	- *método de instancia*  tempo de execução. 
 	- *método static*  tempo de compilação. Ignora o tipo de objeto referenciado. Utiliza o método da ref. Não há polimorfismo com métodos static
@@ -1281,6 +1281,36 @@ void method(Object o, String s) {System.out.println("object");}
 void method(String s, Object o) {System.out.println("string");}
 new Xpto().method("string", "string"); // compile error
 ```
+- método com parâmetros *varargs*
+	- compila e roda `metodo(String[]... args)` varargs de arrays
+	- Se existe uma sobrecarga do método s/ parametros, invocamos sem argumentos, o método chamado é o s/ argumentos	
+	- prioridade na chamada dos métodos sobrecarregados
+		- 1. promoção
+		- 2. box/unboxing
+		- 3. varargs
+	```java
+	void probe(int... x) { System.out.println("In ..."); }  //1    
+    	void probe(Integer x) { System.out.println("In Integer"); } //2    
+    	void probe(long x) { System.out.println("In long"); } //3     
+    	void probe(Long x) { System.out.println("In LONG"); } //4
+	...
+	Integer a = 4; new TestClass().probe(a); //chama o método 2
+        int b = 4; new TestClass().probe(b); //chama o método 3 (promoção tem prioridade em relação a unbox/box e varargs
+	```
+	- método c/ parametros não varargs e com varargs. Varargs sempre deverá ser o último
+	- um parametro array pode receber um varargs
+```java
+public void go(int x, String... y) {
+ System.out.print(y[y.length - 1] + " ");
+  }
+//referenciando
+new Main().go( 2, "hi", "world");
+```
+ 
+```java
+void yingyang(Integer[] ints) {
+void yingyang(Integer... ints) { //nao compila
+```
 #### Apply the **static** keyword to methods and fields  
 - pertence a classe e não a cada objeto
 - não precisa ter um objeto instanciado da classe. Apenas seu nome
@@ -1299,7 +1329,7 @@ public class Car{
 - a inicialização de variaveis mebro static pode chamar metodos static `static int idade = grabAge(); static int grabAge() { return 18;}`			
 - não chamar outros métodos c/ this.method() dentro de um método static
 - os métodos podem ser chamados sem o nome da classe ou com o nome da classe dentro de outro método
-#### Create and **overload constructors**; differentiate between **default** and **user defined constructors**
+#### Create and overload constructors; differentiate between default and user defined constructors
 - construtor não pode ser final, static ou abstract
 - construtor implicito dado pelo compilador, não recebe argumentos, tem a *visibilidade da classe* e tem a chamada a **super()** `class A { /* implicito*/ A() {super();} /*default*/}` 
 - caso vc adicione um construtor qq, o construtor padrão *deixa de existir* e as invocações a ele passam a dar erros de compilação. 
@@ -1338,24 +1368,7 @@ A a = new B(); //new B() chama super() que é a criação do pai. Durante a cria
 	- pode passar instruções/métodos *static* como argumento `Test() {this(value());} private static String value() {return "value...";} Test(String s) {System.out.println(s);}`
 		- não compila se passar métodos não static. O obj não terminou de ser construido ainda durante a execução do construtor
 - *loops* não compilam
-- método com parâmetros *varargs*
-	- compila e roda `metodo(String[]... args)` varargs de arrays
-	- Se existe uma sobrecarga do método s/ parametros, invocamos sem argumentos, o método chamado é o s/ argumentos	
-	- métodos sobrecarregados c/ varargs são invocados por último. Dado prioridade aos métodos assinados c/ primitivo ou objeto.
-	- método c/ parametros não varargs e com varargs. Varargs sempre deverá ser o último
-	- um parametro array pode receber um varargs
-```java
-public void go(int x, String... y) {
- System.out.print(y[y.length - 1] + " ");
-  }
-//referenciando
-new Main().go( 2, "hi", "world");
-```
- 
-```java
-void yingyang(Integer[] ints) {
-void yingyang(Integer... ints) { //nao compila
-```
+
 	
 #### Apply access modifiers
 - *visibilidade*
@@ -1464,6 +1477,7 @@ public class Student{
 	- mesmo c/ return antecipado, o bloco finally é executado
 		- o return do finally sobrepõe return de try ou catch. Não há problema de unreachable statement
 	- o bloco finally não é executado se existe `System.exit(0);` dentro de um bloco try com finally
+	- a exception lançada dentro do bloco finally é a que vai ser lançada pelo método mesmo ocorrendo exceptions dentro de try (qdo não tratada) ou catch (serão ignoradas)
 #### Describe the **advantages** of Exception handling 
 #### Create and invoke a **method that throws an exception**
 - um método eventualmente  não tem condições de tratar um determinado erro de execução
@@ -1474,6 +1488,7 @@ public class Student{
 - se é *checked exception* , avisar na assinatura do seu método com o *throws*
 	- se outros métodos chamam esse método, esses métodos tbm deverão ter *throws*, incluse o main ou usar try-catch
 - apenas instanciar a exception c/ *new* não vai joga-la
+- `throw null` ira compilar mas gerar uma  NullPointerException
 - criando próprias exceptions `class FundoInsuficienteException extends Exception{}` p/ serem lançadas
 - você pode utilizar o throws de uma Exception mesmo que o bloco do código jamais lance essa exception
 	```java
