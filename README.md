@@ -149,6 +149,7 @@ int _a = a;
 	int k = 1;
 	k += (k = 4) * (k + 2);// k = 1 + (4) * (4 + 2);	
 	```
+	- int, long, float ou double podem receber int sem problemas
 	- **referência**
 		- `List<String> names = new ArrayList<>();` <> operador diamante
 		- copiamos o valor da referência (o objeto é o mesmo)
@@ -181,7 +182,8 @@ int _a = a;
 		```
 		int i = 5; float f = 5.5f;  if (i == f) c++ //i é promovido p/ float
 		```
-	- não é possível comparar primitivo c/ array	
+	- não é possível comparar primitivo c/ array
+	- == tem precedencia menor que os outros operadores de comparação	
 - **lógicos**
 	- *& |* a segunda parte sempre é avaliada, podendo incrementar variaveis e tbm chamar métodos			
 	- *curto circuito && ||*  Quando já for possível determinar a resposta final olhando apenas para a primeira parte da expressão, a segunda não é avaliada
@@ -570,13 +572,12 @@ class Vert extends Blip {
 protected long blipvert(int x) { return 0; } } //long é diferente de int. Não compila
 ```		
 	
-	- *visibilidade* igual ou maior q a mãe
-	- número de *exceptions* checked lançadas *throws* devem ser o mesmo ou menor (ou nnehuma). Elas devem ser do mesmo tipo ou mais específico.
-		- *RuntimeException* e suas filhas que tbm são unchecked podem ser adicionadas s/ a restrição
-	- as exceptions lançadas pelo throws tbm são herdadas pelos métodos das classes filhas quando há polimorfismo apenas. Se elas são checked, qdo ocorrer polimorfismo, as invocações deverão estar tratadas c/ try/catch ou lançar com throws
-	- método da mãe não pode ser *final*
-	- *interface* : os métodos são implicitamente *public*
-	
+- *visibilidade* igual ou maior q a mãe
+- número de *exceptions* checked lançadas *throws* devem ser o mesmo ou menor (ou nnehuma). Elas devem ser do mesmo tipo ou mais específico.
+	- *RuntimeException* e suas filhas que tbm são unchecked podem ser adicionadas s/ a restrição
+- as exceptions lançadas pelo throws tbm são herdadas pelos métodos das classes filhas quando há polimorfismo apenas. Se elas são checked, qdo ocorrer polimorfismo, as invocações deverão estar tratadas c/ try/catch ou lançar com throws
+- método da mãe não pode ser *final*
+- *interface* : os métodos são implicitamente *public*
 	
 ```java
 	interface A {void a();//public}
@@ -691,7 +692,13 @@ public class Network {
 			new A().i = 5;
 			new Test().i = 10;
 		}}			
-	```			
+	```
+- construtor pai pode lançar exceptions mas os construtores dos seus filhos deverão lançar exceptions de tipo igual, maior ou outras exceptions
+	- Inverso dos métodos
+```java
+class A{public A() throws IOException{ }}    
+class B extends A{ public B() throws Exception{ } //pois super() precisa ser tratado
+```	
 #### Use **abstract classes** and **interfaces**
 - *interfaces* não podem ter métodos *static*
 	- a partir do java 8 pode ter métodos static com bloco com implementação;
@@ -943,7 +950,7 @@ while (iterator.hasNext()) { //retorna booleano indicando se ainda há elementos
 #### Write a simple **Lambda** expression that consumes a **Lambda Predicate** expression
 - trecho de código que pode ser passado como *parametro* para um método ou armazenado numa *variável*
 - *interface funcional* apenas com 1 método abstract mas pode ter métodos static ou default
-	- ums classe que implementa interface funcional continua sendo classe e não pode ser usada com lambda
+	- uma classe que implementa interface funcional continua sendo classe e não pode ser usada com lambda
 - *Predicate* interface q recebe um *objeto* e retorna um *boolean*
 	- é generificada. É necessário sempre passar o <Tipo>
 	- `import java.util.function.*;` 
@@ -965,6 +972,8 @@ class PersonFilter{
 
 List<Person> adults = new PersonFilter().filter(persons, matcher);
 ```
+- lambda + Predicate: precisa de 1 parametro e o código deverá ser uma expressão que retorna um boolean
+	
 - ( parameters ) -> { code }
 ```java
 Predicate<Person> matcher = (Person p) -> {return p.getAge() >= 18;};
