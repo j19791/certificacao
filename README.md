@@ -1021,7 +1021,7 @@ int  b, c; int a = b = c = 100; //compila e roda pois as variaveis foram declara
 	- char = vazio = equivale a 0
 	- String e Referencias = null
 - criação de *array* a inicialização é *implicita* `int numbers[] = new int[10]; numbers[0]; //0`
-- variável membro **final** deverá ser implicitamente inicializada na sua declaração, dentro dos blocos de instancia ou no construtor
+- variável membro **final** deverá ser implicitamente inicializada na sua declaração, dentro dos blocos de instancia ou no construtor. A variável final não inicializa com valor default
 - **tipos primitivos**
 	- **numéricos** todo número simples (sem casa decimal) é int
 		- **inteiro** podem ser +/-
