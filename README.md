@@ -248,7 +248,7 @@ int _a = a;
 	- soma/ sub (na ordem que aparecem, da esquerda p/ direita)
 	- && || (lógicos)
 	- pós incremento/decremento
-	- = 
+	- = é menor que os de comparação
 - **casting de primitivos**
 	- atribuição somente se *compatível* um tipo cabe no outro: 			
 	**byte -> short -> int -> long -> float -> double**  *autopromoção: qdo o tipo vai da direita p/ esquerda*			
@@ -334,6 +334,12 @@ int _a = a;
 #### Use a switch statement 	 
 - expressões c/ literais no case `case 5 + 5 : ` são validas mas  `case > 10`não são validadas. Não pode duplicar valores dos cases, mesmo usando expressões.
 - se o default aperecer no meio de cases, não é condição de sair do switch. Se não tiver break, todos os cases abaixo do default serão testados se tbm não possuirem break;
+- o switch deverá obrigatoriamente ter um corpo mesmo sem cases ou default
+```java
+switch(8); //não compila
+ int x = 0;  switch(x){ } //compila  e roda
+```
+
 ```java
 int option = 4;		
 final int c1 = 5;
@@ -706,6 +712,7 @@ class B extends A{ public B() throws Exception{ } //pois super() precisa ser tra
 	- não pode ter métodos default static pois um método default sempre é da instância
 	- uma interface  pode redeclarar o método como abstract qdo extende outra interface c/ método default
 		- a classe que implementa essa interface com método abstract deverá re-implementar esse método abstract. O método default não é mais chamado nesse caso.
+	- classe não compila qdo realiza implementação multipla de interfaces com métodos default com a mesma assinatura
 - interfaces não herda de Object
 - uma classe abstrata pode não ter nenhum método abstrato
 - se a classe possui pelo menos 1 método abastrato, a classe precisa ser abstrata
@@ -1035,7 +1042,8 @@ int  b, c; int a = b = c = 100; //compila e roda pois as variaveis foram declara
 			- *float* F f 
 				- armazena de 6-7 digitos de precisão. Acima disso, existe perda de precisão
 			- *double* *d* *D* para explicitar na inicialização 
-			- *notação cientifica* o literal default é double `double d = 3.1E2 /*310.0*/; float f = 1E4F /* 10000.0f*/;`				
+			- *notação cientifica* o literal default é double `double d = 3.1E2 /*310.0*/; float f = 1E4F /* 10000.0f*/;`
+			- F f D d usado apenas para decimais. L l pode ser usado p/ qq base
 	- **não numerico**
 		- *boolean*
 - **literais** valores das variáveis diretamente no código fonte
@@ -1490,6 +1498,9 @@ public class Student{
 #### Describe the **advantages** of Exception handling 
 #### Create and invoke a **method that throws an exception**
 - um método eventualmente  não tem condições de tratar um determinado erro de execução
+```java
+public static void methodX() throws Exception {       throw new AssertionError();    }  //o throws pode ser lançado mesmo de forma desnecessária
+```
 - **throws** no caso de *checked exception* deverá passar o erro p/ o próximo método da pilha (inclusive o main) mas é preciso deixar explito/avisado
 - qdo poder ocorrer erro na inicialização de variaveis membros, avisar c/ throws na assinatura do construtor `class FileAccess {private InputStream is = new FileInputStream("input.txt");FileAccess() throws IOException{}}`
 - **throw new RuntimeException()** ao indentificar uma situação errada, criar um erro de execução e lançar p/ quem o chamou
