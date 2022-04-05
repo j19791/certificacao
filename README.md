@@ -35,6 +35,7 @@
 		- não pode ter novos valores atribuidos qdo a subclasse recebe implicitamente do pai a constante. Recebe também como final 
 #### Define the **structure** of a Java **class**
 - **default package** : qdo não declara explitamente um pacote. Não podem ser importadas para uso em outros pacotes.
+	- não se podem criar pacotes que começam com java.* ou javax.* que são reservados
 - **membros de classe**: variaveis de instancia, construtores e métodos. Podemos ter membros de tipos diferentes com o mesmo nome.
 - **assinatura de um método**: nome do método e os tipos de parametros. Deve ter retorno ou void. Pode ter o mesmo nome de um construtor.
 - **construtor**: a classe pode ter 0 a n construtores. Não devem ter retorno. Pode ter um *return* mas vazio
@@ -840,7 +841,12 @@ sb.setLength(10); //tamanho 10 (12345     ) c/ mais 5 espaços em branco
 	- Instant.now()
 - parse(String, formatador)
 	- formatador:
-		- DateTimeFormatter.ISO_LOCAL_DATE_TIME
+		- DateTimeFormatter
+			- ISO_LOCAL_DATE_TIME ``
+			- ISO_DATE_TIME `2015-02-15T21:32:51.346`
+			- ISO_WEEK_DATE `2015-W07-7`
+			- ISO_ORDINAL_DATE `2015-046`
+			- BASIC_ISO_DATE   `20150215`
 		- DateTimeFormatter.ofPattern("yyyy MM dd")	
 		- String aceitável p/ parse "2011-12-03T00:00:00"
 - of
@@ -1523,8 +1529,8 @@ public static void methodX() throws Exception {       throw new AssertionError()
 	- **StringIndexOutOfBoundsException** acessar uma posição q não existe na *String*
 - **NullPointerException** qdo é usado o **.** com uma referencia *null*
 - **ClassCastException** casting p/ uma ref p/ um tipo incompatível
-- **NumberFormatException** não é possível *parsear* texto em números
 - **IllegalArgumentException** o método deve informar a quem o invocou que os valores passados nos seus parametros não são validos
+	- **NumberFormatException** não é possível *parsear* texto em números
 - **IllegalStateException** estado atual do obj não permite q ele seja executado
 - **ExceptionInInitializerError** quando uma exception non-checked é lançada dentro de um bloco de inicialização. Sobrepõe todas as outras exceptions
 - **StackOverflowError** métodos invocados são empilhados na *Pilha de Execução*. A pilha tem um limite e pode estourar
