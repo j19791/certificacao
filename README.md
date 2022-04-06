@@ -1091,7 +1091,8 @@ int  b, c; int a = b = c = 100; //compila e roda pois as variaveis foram declara
 	- ilhas de isolamento : variáveis de instancia do tipo objeto referenciando outros objetos dentro da ilha de isolamento 
 	- `System.gc();` sugere a JVM o GC
 - *qtd* de objetos criados: Veja os *literais String* q contam como objeto
-- Objetos retornados de métodos não são elegiveis p/ GC depois do fim de execução desses métodos. O objeto retornado é referenciado agora por que chamou esse método	
+- Objetos retornados de métodos não são elegiveis p/ GC depois do fim de execução desses métodos. O objeto retornado é referenciado agora por que chamou esse método
+- Principais tarefas do GC: alocação de memória, manutençãod e objetos referenciados em memória e reaproveitamento de memória de objetos que não estão sendo mais referenciados
 #### Develop code that uses **wrapper** classes such as Boolean, Double, and Integer  
 - classes que representam primitivos
 - são filhos de *Number*
@@ -1488,6 +1489,14 @@ public class Student{
 	- multiplos catchs: invocado somente o + adequado. 
 		- A ordem importa: o JVM procura o 1º catch q pode trabalhar a exception adequada. 
 		- *unreachable code* Quando tem polimorfismo em multiplos catches, priorizar na ordem os mais especificos
+	- multi-catch
+	```java
+	try {     // code
+	} 
+	catch (ExceptionType1 | Exceptiontype2 ex){   
+    	// catch block
+	}
+	```
 	- se ocorrer um erro dentro do bloco catch, o erro é jogado p/ fora do bloco, finally (se houver) é executado,  e o bloco pai que deverá ou não tratar esse erro.
 	- `catch(MyException me){System.out.println(me); }` imprime apenas o nome da exception e a mensagem (se houver)
 		- `catch(MyException me){me.printStackTrace(); }` ira retornar o nome da exception, uma mensagem (se houver) e também todos os métodos chamados com as linhas de código respectivas
@@ -1619,7 +1628,8 @@ public static void methodX() throws Exception {       throw new AssertionError()
 - substring retorna a String que você deseja mas não altera o valor do seu StringBuilder ou StringBuffer.
 	- nos encadeamentos c/ SB, o substring não altera nada e passa p/ outros métodos a mesma string que recebeu 
 - try/catch/finally: variaveis declaradas dentro do bloco try estão fora do escopo dos blocos catch e finally 
-- long deverá ser declarado seu literal com **l** ou declarar a variavel c/ tipo long sem o **l** 	
+- long deverá ser declarado seu literal com **l** ou declarar a variavel c/ tipo long sem o **l** 
+- não existe *delete* em Collections e sim **remove**
 
 #### Atenção
 - unreachable code
@@ -1675,7 +1685,7 @@ for (Days d : Days.values()) //Days.values() retorna um array de Days
 - native: chama métodos escritos em outras linguagens. 
 
 - Math
-	- não precisa importar
+	- não precisa importar `java.lang.Math.*`
 	- Math.max(x,y);
 	- Math.sqrt(x)
 	- Math.random();
