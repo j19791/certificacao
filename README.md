@@ -1355,10 +1355,11 @@ public class Car{
 - os métodos podem ser chamados sem o nome da classe ou com o nome da classe dentro de outro método
 #### Create and overload constructors; differentiate between default and user defined constructors
 - construtor não pode ser final, static ou abstract
-- construtor implicito dado pelo compilador, não recebe argumentos, tem a *visibilidade da classe* e tem a chamada a **super()** `class A { /* implicito*/ A() {super();} /*default*/}` 
-- caso vc adicione um construtor qq, o construtor padrão *deixa de existir* e as invocações a ele passam a dar erros de compilação. 
-	- construtor padrão é o construtor implicito dado pela JVM
-- construtor não implicito tem a visibilidade definida pelo programador (pode ser private e protected também). Se não definir, a visibilidade é default (package private).
+- construtor default dado pelo compilador, não recebe argumentos, tem a *visibilidade da classe* e tem a chamada a **super()** `class A { /* implicito*/ A() {super();} /*default*/}` 
+- caso vc adicione um construtor qq, o construtor default *deixa de existir* e as invocações a ele passam a dar erros de compilação. 
+	- construtor default é o construtor implicito dado pela JVM sem argumentos
+	- construtor sem argumentos escrito pelo programados não é default
+- construtor não default tem a visibilidade definida pelo programador (pode ser private e protected também). Se não definir, a visibilidade é default (package private).
 - dentro do construtor vc pode acessar as variaveis membros *static* ou *non-static*
 - não esqueça que a inicialização das variaveis membros são com os valores default e logo em seguida, os valores atribuidos dentro do construtor
 ```java
