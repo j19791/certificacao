@@ -228,6 +228,7 @@ int _a = a;
 	int a = 15, b= 20, c= 30; a = (b = c + 5) + 5; // c + 5 = 35, b = 35, 35 + 5 = 40, a = 40
 	```
 - **ternário** `variavel = teste booleano ? verdadeiro : falso;`
+	- obrigatório ter verdadeiro e falso
 - **referencia** `ref.atributo()` p/ acessar atributos ou métodos de um obj
 - **bitwise** & | ^ ~ << >>
 - **concatenação de Strings** 
@@ -1403,6 +1404,7 @@ A a = new B(); //new B() chama super() que é a criação do pai. Durante a cria
 - parametros não recebem modificadores de visibilidade. Apenas o *final*
 	- **public** acessado de qq componente em qq pacote
 	- **protected** acessado por classes e interfaces no *mesmo pacote* e somente pela classe *que estenda, independente do pacote*
+	
 ```java
 package a;
 public class AccessTest {
