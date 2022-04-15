@@ -479,6 +479,14 @@ for (int i = 1; i < 10; i++) {
 ### Working with Inheritance
 
 #### Describe inheritance and its benefits
+- A classe mãe pode usar parametros do tipo das classes filhas nos seus métodos
+```java
+class Bottle {
+    void Bottle() {}
+    void Bottle(WaterBottle w) {} //parametro do tipo filha num método da classe mãe
+}
+class WaterBottle extends Bottle {}
+```
 - a classe filha *especializa* a mais genérica
 - a classe mãe precisa ser visível e tbm um de seus contrutores
 ```java
