@@ -723,6 +723,7 @@ class B extends A{ public B() throws Exception{ } //pois super() precisa ser tra
 	- uma interface  pode redeclarar o método como abstract qdo extende outra interface c/ método default
 		- a classe que implementa essa interface com método abstract deverá re-implementar esse método abstract. O método default não é mais chamado nesse caso.
 	- classe não compila qdo realiza implementação multipla de interfaces com métodos default com a mesma assinatura
+		- a menos que essa classe sobreescreve os métodos default
 - interfaces não herda de Object
 - uma classe abstrata pode não ter nenhum método abstrato
 - se a classe possui pelo menos 1 método abastrato, a classe precisa ser abstrata
@@ -1139,7 +1140,9 @@ int  b, c; int a = b = c = 100; //compila e roda pois as variaveis foram declara
 		- todos os numericos se convertem entre si
 		- Boolean, Character só convertem p/ boolean e char, respectivamente
 	- String p/ primitivo *XXX.parseXXX("")* `double d = Double.parseDouble("123.00");`
-		- *NumberFormatException*
+		- `int i = Integer.parseInt("12.3"); // 12.3 não trunca p/ 12` *NumberFormatException*
+		- o parse retorna um primitivo que deve ser atribuido apenas a variáveis cujo range cabe
+			- `char one =  Integer.parseInt("1");` não compila: conversão de int p/ char
 		- parser de números int c/ base `int i6 = Integer.parseInt("FF",16); //255 Hexa`
 	- String p/ Wrapper
 		- usar o próprio construtor do Wrapper
@@ -1783,7 +1786,7 @@ for (Days d : Days.values()) //Days.values() retorna um array de Days
 ```
 
 - Inner Classes
-- podem ser public, private e protected
+	- podem ser public, private e protected
 ```java
 class OuterClass {
   int x = 10;
@@ -1794,6 +1797,15 @@ class OuterClass {
   
   public static class Point {}
 }
+				
+- Inner Interfaces
+```
+public class Shoot {
+   interface Target {
+      boolean needToAim(double angle);
+   }
+}
+```
 
 OuterClass.InnerClass myInner = new OuterClass().new InnerClass();
 OuterClass.Point point = new OuterClass.Point();
@@ -1806,7 +1818,13 @@ OuterClass.Point point = new OuterClass.Point();
 		- a = array q deseja ordenar
 		- retorna void. Não colocar dentro de foEeach
 		- não é Collection
-
+	- Arrays.asList(a)
+		- transforma um array numa lista;
+		- não pode remover ou adicionar elementos nessa nova lista: UnsupportedOperationException
+	- Arrays.binarySearch(array, elemento q deseja achar)
+		- o array precisa ser ordenado anteriormente
+		- retorna a posição do elemento encontrado;
+			- retorna valor negativo se não achar
 - Collection
 	- interfaces e implementações
 		- Collection
