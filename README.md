@@ -473,6 +473,7 @@ for (int i = 1; i < 10; i++) {
 			}	
 ```
 - *switch* só aceita *break*
+- `block: { break block; }` compila e roda break de um bloco com label;
 		
 [[↑] Back to top](#Anotações-para-certificação-OCA-Programmer-1Z0-808)		
 		
@@ -801,7 +802,15 @@ sb.setLength(10); //tamanho 10 (12345     ) c/ mais 5 espaços em branco
 #### Create and manipulate **Strings**
 - *imutáveis* : o valor da String não muda quando usada um método seu. Só muda quando é feita uma re-atribuição p/ a mesma variavel.
 - é *final* (não pode ter subclasses)
-- criar `String implicit = "Java";String explicit = new String("Java"); char[] name = new char[]{'J', 'a', 'v', 'a'}; String fromArray = new String(name); String nameBuilder = new String(new StringBuilder("Java"));`
+- criar 
+```java
+	String implicit = "Java";
+	String explicit = new String("Java"); 
+	char[] name = new char[]{'J', 'a', 'v', 'a'}; 
+	String fromArray = new String(name); 
+	String nameBuilder = new String(new StringBuilder("Java"));
+```
+- `"String".toCharArray()` converte o string para um array de char
 - não é um tipo primitivo, pode ter valor *null* `String name = null; // explicit null`
 - não compila. Não existe construtor q recebe null `new String(null);`
 - *NullPointerException* `String s = null; String s2 = new String(s);`		
@@ -961,7 +970,9 @@ names.get(0) /*Certification*/; clients.get(0).getName()); // John
 cliente.setName("Mayer"); clients.get(0).getName()); // Mayer
 names.set(0, "certification"); //altera elemento da posição
 names.indexOf("certification")); // retorna a primeira posição do elemento passado, se não acha, retorna -1	
-names.lastIndexOf("john")); // retorna a última posição do elemento, se não acha, retorna -1		
+names.lastIndexOf("john")); // retorna a última posição do elemento, Se não acha, retorna -1
+names.lastIndexOf("john",6)); // retorna a última posição do elemento, a partir da posição 6. Se não acha, retorna -1
+
 
 Collection<String> strings = new ArrayList<String>();
 Iterator<String> iterator = strings.iterator();
@@ -1108,6 +1119,7 @@ int  b, c; int a = b = c = 100; //compila e roda pois as variaveis foram declara
 - são filhos de *Number*
 - são *final*
 - char : Character. Apenas 1 construtor  `new Character(´d´);`
+	- `Character c = new Character(´d´); char c2 =  c.charValue()` converte para char apesar que o unbox tbm faz isso
 - int: Integer
 - criando 
 	- *numéricos*
@@ -1466,6 +1478,7 @@ public class Student{
 	- *de referência* 	variaveis não primitivas guardam referencias que apontam p/ o mesmo objeto. Modificações no obj podem ser feitas por n referencias. 
 		- a referência continua apontando p/ o objeto anterior quando essa referência é passada numa invocação de método e um novo objeto é atribuido a essa referência dentro desse método
 		- array não é primitivo
+		- o parametro de um método que aponta para um objeto que foi promovido durante a chamada desse método, ainda chama dinamicamente os métodos do objeto
 - *pilha de execução* lugar onde são empilhados os métodos invocados na mesma ordem q foram chamados
 - *heap de objetos* lugar onde são guardados os objetos criados durante sua execução
 
