@@ -160,8 +160,10 @@ int _a = a;
 		int int = 1; //não compila
 		```
 - **aritméticos**
-	- **%** resto de divisão. O tipo resultado segue a regre das outras operações
+	- **%** resto de divisão. O tipo resultado segue a regra das outras operações
 		- pode ser usado com números decimais:  5.5 % 3 = 2.5
+		- `-i % k ` o valor negativo de i é ignorado
+			-`i % - k ` o valor de k é considerado é o resto fica negativo 
 	- variável int que recebe o valor de uma divisão|: o valor é **truncado** e **não arredondado** 
 	- o tipo do resultado da operação com variaveis é no minimo **int** ou o **tipo mais abrangente** . Não importa se a operação é feita c/o variáveis ou literais
 		```java					
@@ -558,7 +560,8 @@ System.out.println(new C().i); //nao compila: i é private em B e o i de B escon
 - **toString** sobreescrever de *Object* p/ devolver uma String q represente o objeto ```public String toString()```
 	- o toString() de Object retorna <classname>@<hashcode>
 #### Develop code that makes use of polymorphism; develop code that overrides methods;  differentiate between the type of a reference and the type of an object
-- **reescrita, sobrescrita** : subclasse redefine o comportamento do método herdado da superclasse
+- **sobreescrita** : o tipo da referência (em tempo de compilação) e o tipo de parametro definem o método que vai ser chamado.
+- **reescrita** : subclasse redefine o comportamento do método herdado da superclasse
 	- **polimorfismo** : 
 		- *binding* : (lookup)
 			- 1) em *tempo de compilação*, verificar se o pai e o filho possuem métodos polimorficos. Verificação da existência do método. 
@@ -968,7 +971,7 @@ ArrayList<String> countries = new ArrayList<String>();countries.add("korea");cou
 ArrayList<String> everything = new ArrayList<String>(); everything.addAll(names); everything.addAll(countries);//adicionar 2 coleções em outra
 names.get(0) /*Certification*/; clients.get(0).getName()); // John
 cliente.setName("Mayer"); clients.get(0).getName()); // Mayer
-names.set(0, "certification"); //altera elemento da posição
+names.set(0, "certification"); //altera elemento da posição e retorna o elemento que foi alterado
 names.indexOf("certification")); // retorna a primeira posição do elemento passado, se não acha, retorna -1	
 names.lastIndexOf("john")); // retorna a última posição do elemento, Se não acha, retorna -1
 names.lastIndexOf("john",6)); // retorna a última posição do elemento, a partir da posição 6. Se não acha, retorna -1
@@ -1065,6 +1068,7 @@ int  b, c; int a = b = c = 100; //compila e roda pois as variaveis foram declara
 				- *octal* começa c/ 0 a esquerda e vai de 0 a 7 `int i = 0761;`  
 				- *hexadecimal* começa c/ 0x ou 0X. 0 a 9, A a F (10 a 15)
 				- *binary* 0b ou 0B e pode usar apenas 0 e 1
+					- literais binários não podem usar d ou f no final para efinilos como ponto flutuante. L de long pode;
 		- **ponto flutuante** Pode assumir +/- infinity , +/- 0, NaN . Literal com casa decimal é double
 			- *float* F f 
 				- armazena de 6-7 digitos de precisão. Acima disso, existe perda de precisão
@@ -1214,6 +1218,7 @@ int  b, c; int a = b = c = 100; //compila e roda pois as variaveis foram declara
 			- pode inicializar c/ vlr nulos `Car[] cars = new Car[]{new Car(), null, new Car()};` 
 			- declarar e inicializar *somente na mesma linha* `int[] numbers = {1,2,5,7,5};`
 			- `String[] sa = { };` array de tamanho 0
+				- qualquer referência p/ uma posição desse rarray vai gerar ArrayIndexOutOfBoundsException ou IndexOutOfBoundsException
 			- é possível atribuir o array de primitivos ou de objetos a uma ref do tipo Object mas é necessário um cast p/ aproveitar essa atribuição 
 				- `Object obj = new int[] { 1, 2, 3 }; int[] someArray = (int[])obj;`
 			- não é possível atribuir a uma ref array de Object um array de primitivos
