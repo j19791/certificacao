@@ -815,6 +815,7 @@ sb.setLength(10); //tamanho 10 (12345     ) c/ mais 5 espaços em branco
 ```
 - `"String".toCharArray()` converte o string para um array de char
 - não é um tipo primitivo, pode ter valor *null* `String name = null; // explicit null`
+- não recebe parametro do tipo numérico ou booleano
 - não compila. Não existe construtor q recebe null `new String(null);`
 - *NullPointerException* `String s = null; String s2 = new String(s);`		
 - deverá ser sempre inicializada dentro de métodos, mesmo com null
@@ -840,6 +841,7 @@ sb.setLength(10); //tamanho 10 (12345     ) c/ mais 5 espaços em branco
 	- conseguimos obter versões modificados c/ o retorno dos métodos
 - LocalDate yyyy-MM-dd
 - LocalTime hh:mm::ss.zzz
+	- LocalTime.NOON = 12:00
 - LocalDateTime yyyy-MM-dd-hh:mm::ss.zzz
 - YearMonth yyyy-MM
 - MonthDay MM-dd
