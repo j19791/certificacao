@@ -1370,6 +1370,7 @@ new Main().go( 2, "hi", "world");
 ```java
 void yingyang(Integer[] ints) {
 void yingyang(Integer... ints) { //nao compila
+![Sobrecarga x Sobreescrita](/overload_overriden_methods.jpg)
 ```
 #### Apply the **static** keyword to methods and fields  
 - pertence a classe e não a cada objeto
