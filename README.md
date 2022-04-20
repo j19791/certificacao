@@ -347,8 +347,13 @@ switch(8); //não compila
 ```java
 int option = 4;		
 final int c1 = 5;
-switch (option) { //Pode ser constante. o argumento deverá ser sempre compatível com int (igual ou menor que int), wrapper menor ou igual q Integer, String, Enum
-	case c1: //o valor de cada case deverá ser compatível com o argumento do switch. Usar literal, variavel final (wrapper c/ final não é cte e não pode ser usado ) inicializada durante sua declaração com literal ou expressões com literal/ variavel final. null não é válido. Não pode duplicar cases
+switch (option) { //Pode ser constante. 
+		 //o argumento deverá ser sempre compatível com int (igual ou menor que int), wrapper menor ou igual q Integer, String, Enum
+	case c1: //o valor de cada case deverá ser compatível com o argumento do switch. 
+	//Usar literal, variavel final (wrapper c/ final não é cte e não pode ser usado ) 
+	//inicializada durante sua declaração (nao pode delcarar e inicializar em outra instrução), com literal ou expressões com literal/ variavel final (compile time constant)
+	//null não é válido. 
+	//Não pode duplicar cases
 		System.out.println("number 1");
 		break; //para não executar os casos q vem abaixo			
 	default: //qdo nenhum caso bater. Pode aparecer no meio dos cases			
@@ -1508,7 +1513,8 @@ public class Student{
 				- é opcional trata-las 
 			- **checked** não são faceis de evitar. O compilador verifica se o programa pode lançar um checked exception e obriga-lo a tratar c/ *try-catch* ou *throws*
 				- SQLException
-				- IOException : FileNotFoundException						 
+				- IOException : FileNotFoundException	
+				- ClassNotFoundException
 #### Create a **try-catch** block and determine how exceptions alter normal program flow		
 - **try {}** trecho do código que pode gerar um erro de execução
 	- as linhas abaixo daquela q gerou o erro não são executadas
@@ -1706,6 +1712,19 @@ for (Days d : Days.values()) //Days.values() retorna um array de Days
 
 ```
 - inicialização das variaveis membros
+	- o que importa é o carregamento das classes em tempo de compilação.
+	```java
+	class A{
+	A{} //2
+	static{} //1
+	}
+	class B extends A{
+	B{} //4 : nao espera o super() para chamar o A()
+	{} //3
+	}
+	----
+	A a = new B()		
+	```			
 	- 1º : inicialização de atributos e blocos static na ordem que aparecem no código
 		- inicializa apenas membros static
 		- executado apenas uma vez mesmo quando não há criação de instancia
@@ -1713,6 +1732,7 @@ for (Days d : Days.values()) //Days.values() retorna um array de Days
 		- métodos chamados c/ new
 		- pode tbm inicializar membros static mas não tem preferência de ordem
 	- 3: construtores
+	- não importa se o bloco static/non-static vem antes da declaração das variaveis membros
 
 - `System.exit()` para de executar o programa
 
@@ -1806,6 +1826,7 @@ for (Days d : Days.values()) //Days.values() retorna um array de Days
 ```
 
 - Inner Classes
+	- não são top level classes
 	- podem ser public, private e protected
 ```java
 class OuterClass {
@@ -1815,11 +1836,23 @@ class OuterClass {
     int y = 5;
   }
   
-  public static class Point {}
-}
+  public static class Point {} //static inner class
 				
-- Inner Interfaces
+public static void main(String[] args){
+
+	class Local{}	//classe local			
+				
+	OuterClass.InnerClass myInner = new OuterClass().new InnerClass(); //inner class
+	OuterClass.Point point = new OuterClass.Point();				
+	Local local = new Local();
+				
+}				
+}
 ```
+
+- Inner Interfaces
+				
+```java
 public class Shoot {
    interface Target {
       boolean needToAim(double angle);
@@ -1827,10 +1860,9 @@ public class Shoot {
 }
 ```
 
-OuterClass.InnerClass myInner = new OuterClass().new InnerClass();
-OuterClass.Point point = new OuterClass.Point();
 
-```
+
+
 
 - Arrays
 	- java.util.Arrays
@@ -1875,5 +1907,6 @@ OuterClass.Point point = new OuterClass.Point();
 	- import java.util.HashSet; 
 	- `HashSet<String> cars = new HashSet<String>();    cars.add("Volvo");`
 
+- se a.equals(b) então a.hashCode() == b.hashCode()
 
 [[↑] Back to top](#Dicas)
