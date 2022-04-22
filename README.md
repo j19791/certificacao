@@ -163,7 +163,8 @@ int _a = a;
 	- **%** resto de divisão. O tipo resultado segue a regra das outras operações
 		- pode ser usado com números decimais:  5.5 % 3 = 2.5
 		- `-i % k ` o valor negativo de i é ignorado
-			-`i % - k ` o valor de k é considerado é o resto fica negativo 
+			- `i % - k ` o valor de k é considerado é o resto fica negativo
+		- 1.0 % 0.0 = NaN. Nan é menor que qualquer número 
 	- variável int que recebe o valor de uma divisão|: o valor é **truncado** e **não arredondado** 
 	- o tipo do resultado da operação com variaveis é no minimo **int** ou o **tipo mais abrangente** . Não importa se a operação é feita c/o variáveis ou literais
 		```java					
@@ -250,7 +251,7 @@ int _a = a;
 	- potência e raiz quadrada
 	- mult/ div/ % (na ordem que aparecem, da esquerda p/ direita)
 	- soma/ sub (na ordem que aparecem, da esquerda p/ direita)
-	- && || (lógicos)
+	- ^ && || (lógicos)
 	- pós incremento/decremento
 	- = é menor que os de comparação
 - **casting de primitivos**
@@ -1573,7 +1574,14 @@ public static void methodX() throws Exception {       throw new AssertionError()
 		System.out.println("ok");
 	}
 	
-	``` 
+	```
+- um método pode incluir na sua assinatura uma exception pai e lançar uma exception filha. O método que chamar esse método deverá tratar FileNotFoundException
+```java
+void m() throws IOException{
+	    throw new FileNotFoundException();
+	}
+```
+	
 #### Recognize common exception classes (such as NullPointerException, ArithmeticException, ArrayIndexOutOfBoundsException, ClassCastException)
 - **IndexOutOfBoundsException** acessar uma posição q não existe no *ArrayList*
 	- **ArrayIndexOutOfBoundsException** acessar uma posição q não existe no *array*
@@ -1871,6 +1879,7 @@ public class Shoot {
 	- Arrays.sort(a) 
 		- a = array q deseja ordenar
 		- retorna void. Não colocar dentro de foEeach
+		- ordenação 123ABCabc
 		- não é Collection
 	- Arrays.asList(a)
 		- transforma um array numa lista;
@@ -1879,6 +1888,8 @@ public class Shoot {
 		- o array precisa ser ordenado anteriormente
 		- retorna a posição do elemento encontrado;
 			- retorna valor negativo se não achar
+	- Arrays.equals(a1, a2); //primitivos
+	- Arrays.deepEquals(Object[] a1, Object[] a2); //objetos
 - Collection
 	- interfaces e implementações
 		- Collection
