@@ -276,7 +276,8 @@ int _a = a;
 	System.out.println(name1 == name2); // false: 2 objetos criados com new		
 ```
 - equals de Wrappers de tipo diferente são sempre **false**	
-- equals de Object é o mesmo que ==	
+- equals de Object é o mesmo que ==
+- StringBuilder não tem equals, apenas String	
 - **Pool de Strings** 
 	- antes de criar uma nova String, verifica-se se já existe no pool uma String com mesmo conteúdo. Se já existe, não cria nova, reutiliza. 
 		`String name1 = "Mario"; String name2 = "Mario"; System.out.println(name1 == name2);	//true`
@@ -792,7 +793,8 @@ class B extends A{ public B() throws Exception{ } //pois super() precisa ser tra
 - permite chamadas encadeadas : `new StringBuffer().append("Caelum").append(" - ").append("Ensino e Inovação") // Caelum - Ensino e Inovação`
 	- substring só pode ser chamado no final de chamadas encadeadas
 ```java
-StringBuffer sb = new StringBuffer();
+StringBuffer sb = new StringBuffer(); //capacity = 16 (default)
+
 sb.append("Caelum - Inovação"); //sempre insere no fim
 sb.append(" no mercado de trabalho ", 0, 11); //sempre insere no fim. Vai inserir apenas "Caelum - Inovação no mercado"
 sb.insert(9, "Ensino e "); // inserir coisas no meio com indice:  Caelum - Ensino e Inovação. Insere no fim quando é passado pro indice o tamanho do StringBuilder  
@@ -804,10 +806,11 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 - não compila quando tenta comparar String e StringBuilder usando == ou equals
 - setLength() altera o tamanho
 ```java
-StringBuilder sb = new StringBuilder("12345678");       
+StringBuilder sb = new StringBuilder("12345678"); //capacity = 16 + 8= 24      
 sb.setLength(5); //tamanho = 5 (12345)
 sb.setLength(10); //tamanho 10 (12345     ) c/ mais 5 espaços em branco
 ```
+
 #### Create and manipulate **Strings**
 - *imutáveis* : o valor da String não muda quando usada um método seu. Só muda quando é feita uma re-atribuição p/ a mesma variavel.
 - é *final* (não pode ter subclasses)
@@ -1180,7 +1183,8 @@ int  b, c; int a = b = c = 100; //compila e roda pois as variaveis foram declara
 		Integer intWrapper = Integer.valueOf(1);intWrapper++; //will unbox, increment, then box again.
 		boolean isValid = new Boolean (true)
 		```
-		
+		- `Float f = 1; não compila` não é permitido promoção de primitivo e autoboxing em seguida
+	
 	- *comparando* 
 		- Wrapper == primitivo : a ref wrapper será *unboxed* e apenas os valores serão comparados e não os objetos em memória
 		- *equals* c/ wrappers de diferentes tipos sera sempre *false*, não importa o valor  
