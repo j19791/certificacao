@@ -735,6 +735,7 @@ class B extends A{ public B() throws Exception{ } //pois super() precisa ser tra
 		- a classe que implementa essa interface com método abstract deverá re-implementar esse método abstract. O método default não é mais chamado nesse caso.
 	- classe não compila qdo realiza implementação multipla de interfaces com métodos default com a mesma assinatura
 		- a menos que essa classe sobreescreve os métodos default
+	- métodos default não podem sobreescrever métodos de Object como equals
 - interfaces não herda de Object
 - uma classe abstrata pode não ter nenhum método abstrato
 - se a classe possui pelo menos 1 método abastrato, a classe precisa ser abstrata
@@ -1126,6 +1127,7 @@ int  b, c; int a = b = c = 100; //compila e roda pois as variaveis foram declara
 	- *elegível, passível* p/ o **Garbage Collector**
 	- ilhas de isolamento : variáveis de instancia do tipo objeto referenciando outros objetos dentro da ilha de isolamento 
 	- `System.gc();` sugere a JVM o GC
+	- objetos referenciados pelas variaveis de instancia de um objeto que é passível p/ o GC também contam p/ o GC
 - *qtd* de objetos criados: Veja os *literais String* q contam como objeto
 - Objetos retornados de métodos não são elegiveis p/ GC depois do fim de execução desses métodos. O objeto retornado é referenciado agora por que chamou esse método
 - Principais tarefas do GC: alocação de memória, manutençãod e objetos referenciados em memória e reaproveitamento de memória de objetos que não estão sendo mais referenciados
@@ -1234,6 +1236,12 @@ int  b, c; int a = b = c = 100; //compila e roda pois as variaveis foram declara
 			- é possível atribuir o array de primitivos ou de objetos a uma ref do tipo Object mas é necessário um cast p/ aproveitar essa atribuição 
 				- `Object obj = new int[] { 1, 2, 3 }; int[] someArray = (int[])obj;`
 			- não é possível atribuir a uma ref array de Object um array de primitivos
+		- é possível atribuir uma dimensão para um array multidimensional e depois altera-la
+		```java
+		int nums[][] = new int[3][3];
+		nums[0] = new int[2]; //ok
+		```
+		`int[][] ints = new int[3][2]; ints[2] ={1,2,3}; ` não compila
 	- *acesso*
 		- `numbers[0] = 10;` 
 		- *ArrayIndexOutOfBoundsException* acessar posição q não existe
@@ -1747,6 +1755,11 @@ for (Days d : Days.values()) //Days.values() retorna um array de Days
 		- pode tbm inicializar membros static mas não tem preferência de ordem
 	- 3: construtores
 	- não importa se o bloco static/non-static vem antes da declaração das variaveis membros
+	- blocos podem ter variaveis locais que escondem a vasriavel membro
+	```
+	static int x = 2;
+	static {int x = 3} //somente dentro desse bloco o x=3
+	```
 
 - `System.exit()` para de executar o programa
 
