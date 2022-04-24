@@ -33,6 +33,7 @@
 	- não compila quando uma variável final (constante) é atribuida com novos valores
 	- quando uma subclasse faz o shadow da variavel final da classe pai/interface, essa variavel pode ter novos valores atribuidos.
 		- não pode ter novos valores atribuidos qdo a subclasse recebe implicitamente do pai a constante. Recebe também como final 
+	- `final char a = 'A', d = 'D';` a e d são char e final
 #### Define the **structure** of a Java **class**
 - **default package** : qdo não declara explitamente um pacote. Não podem ser importadas para uso em outros pacotes.
 	- não se podem criar pacotes que começam com java.* ou javax.* que são reservados
@@ -50,6 +51,7 @@
 	- pode ter modificador **final**
 	- se nenhum argumento é passado p/ o main, o parametro args não é null mas non-null array de Strings de tamanho zero
 - **java** HelloWorld *Mario* : passando 1 parametro para a execução do programa
+	- `java BirdDisplay Sparrow "Blue Jay"`	passando 2 parametros
 - **.class** é o *bytecode* gerado pelo *javac*
 - compilando e rodando c/ *package certification*  `javac certification/Test.java; java certification.Test`
 - Passando **propriedades** na execução: java *-Dkey1=abc -Dkey2=def* Foo xpto bar 
@@ -767,6 +769,7 @@ class B extends A{ public B() throws Exception{ } //pois super() precisa ser tra
 	- pode redeclarar um método default herdado e torna-lo abstract
 	- pode redeclarar um método default herdado com uma nova implementação
 - declarar *variaveis* membro em uma interface: todas elas serão *constantes* `interface X {/* public static final */ int i = 5;}`
+	- `interface X {/* public static final */ int i ;}` não compila. variavel de interface é final e é preciso inicializa-la implicitamente
 	- classe que implementa interface c/ variaveis (são static) pode chama-las diretamente como membros static
 	 ```java
 	 public interface IInt{ int thevalue = 0; }
@@ -1063,7 +1066,7 @@ int  b, c; int a = b = c = 100; //compila e roda pois as variaveis foram declara
 	- char = vazio = equivale a 0
 	- String e Referencias = null
 - criação de *array* a inicialização é *implicita* `int numbers[] = new int[10]; numbers[0]; //0`
-- variável membro **final** deverá ser implicitamente inicializada na sua declaração, dentro dos blocos de instancia ou no construtor. A variável final não inicializa com valor default
+- variável membro **final** deverá ser implicitamente inicializada na sua declaração, dentro dos blocos de inicialização static/non-static ou no construtor. A variável final não inicializa com valor default
 - **tipos primitivos**
 	- **numéricos** todo número simples (sem casa decimal) é int
 		- **inteiro** podem ser +/-
@@ -1127,6 +1130,7 @@ int  b, c; int a = b = c = 100; //compila e roda pois as variaveis foram declara
 	- *elegível, passível* p/ o **Garbage Collector**
 	- ilhas de isolamento : variáveis de instancia do tipo objeto referenciando outros objetos dentro da ilha de isolamento 
 	- `System.gc();` sugere a JVM o GC
+	- `void finalize()` da classe Object é chamado qdo o objeto é coletado. Pode sobreescreve-lo para determinar ações quando o objeto é coletado
 	- objetos referenciados pelas variaveis de instancia de um objeto que é passível p/ o GC também contam p/ o GC
 - *qtd* de objetos criados: Veja os *literais String* q contam como objeto
 - Objetos retornados de métodos não são elegiveis p/ GC depois do fim de execução desses métodos. O objeto retornado é referenciado agora por que chamou esse método
