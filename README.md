@@ -966,7 +966,7 @@ sb.setLength(10); //tamanho 10 (12345     ) c/ mais 5 espaços em branco
 - primitivos não poder ser usados em ArrayList. Wrappers respectivos sim.
 - ArrayList sobreescreve metodo equals :  mesmos elementos na mesma ordem.
 ```java
-List<String> _lista = new ArrayList<>(2); //pode especificar tamanho mas o valor size() corresponde ao número de elementos ja inseridos. Pode inserir mais de 2 elementos nesse caso
+List<String> _lista = new ArrayList<>(2); //pode especificar tamanho (default =10) mas o valor size() corresponde ao número de elementos ja inseridos. Pode inserir mais de 2 elementos nesse caso
 ArrayList<String> names = new ArrayList<String>();
 ArrayList<Client> clients = new ArrayList<Client>();
 
@@ -1224,6 +1224,7 @@ int  b, c; int a = b = c = 100; //compila e roda pois as variaveis foram declara
 		- **new** criação do novo obj e seus elementos são inicializados implicitamente c/ vlr default.		
 		- definir a capacidade `int[] ages = new int[10];`					
 			- capacidade zero compila e roda
+			- apenas int é valido para definir a dimensão do array
 			- capacidade negativa compila mas joga *NegativeArraySizeException*
 			- a dimensão é avaliada da esquerda p/ direita
 			```java
@@ -1332,7 +1333,16 @@ int[] [][]hipercube[];  // Um array de quatro dimensões.
 			void m(Integer a, Integer b){}
 			m(1,2); // chama o método c/ double
 			```
-			- *polimorfismo* passar qq objeto que *seja um* objeto do tipo do parametro	
+			- *polimorfismo* passar qq objeto que *seja um* objeto do tipo do parametro
+			- literais int não podem ser passados para um método com parametro < int
+			```java
+			static boolean check(short x)
+			check(10); //não compila
+			check((short) 10); //compila
+			short s = 10; //apesar disso, a atribuição funciona
+			```
+										       	
+			
 - modificadores opcionais
 	- *final* o método não pode ser sobreescrito nas classes filhas
 	- *abstract* obriga as classes filhas a implmentarem o método. Não pode ter corpo
