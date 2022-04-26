@@ -575,6 +575,7 @@ System.out.println(new C().i); //nao compila: i é private em B e o i de B escon
 		- *binding* : (lookup)
 			- 1) em *tempo de compilação*, verificar se o pai e o filho possuem métodos polimorficos. Verificação da existência do método. 
 				- Podem estar escondidos mas compila e executa.
+					- qdo o método do pai é private, o método chamado é o do pai
 				- se o método sobreescrito possui throws de checked exception, a chamada deverá tratar esse método com try/catch ou um novo throws
 					- com casting, avisa p/ o compilador especificamente o método do obj referenciado, que sobreescreve, e se não tem throws de checked exceptions, a chamada não precisa de tratamento
 			- 2) em *tempo de execução*, o método invocado é o do objeto, não o da referencia *virtual method invocation*. Chama o métood da ref apenas quando este é *hidden*			 	
@@ -1090,6 +1091,7 @@ int  b, c; int a = b = c = 100; //compila e roda pois as variaveis foram declara
 			- *double* *d* *D* para explicitar na inicialização 
 			- *notação cientifica* o literal default é double `double d = 3.1E2 /*310.0*/; float f = 1E4F /* 10000.0f*/;`
 			- F f D d usado apenas para decimais. L l pode ser usado p/ qq base
+			- `double d = 4.` 4. pode ser usado como double = 4.0
 	- **não numerico**
 		- *boolean*
 - **literais** valores das variáveis diretamente no código fonte
@@ -1403,6 +1405,13 @@ void yingyang(Integer... ints) { //nao compila
 #### Apply the **static** keyword to methods and fields  
 - pertence a classe e não a cada objeto
 - não precisa ter um objeto instanciado da classe. Apenas seu nome
+```java
+ public class Rope {
+    public static void swing() {}
+Rope r = null;
+r.swing();// não gera NPEx. a chamada é automaticamente mudada p/ Rope.swing()											
+```
+												
 - não usar um método/atributo de instancia dentro de um método *static* 
 ```java
 public class Car{
@@ -1915,10 +1924,12 @@ public class Shoot {
 	- Arrays.asList(a)
 		- transforma um array numa lista;
 		- não pode remover ou adicionar elementos nessa nova lista: UnsupportedOperationException
+		- `Arrays.asList(5, 10, -5, -10);` também funciona 
 	- Arrays.binarySearch(array, elemento q deseja achar)
 		- o array precisa ser ordenado anteriormente
 		- retorna a posição do elemento encontrado;
-			- retorna valor negativo se não achar
+			- se não achar, retorna a posição que o elemento procurado deveria estar, negativa e subtrai por -1
+			`[–10, –5, 5, 10]; Collections.binarySearch(numberList, 4);` deveria estar na posição 2 => -2 - 1: retornará -3
 	- Arrays.equals(a1, a2); //primitivos
 	- Arrays.deepEquals(Object[] a1, Object[] a2); //objetos
 - Collection
