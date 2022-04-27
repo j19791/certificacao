@@ -164,9 +164,7 @@ int _a = a;
 - **aritméticos**
 	- **%** resto de divisão. O tipo resultado segue a regra das outras operações
 		- pode ser usado com números decimais:  5.5 % 3 = 2.5
-		- `-i % k ` o valor negativo de i é ignorado
-			- `i % - k ` o valor de k é considerado é o resto fica negativo
-		- 1.0 % 0.0 = NaN. Nan é menor que qualquer número 
+		- `-i % k ` o sinal do resto é correspondente ao sinal do dividendo (i), não importando o sinal do divisor. Nesse caso, o sinal do resto é negativo		   - 1.0 % 0.0 = NaN. Nan é menor que qualquer número 
 	- variável int que recebe o valor de uma divisão|: o valor é **truncado** e **não arredondado** 
 	- o tipo do resultado da operação com variaveis é no minimo **int** ou o **tipo mais abrangente** . Não importa se a operação é feita c/o variáveis ou literais
 		```java					
@@ -201,7 +199,7 @@ int _a = a;
 	System.out.println(false & true); //false
 	```
 	- **^** ou exclusivo
-- **incremento/decremento**
+- **incremento/decremento (unários)**
 	- *pré* sempre a primeira coisa q é feita é o incrementar/decrementar
 	```java
 		int i = 10; System.out.println(++i); //imprime 11
@@ -212,6 +210,7 @@ int _a = a;
 		return ++k; vai retornar 1		
 	```
 	- só pode incrementar variáveis. Não usar incremento/ decremento com métodos
+	- outros unários: -(valor) !(boolean)
 - **operações/atribuições de uma só vez**
 	```java
 	short b2 = 3; b2 += 4; // compila, dá um desconto pois internamente existe um cast: b2 = (short) (b2 + 4)
@@ -958,6 +957,10 @@ sb.setLength(10); //tamanho 10 (12345     ) c/ mais 5 espaços em branco
 	- DateTimeFormatter
 		- ofPattern("yyyy MM dd")
 			- format(ld) //formata ld a partir de um padrão
+			- M : formata 1,2,3,4,5,6,7,8,9,10,11,12
+			- MM: 01, 02, 03...12
+			- MMM: Jan Fev Mar
+			- yyyy ou uuuu podem ser usados
 	- DateTimeFormatException
 			
 	![conversões](/imagens/java.time.jpg)
@@ -1476,7 +1479,7 @@ A a = new B(); //new B() chama super() que é a criação do pai. Durante a cria
 - membros da classe recebem modificadores
 - parametros não recebem modificadores de visibilidade. Apenas o *final*
 	- **public** acessado de qq componente em qq pacote
-	- **protected** acessado por classes e interfaces no *mesmo pacote* e somente pela classe *que estenda, independente do pacote*
+	- **protected** acessado por classes e interfaces no *mesmo pacote* ou pelas classes *filhas, independente do pacote*
 	
 ```java
 package a;
@@ -1571,7 +1574,7 @@ public class Student{
 	```java
 	try {     // code
 	} 
-	catch (ExceptionType1 | Exceptiontype2 ex){   
+	catch (ExceptionType1 | Exceptiontype2 ex){  //ex é implicitamente final e não pode receber atribuiçoes dentro do catch 
     	// catch block
 	}
 	```
@@ -1932,6 +1935,7 @@ public class Shoot {
 			`[–10, –5, 5, 10]; Collections.binarySearch(numberList, 4);` deveria estar na posição 2 => -2 - 1: retornará -3
 	- Arrays.equals(a1, a2); //primitivos
 	- Arrays.deepEquals(Object[] a1, Object[] a2); //objetos
+	- Arrays.fill(array, valor); // preenche as posições do array c/ o valor especificado
 - Collection
 	- interfaces e implementações
 		- Collection
