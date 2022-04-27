@@ -278,7 +278,9 @@ int _a = a;
 ```
 - equals de Wrappers de tipo diferente são sempre **false**	
 - equals de Object é o mesmo que ==
-- StringBuilder não tem equals, apenas String	
+- StringBuilder não tem equals, apenas String
+- ArrayList : equals verifica os mesmos elementos na mesma ordem	
+- arrays não tem equals
 - **Pool de Strings** 
 	- antes de criar uma nova String, verifica-se se já existe no pool uma String com mesmo conteúdo. Se já existe, não cria nova, reutiliza. 
 		`String name1 = "Mario"; String name2 = "Mario"; System.out.println(name1 == name2);	//true`
@@ -961,6 +963,8 @@ sb.setLength(10); //tamanho 10 (12345     ) c/ mais 5 espaços em branco
 			- MM: 01, 02, 03...12
 			- MMM: Jan Fev Mar
 			- yyyy ou uuuu podem ser usados
+		- ofLocalizedTime(FormatStyle.SHORT) retorna apenas o horário 11:22 AM
+		- ofLocalizedDateTime(FormatStyle.SHORT); retorna 3/7/14 11:22 AM (M/D/YY)
 	- DateTimeFormatException
 			
 	![conversões](/imagens/java.time.jpg)
@@ -1134,7 +1138,7 @@ int  b, c; int a = b = c = 100; //compila e roda pois as variaveis foram declara
 	- Quando o *escopo* da ref termina 
 	- *elegível, passível* p/ o **Garbage Collector**
 	- ilhas de isolamento : variáveis de instancia do tipo objeto referenciando outros objetos dentro da ilha de isolamento 
-	- `System.gc();` sugere a JVM o GC
+	- `System.gc();` sugere a JVM o GC, que pode ignorar. Não é garantido
 	- `void finalize()` da classe Object é chamado qdo o objeto é coletado. Pode sobreescreve-lo para determinar ações quando o objeto é coletado
 	- objetos referenciados pelas variaveis de instancia de um objeto que é passível p/ o GC também contam p/ o GC
 - *qtd* de objetos criados: Veja os *literais String* q contam como objeto
@@ -1558,9 +1562,11 @@ public class Student{
 				- ClassNotFoundException
 #### Create a **try-catch** block and determine how exceptions alter normal program flow		
 - **try {}** trecho do código que pode gerar um erro de execução
+	- obrigatório uso {}
 	- as linhas abaixo daquela q gerou o erro não são executadas
 	- *JVM* redireciona o fluxo do try p/ o catch, faz o tratamento e continua o fluxo fora do bloco try/catch			
 - **catch (Throwable t){}** pegando e tratando todos os possíveis erros de execução. 
+	- obrigatório uso {}
 	- **catch (Exception e){}** fazer um catch em Throwable não é uma boa prática pois os *Error* não deveriam ser tratados pela aplicação
 	- cuidado c/ *unreachable code* usar em uma *checked exception* somente se o bloco do try pode realmente lançar a checked exception em questão `try {System.out.println("SQLException");} catch(SQLException e){//não compila` 
 		- compila `try {new FileInputStream("a.txt");} catch(FileNotFoundException e){ // tratamento de FileNotFoundException.}`
@@ -1584,12 +1590,13 @@ public class Student{
 		- o stack trace é impresso se não foi possível capturar e tratar o erro c/ o catch ou não teve nenhum tratamento de erro
 	- mesmo dentro do catch ou finally, também deverá ser tratado dentro de sub-blocos try/catch métodos que lançam exception checked. Ou lançar na assinatura do método
 - **finally** seja no sucesso ou no fracasso, temos a obrigação de cumprir certas tarefas. Conexão deveria ser fechada, por exemplo
+	- obrigatório uso {}
 	- pode usar finally s/ o catch
 	- finally jamais devera vir antes do catch: a ordem tem q ser try + catch ou try + finally ou try + catch + finally
 	- erros ou exceptions dentro de blocos catch ou finally podem ocorrer e se não forem tratados, a JVM vão trata-los como erros/ exceptions normalmente e parar a execução do programa.
 	- mesmo c/ return antecipado, o bloco finally é executado
 		- o return do finally sobrepõe return de try ou catch. Não há problema de unreachable statement
-	- o bloco finally não é executado se existe `System.exit(0);` dentro de um bloco try com finally
+	- o bloco finally não é executado se existe `System.exit(0);` dentro de um bloco try ou bloco try com finally
 	- a exception lançada dentro do bloco finally é a que vai ser lançada pelo método mesmo ocorrendo exceptions dentro de try (qdo não tratada) ou catch (serão ignoradas)
 #### Describe the **advantages** of Exception handling 
 #### Create and invoke a **method that throws an exception**
@@ -1914,8 +1921,9 @@ public class Shoot {
 ```
 
 
-
-
+- Collections
+	- Collections.sort
+	- Collections.binarySearch(collection, elemento)
 
 - Arrays
 	- java.util.Arrays
@@ -1923,7 +1931,7 @@ public class Shoot {
 		- a = array q deseja ordenar
 		- retorna void. Não colocar dentro de foEeach
 		- ordenação 123ABCabc
-		- não é Collection
+		- ordenação de String: Número vem antes de letra ("30", "8", "3A", "FF") => [30, 3A, 8, FF]		
 	- Arrays.asList(a)
 		- transforma um array numa lista;
 		- não pode remover ou adicionar elementos nessa nova lista: UnsupportedOperationException
