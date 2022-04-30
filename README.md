@@ -271,11 +271,12 @@ int _a = a;
 		- é necessário casting para conversão de short p/ char e vice-versa
 	- `static short method(short s){}; method(7); //erro` passagem de um valor de um tipo mais abrangente num metodo para um parametro de tipo menos abrangente não compila devido a perda de informação. Utilizar cast qdo possível
 #### Test equality between Strings and other objects using **==** and **equals()**
-- comparar dois objetos para ver se **apontam para o mesmo lugar**		
+- == comparar dois objetos do mesmo tipo ou subclasses para ver se **apontam para o mesmo lugar**		
 ```java
 	String name1 = new String("Mario");	String name2 = new String("Mario");
 	System.out.println(name1 == name2); // false: 2 objetos criados com new		
 ```
+- equals de objetos cque não estão relacionados através de herança é sempre false
 - equals de Wrappers de tipo diferente são sempre **false**	
 - equals de Object é o mesmo que ==
 - StringBuilder não tem equals, apenas String
@@ -794,17 +795,25 @@ class B extends A{ public B() throws Exception{ } //pois super() precisa ser tra
 - é *final*
 - concatenar *append* `StringBuffer sb = new StringBuffer();sb.append("Caelum");sb.append(" - ");sb.append("Alura - Casa do Código"); //// Caelum - Alura - Casa do Código`
 	- `sb.append(false)` funciona: Caelum - Alura - Casa do Códigofalse 
-- criar objeto do tipo StringBUilder `new StringBuilder(); StringBuilder sb2 = new StringBuilder("java");StringBuilder sb3 = new StringBuilder(50) /* tamamnho inicial do array (length = 0)*/;StringBuilder sb4 = new StringBuilder(sb2);`
-- não compila se tentar criar atribuindo diretamente uma String `StringBuilder b = "rumble";//nao compila` 
-- permite chamadas encadeadas : `new StringBuffer().append("Caelum").append(" - ").append("Ensino e Inovação") // Caelum - Ensino e Inovação`
-	- substring só pode ser chamado no final de chamadas encadeadas
+- criar objeto do tipo StringBuilder 
 ```java
-StringBuffer sb = new StringBuffer(); //capacity = 16 (default)
-
+	StringBuffer sb = new StringBuffer(); //capacity = 16 (default)
+	StringBuilder sb2 = new StringBuilder("java");
+	StringBuilder sb3 = new StringBuilder(50) /* não converte p/ "50". É o tamanho inicial do array (length = 0)*/;
+	StringBuilder sb4 = new StringBuilder(sb2);
+	
+	//nao compila
+	StringBuilder b = "rumble";	
+	utilizar qualquer outro tipo de primitivo não funciona
+```
+ 
+- permite chamadas encadeadas : `new StringBuffer().append("Caelum").append(" - ").append("Ensino e Inovação") // Caelum - Ensino e Inovação`
+	- substring só pode ser chamado no final de chamadas encadeadas pq retorna uma String e não um StringBuilder
+```java
 sb.append("Caelum - Inovação"); //sempre insere no fim
 sb.append(" no mercado de trabalho ", 0, 11); //sempre insere no fim. Vai inserir apenas "Caelum - Inovação no mercado"
 sb.insert(9, "Ensino e "); // inserir coisas no meio com indice:  Caelum - Ensino e Inovação. Insere no fim quando é passado pro indice o tamanho do StringBuilder  
-sb.delete(6, 15); //indice inicial e final - Caelum e Inovação
+sb.delete(6, 15); //indice inicial e final (pode ser maior que o tamanho do SB, não da exception de SIOOBEx  - Caelum e Inovação
 new StringBuffer("guilherme").reverse(); //emrehliug		
 ```
 - *substring* não altera o valor do seu StringBuilder ou StringBuffer , mas retorna a String que você deseja.
@@ -1378,6 +1387,7 @@ void method(String s, Object o) {System.out.println("string");}
 new Xpto().method("string", "string"); // compile error
 ```
 - método com parâmetros *varargs*
+	- public int howMany( boolean... b2) {} pode ser invocado como howMany(new boolean[2]); //varargs recebe array
 	- compila e roda `metodo(String[]... args)` varargs de arrays
 	- Se existe uma sobrecarga do método s/ parametros, invocamos sem argumentos, o método chamado é o s/ argumentos	
 	- prioridade na chamada dos métodos sobrecarregados
