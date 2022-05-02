@@ -34,7 +34,17 @@
 	- quando uma subclasse faz o shadow da variavel final da classe pai/interface, essa variavel pode ter novos valores atribuidos.
 		- não pode ter novos valores atribuidos qdo a subclasse recebe implicitamente do pai a constante. Recebe também como final 
 	- `final char a = 'A', d = 'D';` a e d são char e final
-#### Define the **structure** of a Java **class**
+```java
+class A{
+	int x;
+}
+void m(){
+x = x+1; //o x é do escopo da variavel mebro
+int x = 0; //a partir daqui, o x é do escopo da variavel local
+x = x+1 
+}
+```
+#### Define the structure of a Java class
 - **default package** : qdo não declara explitamente um pacote. Não podem ser importadas para uso em outros pacotes.
 	- não se podem criar pacotes que começam com java.* ou javax.* que são reservados
 - **membros de classe**: variaveis de instancia, construtores e métodos. Podemos ter membros de tipos diferentes com o mesmo nome.
@@ -76,9 +86,25 @@ System.getProperty("key1");
 		Locale br = new Locale("pt","BR");
 		System.out.printf(br,"%,f %n", 123456.789); // 123.456,789000
 		```
-		
+- System.out
+	- `println();`  imprime uma linha em branco
+	- `println("\n");` quebra a linha
+	- `print();` nao compila
+	- 
 #### Import other Java packages to make them accessible in your code
 - package deverá ser sempre a primeira declaração dentro do código
+- compila e roda se importar o próprio fqn da própria classe ou de outras classes no mesmo pacote
+```java
+package lilypad;
+public class Frog {  }
+///////////////
+package lilypad;
+import lilypad.Frog; //classe no mesmo pacote
+import lilypad.Tadpole;//a própria classe
+ public class Tadpole {
+   private Frog parent;
+ }
+```
 - Classes *se enxergam* se estão no **mesmo pacote**
 - usar o **Full Qualified name** para acessar a *public class*  de outro pacote	
 - **import Full Qualified name** para evitar o uso do *Full Qualified name* em vários pontos do código
@@ -417,7 +443,12 @@ int a = 1, b = 2;
 	while(a > b) // compila
 		System.out.println("OI");			
 ```
-
+- nem todos os whiles tem loop infinito
+```java
+while(--i < 10){
+//i vai até o menor valor negativo e depois vai para o maior positivo, saindo do loop
+}
+```
 #### Create and use for loops including the enhanced for loop
 - *inicialização*
 	- `for(;;){}` compila e roda infinitamente      
@@ -525,8 +556,9 @@ class Y extends X { public void method2(int x){this.x = x; //erro: nao enexerga 
 		}
 	}
 	```
-	- não pode sobreescrer um método *static* c/ um método *non-static* e vice-versa
+	- não pode sobreescrer um método *static* c/ um método *non-static* e vice-versa. Ambos devem ser static (hide) ou non-static (overrriden)
 	- **abstract** não compila em métodos *static* pois não há herança
+	- private abstract não compila
 	- construtores e blocos static não são herdados 
 - métodos *private* não são sobreescritos mas são verificados em tempo de compilação
 - **binding do polimorfismo**  o método chamado é do pai ou da filha ?
@@ -784,7 +816,8 @@ class B extends A{ public B() throws Exception{ } //pois super() precisa ser tra
 		int l = thevalue; 
 		int m = Sample.thevalue;	 
 	 ```
-
+- é sempre preferível usar interface do que classes abstract
+	
 [[↑] Back to top](#Anotações-para-certificação-OCA-Programmer-1Z0-808)
 
 ### Working with Selected classes from the **Java API** 
@@ -818,7 +851,7 @@ new StringBuffer("guilherme").reverse(); //emrehliug
 ```
 - *substring* não altera o valor do seu StringBuilder ou StringBuffer , mas retorna a String que você deseja.
 - *indexOf* e *lastIndexOf* retornam -1 qdo não encontra
-- não compila quando tenta comparar String e StringBuilder usando == ou equals
+- SB x String: não compila quando tenta comparar String e StringBuilder usando == ou equals. Não existe cast entre eles
 - setLength() altera o tamanho
 ```java
 StringBuilder sb = new StringBuilder("12345678"); //capacity = 16 + 8= 24      
@@ -843,6 +876,7 @@ sb.setLength(10); //tamanho 10 (12345     ) c/ mais 5 espaços em branco
 - não compila. Não existe construtor q recebe null `new String(null);`
 - *NullPointerException* `String s = null; String s2 = new String(s);`		
 - deverá ser sempre inicializada dentro de métodos, mesmo com null
+- `"Certificação".startsWith("C");` retorna true/false
 - conversão de *null* para String na concatenação `String nulled = null; System.out.println("value: " + nulled); /* value: null */ System.out.println(nulled + " value"); // null value`
 - conversão de *primitivos* p/ String `String name = "Java" + ' ' + "Certification" + ' ' + 1500; //Java Certification 1500`
 - na concatenação, tbm existe a precedencia de operadores `String value = 15 + 00 + " certification"; \\ 15 certification`
@@ -851,7 +885,8 @@ sb.setLength(10); //tamanho 10 (12345     ) c/ mais 5 espaços em branco
 	"".isEmpty(); /*true*/ " ".isEmpty(); /*false*/
 	substring(beginIndex, endIndex); /* inclui o caractere da posição inicial mas não o da final */ subString(beginIndex); /*a partir do indice passado até o fim */
 	"Java".substring(0, 4); /*Java*/ "Java".substring(0, 3)); /*Jav*/; //limite do endIndex é 4 nesse caso pois p/ descobrir o endIndex é 4-1 = 3 entao o substring vai de 0 a 3. Se beginIndex e endIndex for igual, nao retorna nada e nao da erro.
-	replace(oldChar, newChar); /*substitui as ocorrências de um char por outro*/ replace(CharSequence target,CharSequence replacement); //atenção: não existe replace sobrecarregado c/ (String, char) ou (char, String). É case sensitive
+	replace(oldChar, newChar); /*substitui todas as ocorrências de um char por outro*/ 
+	replace(CharSequence target,CharSequence replacement); //atenção: não existe replace sobrecarregado c/ (String, char) ou (char, String). É case sensitive
 	trim() /*limpa os caracteres brancos das duas pontas do String. SB não tem trim() */
 	"Certification".compareTo("certification"); /* -32 lexicográfico: minusculas são maiores que maiusculas. C < c retorna valor -. Contrário retornaria + */
 ```
@@ -981,6 +1016,7 @@ sb.setLength(10); //tamanho 10 (12345     ) c/ mais 5 espaços em branco
 - *java.util.ArrayList*
 - atenção: não tem length() (String) ou length (Array). ArrayList usa size()
 - primitivos não poder ser usados em ArrayList. Wrappers respectivos sim.
+- são ordenados por um índice														      
 - ArrayList sobreescreve metodo equals :  mesmos elementos na mesma ordem.
 ```java
 List<String> _lista = new ArrayList<>(2); //pode especificar tamanho (default =10) mas o valor size() corresponde ao número de elementos ja inseridos. Pode inserir mais de 2 elementos nesse caso
@@ -1227,8 +1263,8 @@ int  b, c; int a = b = c = 100; //compila e roda pois as variaveis foram declara
 
 ### Creating and Using Arrays
 
-#### Declare, instantiate, initialize and use a **one-dimensional** array
-- armazenamento sequencial de variveis em memória de um tipo
+#### Declare, instantiate, initialize and use a one-dimensional array
+- armazenamento sequencial de variveis em memória de um tipo. São ordenados por um index
 - são objetos
 	- int[] é uma classe com o nome de [I e o nome da classe para int[][] is [[I
 	- new int[10].getClass().isArray() retorna true 
@@ -1287,8 +1323,15 @@ int  b, c; int a = b = c = 100; //compila e roda pois as variaveis foram declara
 - *casting*	
 	- não funciona com primitivos `int[] values = new int[10]; long[] vals = values; // compile error`
 	- c/ ref é possível c/ o polimorfismo
+	- arrays de diferentes dimensoes não fazem casting: int[] é um tipo de objeto diferente de int[][]
 	- *ClassCastException* não tente fazer casting de array c/ Object `Object[] values= new Object[2] values[0] = "Certification"; String[] vals = (String[]) values;`
-#### Declare, instantiate, initialize and use **multi-dimensional** arrays
+- Array anonimo
+```java
+void m(int i[]){}
+m(new int[]{1,2,3});
+```
+	
+#### Declare, instantiate, initialize and use multi-dimensional arrays
 - array de arrays
 - *declaração*
 ```java
@@ -1439,7 +1482,7 @@ public class Car{
 - não deverão existir membros static e non-static c/mesmo nome 
 - `static int b = getMethod() /*0*/; public static int getMethod() {return a /*0, a ainda nao inicializada*/; } static int a = 15;`
 - membros estáticos podem ser acessados através de *instâncias da classe*
-- classe fiha não pode possuir um *método não static* que *sobreescreve* um método static. Ambos ou nenhum deve ser static.
+- classe fiha não pode possuir um *método não static* que *sobreescreve* um método static. Ambos (hide) nenhum deve ser static (sobreescrita).
 - *binding* do método é feito em tempo de compilação
 - a inicialização de variaveis mebro static pode chamar metodos static `static int idade = grabAge(); static int grabAge() { return 18;}`			
 - não chamar outros métodos c/ this.method() dentro de um método static
@@ -1533,6 +1576,7 @@ public class Student{
        		return new ArrayList(scores);   
 }  
 ```
+- imutabilidade: variaveis de instancia private e somente getters
 - especificação *javabeans* 
 	- método public ou protected p/ acessar a leitura do atributo *getter* 
 	- escrita com método publico ou protected *setter* (c/ validação)		
@@ -1947,7 +1991,7 @@ public class Shoot {
 		- não pode remover ou adicionar elementos nessa nova lista: UnsupportedOperationException
 		- `Arrays.asList(5, 10, -5, -10);` também funciona 
 	- Arrays.binarySearch(array, elemento q deseja achar)
-		- o array precisa ser ordenado anteriormente
+		- o array precisa ser ordenado anteriormente. Se não for ordenado, compila  e roda mas o resultado da busca é indefinido
 		- retorna a posição do elemento encontrado;
 			- se não achar, retorna a posição que o elemento procurado deveria estar, negativa e subtrai por -1
 			`[–10, –5, 5, 10]; Collections.binarySearch(numberList, 4);` deveria estar na posição 2 => -2 - 1: retornará -3
